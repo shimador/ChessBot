@@ -11,6 +11,11 @@
     <properties>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jmh.version>1.37</jmh.version>
+        <!-- Arguments passed to JMH, e.g. -Djmh.args="Perft -prof gc" -->
+        <jmh.args></jmh.args>
+        <!-- Output file of the JFR profiling run -->
+        <profile.out>target/profile.jfr</profile.out>
     </properties>
 
     <dependencies>
@@ -20,10 +25,36 @@
             <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.17</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.openjdk.jmh</groupId>
+                            <artifactId>jmh-generator-annprocess</artifactId>
+                            <version>${jmh.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -36,6 +67,32 @@
                 <configuration>
                     <mainClass>com.chessbot.Main</mainClass>
                 </configuration>
+                <executions>
+                    <!-- mvn test-compile exec:exec@bench -Djmh.args="..." -->
+                    <execution>
+                        <id>bench</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <classpathScope>test</classpathScope>
+                            <commandlineArgs>-cp %classpath org.openjdk.jmh.Main ${jmh.args}</commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <!-- mvn test-compile exec:exec@profile : JFR recording of the reference workload -->
+                    <execution>
+                        <id>profile</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <classpathScope>test</classpathScope>
+                            <commandlineArgs>-XX:StartFlightRecording=filename=${profile.out},settings=tools/profile.jfc -cp %classpath com.chessbot.bench.ProfileWorkload</commandlineArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
