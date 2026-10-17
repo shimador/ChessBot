@@ -1,0 +1,56 @@
+# WARNING: Unable to get Instrumentation. Dynamic Attach failed. You may add this JAR as -javaagent manually, or supply -Djdk.attach.allowAttachSelf
+# VM mode: 64 bits
+# Compressed references (oops): 0-bit shift
+# Compressed class pointers: 0-bit shift and 0x9000000 base
+# Object alignment: 8 bytes
+#                       ref, bool, byte, char, shrt,  int,  flt,  lng,  dbl
+# Field sizes:            4,    1,    1,    2,    2,    4,    4,    8,    8
+# Array element sizes:    4,    1,    1,    2,    2,    4,    4,    8,    8
+# Array base offsets:    16,   16,   16,   16,   16,   16,   16,   16,   16
+
+com.chessbot.FieldLayoutDiagnostic$CandidateBad object internals:
+OFF  SZ               TYPE DESCRIPTION               VALUE
+  0   8                    (object header: mark)     N/A
+  8   4                    (object header: class)    N/A
+ 12   4                int CandidateBad.length       N/A
+ 16   8               long CandidateBad.attempts     N/A
+ 24   1            boolean CandidateBad.found        N/A
+ 25   1               byte CandidateBad.charsetId    N/A
+ 26   2                    (alignment/padding gap)   
+ 28   4   java.lang.String CandidateBad.target       N/A
+Instance size: 32 bytes
+Space losses: 2 bytes internal + 0 bytes external = 2 bytes total
+
+com.chessbot.FieldLayoutDiagnostic$CandidateGood object internals:
+OFF  SZ               TYPE DESCRIPTION               VALUE
+  0   8                    (object header: mark)     N/A
+  8   4                    (object header: class)    N/A
+ 12   4                int CandidateGood.length      N/A
+ 16   8               long CandidateGood.attempts    N/A
+ 24   1            boolean CandidateGood.found       N/A
+ 25   1               byte CandidateGood.charsetId   N/A
+ 26   2                    (alignment/padding gap)   
+ 28   4   java.lang.String CandidateGood.target      N/A
+Instance size: 32 bytes
+Space losses: 2 bytes internal + 0 bytes external = 2 bytes total
+
+com.chessbot.Position object internals:
+OFF  SZ      TYPE DESCRIPTION               VALUE
+  0   8           (object header: mark)     N/A
+  8   4           (object header: class)    N/A
+ 12   4       int Position.castling         N/A
+ 16   8      long Position.hash             N/A
+ 24   4       int Position.epSquare         N/A
+ 28   4       int Position.whiteKing        N/A
+ 32   4       int Position.blackKing        N/A
+ 36   4       int Position.ply              N/A
+ 40   1   boolean Position.whiteToMove      N/A
+ 41   3           (alignment/padding gap)   
+ 44   4    char[] Position.board            N/A
+ 48   4    char[] Position.undoCaptured     N/A
+ 52   4     int[] Position.undoCastling     N/A
+ 56   4     int[] Position.undoEpSquare     N/A
+ 60   4    long[] Position.undoHash         N/A
+Instance size: 64 bytes
+Space losses: 3 bytes internal + 0 bytes external = 3 bytes total
+
