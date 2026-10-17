@@ -16,6 +16,8 @@
         <jmh.args></jmh.args>
         <!-- Output file of the JFR profiling run -->
         <profile.out>target/profile.jfr</profile.out>
+        <!-- Build output; benchmarks use -Dbuild.dir=target-bench so the IDE compiler cannot overwrite the measured classes -->
+        <build.dir>${project.basedir}/target</build.dir>
     </properties>
 
     <dependencies>
@@ -40,6 +42,7 @@
     </dependencies>
 
     <build>
+        <directory>${build.dir}</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

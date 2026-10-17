@@ -9,6 +9,7 @@ Chaque optimisation est **justifiée par une mesure**, appliquée dans **un comm
 |---|---|---|---|---|---|---|
 | 0 | Baseline | — | 329,5 ms | 236,6 ms | 14,8 s | 258,8 Mo |
 | 1 | Plateau 1D contigu | `Position.copy` : 28 % du CPU, 93 % des allocations | 39,6 ms (×8,3) | 57,4 ms (×4,1) | 3,1 s (×4,7) | 86,7 Mo |
+| 2 | Zéro allocation (jouer/annuler, buffers) | `Position.copy` : encore 84 % des allocations | 15,5 ms (×2,6) | 23,5 ms (×2,4) | 1,07 s (×2,9) | 54 o |
 
 *Temps moyens JMH, intervalle de confiance à 99,9 %. Gain = temps avant / temps après.*
 
@@ -28,7 +29,9 @@ Chaque optimisation est **justifiée par une mesure**, appliquée dans **un comm
 | `mateIn3` | recherche complète de mat en 3 sur la position Kiwipete (aucun mat : rien n'est élagué tôt) |
 | `mateIn4` | même recherche, un coup plus profond (mesure en coups uniques, car longue) |
 
-Reproduire : `mvn test-compile exec:exec@bench -Djmh.args="-prof gc"` et `mvn test-compile exec:exec@profile`.
+Reproduire : `mvn -Dbuild.dir=target-bench clean test-compile exec:exec@bench -Djmh.args="-prof gc"` et `... exec:exec@profile`.
+
+**Piège rencontré** : l'extension Java de VS Code compile elle aussi dans `target/` et écrasait par moments les classes mesurées (un benchmark a échoué avec « Unresolved compilation problems », message du compilateur Eclipse). Depuis l'optimisation 2, les mesures sont compilées dans un dossier séparé (`target-bench/`).
 
 ---
 
@@ -93,3 +96,45 @@ Les intervalles de confiance ne se recouvrent sur aucune charge : le gain est si
 **Analyse.** Le gain (×8) dépasse la seule baisse des octets alloués (÷3) : passer de 17 à 2 allocations par coup évite aussi la mise à zéro de 9 tableaux, 8 appels de copie séparés et les accès indirects. On ne peut pas séparer précisément ces effets, qui viennent tous de la même structure de données. La queue de latence (p99) baisse encore plus que la médiane, car le GC a 3 fois moins d'objets à traiter.
 
 **Nouveau profil** ([flamegraph](docs/flamegraphs/01-plateau-1d.svg)) : la copie ne pèse plus que 0,4 % du CPU mais reste **83,9 % des allocations** (justifie l'optimisation 2). Le nouveau point chaud est la détection d'échec : `attackedBySlide` 34,8 % de temps propre, `isKingAttacked` 34,2 % du temps total (justifie l'optimisation 3).
+
+---
+
+## 2. Zéro allocation — *pile vs tas, buffers préalloués (J2_AM)*
+
+Tag [`opt2-zero-allocation`](../../tree/opt2-zero-allocation).
+
+**Constat.** Après l'optimisation 1, le profil JFR montre que `Position.copy` produit encore **83,9 % des allocations** : 86,7 Mo par perft 4, 5,2 Go par mat en 4.
+
+**Cause racine.** Chaque coup *testé* (pas seulement joué) crée une nouvelle `Position`, et chaque nœud crée une `ArrayList<Move>` remplie d'objets `Move`. Tous ces objets sortent de la fonction qui les crée (ils sont retournés ou stockés dans une liste) : l'escape analysis du JIT ne peut pas les garder sur la pile.
+
+**Technique.**
+- **Jouer / annuler sur un seul plateau** : `make(move)` modifie la position en place et `unmake(move)` la restaure à partir d'une petite pile d'annulation préallouée (pièce capturée, droits de roque, case en passant).
+- **Coups encodés en `int`** (case de départ, case d'arrivée, promotion sur 15 bits) au lieu d'objets `Move`.
+- **Buffers préalloués** : un tableau `int[320]` par profondeur, créé une seule fois par thread et réutilisé à chaque appel (`ThreadLocal`), à la place des `ArrayList`.
+
+```java
+for (int i = 0; i < count; i++) {
+    p.make(buffer[i]);                                   // avant : Position next = p.makeMove(m);
+    if (!MoveGenerator.isKingAttacked(p, !p.whiteToMove))
+        nodes += perft(p, moves, depth - 1, ply + 1);
+    p.unmake(buffer[i]);
+}
+```
+
+**Diagnostic d'échappement en cours de route.** La première version de l'optimisation allouait encore **21,7 Mo par mat en 3**. JFR a désigné la source : 99 % des allocations restantes venaient de `for (int dc : new int[]{-1, 1})` dans la génération des coups de pion. Ce tableau littéral ne sort pourtant jamais de la fonction, mais l'escape analysis de C2 ne l'a pas éliminé dans ce contexte. Le remplacer par une constante `static final` a supprimé ces allocations. Leçon : l'escape analysis n'est pas une garantie, il faut vérifier par la mesure (équivalent de `go build -gcflags="-m"`).
+
+**Résultat** (avant = optimisation 1).
+
+| Charge | Avant | Après | Gain |
+|---|---|---|---|
+| perft 4 | 39,6 ± 8,3 ms | **15,5 ± 0,3 ms** | **×2,6** |
+| perft 3 p50 / p99 / p99,9 | 1,42 / 3,33 / 4,33 ms | **0,82 / 1,95 / 3,39 ms** | ×1,7 / ×1,7 / ×1,3 |
+| Mat en 3 | 57,4 ± 15,2 ms | **23,5 ± 1,0 ms** | **×2,4** |
+| Mat en 4 | 3,1 s | **1,07 s** (1,07 / 1,09 / 1,05) | **×2,9** |
+| Allocations perft 4 | 86,7 Mo/op | **54 o/op** | −100 % |
+| Allocations mat en 4 | 5,2 Go/op | **6,8 Ko/op** | −100 % |
+| Nombre de GC pendant la mesure | 15 à 30 | **≈ 0** | |
+
+Les quelques octets restants sont alloués une fois par appel hors du chemin critique (résultat `Optional<Move>`, infrastructure JMH). Les intervalles de confiance sont aussi **8 à 25 fois plus étroits** : une partie du bruit des mesures précédentes venait des allocations elles-mêmes.
+
+**Nouveau profil** ([flamegraph](docs/flamegraphs/02-zero-allocation.svg)) : il ne reste aucune allocation applicative (les allocations visibles viennent de JFR lui-même). Le CPU est maintenant dominé par la détection d'échec : `attackedBySlide` **53,2 % de temps propre**, `isKingAttacked` **60,6 % du temps total**, dont 10,3 % de temps propre passé à **chercher le roi case par case** (justifie l'optimisation 3).

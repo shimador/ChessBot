@@ -10,10 +10,21 @@ public final class Perft {
     }
 
     public static long perft(Position position, int depth) {
+        SearchContext ctx = SearchContext.load(position);
+        return perft(ctx.position, ctx.moves, depth, 0);
+    }
+
+    private static long perft(Position p, int[][] moves, int depth, int ply) {
         if (depth == 0) return 1;
+        int[] buffer = moves[ply];
+        int count = MoveGenerator.generate(p, buffer);
         long nodes = 0;
-        for (Move move : MoveGenerator.legalMoves(position)) {
-            nodes += perft(position.makeMove(move), depth - 1);
+        for (int i = 0; i < count; i++) {
+            p.make(buffer[i]);
+            if (!MoveGenerator.isKingAttacked(p, !p.whiteToMove)) {
+                nodes += perft(p, moves, depth - 1, ply + 1);
+            }
+            p.unmake(buffer[i]);
         }
         return nodes;
     }

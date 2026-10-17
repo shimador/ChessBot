@@ -1,22 +1,30 @@
 package com.chessbot;
 
 /**
- * A chess position: a flat 64-char array (one contiguous object) copied on every move.
+ * A mutable chess position: moves are played with {@link #make} and taken back with {@link #unmake},
+ * on the same flat 64-char board. Nothing is allocated while searching: the information needed to
+ * undo a move is kept in preallocated arrays indexed by ply.
  * <p>
  * board[sq(row, col)]: row 0 = rank 8, col 0 = file a.
  * Uppercase = white, lowercase = black, '.' = empty.
  */
 public class Position {
     public static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    static final int MAX_PLY = 64;
 
-    final char[] board;
+    // Castling rights, as bits of the 'castling' field
+    static final int WHITE_KINGSIDE = 1, WHITE_QUEENSIDE = 2, BLACK_KINGSIDE = 4, BLACK_QUEENSIDE = 8;
+
+    final char[] board = new char[64];
     boolean whiteToMove;
-    boolean whiteKingside, whiteQueenside, blackKingside, blackQueenside;
-    int epRow = -1, epCol = -1; // square a pawn may capture onto en passant, -1 if none
+    int castling;
+    int epSquare = -1; // square a pawn may capture onto en passant, -1 if none
 
-    private Position(char[] board) {
-        this.board = board;
-    }
+    // Undo stack: what make() overwrote, restored by unmake()
+    private final char[] undoCaptured = new char[MAX_PLY];
+    private final int[] undoCastling = new int[MAX_PLY];
+    private final int[] undoEpSquare = new int[MAX_PLY];
+    private int ply;
 
     /** Index of a square in the flat board. */
     static int sq(int row, int col) {
@@ -28,7 +36,7 @@ public class Position {
         String[] rows = parts[0].split("/");
         if (rows.length != 8) throw new IllegalArgumentException("Bad FEN: " + fen);
 
-        Position p = new Position(new char[64]);
+        Position p = new Position();
         for (int r = 0; r < 8; r++) {
             int c = 0;
             for (char ch : rows[r].toCharArray()) {
@@ -43,58 +51,103 @@ public class Position {
 
         p.whiteToMove = parts.length < 2 || parts[1].equals("w");
         String castling = parts.length > 2 ? parts[2] : "-";
-        p.whiteKingside = castling.contains("K");
-        p.whiteQueenside = castling.contains("Q");
-        p.blackKingside = castling.contains("k");
-        p.blackQueenside = castling.contains("q");
+        if (castling.contains("K")) p.castling |= WHITE_KINGSIDE;
+        if (castling.contains("Q")) p.castling |= WHITE_QUEENSIDE;
+        if (castling.contains("k")) p.castling |= BLACK_KINGSIDE;
+        if (castling.contains("q")) p.castling |= BLACK_QUEENSIDE;
         if (parts.length > 3 && !parts[3].equals("-")) {
-            p.epCol = parts[3].charAt(0) - 'a';
-            p.epRow = 8 - (parts[3].charAt(1) - '0');
+            int col = parts[3].charAt(0) - 'a';
+            int row = 8 - (parts[3].charAt(1) - '0');
+            p.epSquare = sq(row, col);
         }
         return p;
     }
 
-    /** Returns a new position with the move played. This position is left untouched. */
-    public Position makeMove(Move m) {
-        Position next = copy();
-        char piece = board[sq(m.fromRow(), m.fromCol())];
-        boolean isPawn = Character.toLowerCase(piece) == 'p';
-        boolean isKing = Character.toLowerCase(piece) == 'k';
+    /** Copies another position into this one, without allocating. */
+    void copyFrom(Position other) {
+        System.arraycopy(other.board, 0, board, 0, 64);
+        whiteToMove = other.whiteToMove;
+        castling = other.castling;
+        epSquare = other.epSquare;
+        ply = 0;
+    }
+
+    /** Returns an independent copy (for callers that must not see their position modified). */
+    public Position copy() {
+        Position p = new Position();
+        p.copyFrom(this);
+        return p;
+    }
+
+    /** Plays a move encoded by {@link Moves} on this position. */
+    void make(int move) {
+        int from = Moves.from(move), to = Moves.to(move), promo = Moves.promotion(move);
+        char piece = board[from];
+        boolean isPawn = piece == 'P' || piece == 'p';
+
+        undoCaptured[ply] = board[to];
+        undoCastling[ply] = castling;
+        undoEpSquare[ply] = epSquare;
+        ply++;
 
         // En passant: the captured pawn sits beside the moving pawn, not on the target square
-        if (isPawn && m.toRow() == epRow && m.toCol() == epCol && m.fromCol() != m.toCol()) {
-            next.board[sq(m.fromRow(), m.toCol())] = '.';
+        if (isPawn && to == epSquare && (from & 7) != (to & 7)) {
+            board[(from & ~7) | (to & 7)] = '.';
         }
 
-        next.board[sq(m.fromRow(), m.fromCol())] = '.';
-        next.board[sq(m.toRow(), m.toCol())] = m.promotion() != 0 ? m.promotion() : piece;
+        board[from] = '.';
+        board[to] = promo != 0 ? Moves.promotionPiece(promo, whiteToMove) : piece;
 
         // Castling: the king moves two squares, bring the rook across
-        if (isKing && Math.abs(m.toCol() - m.fromCol()) == 2) {
-            int row = m.fromRow();
-            if (m.toCol() == 6) {
-                next.board[sq(row, 5)] = next.board[sq(row, 7)];
-                next.board[sq(row, 7)] = '.';
+        if ((piece == 'K' || piece == 'k') && Math.abs(to - from) == 2) {
+            int rowStart = from & ~7;
+            if ((to & 7) == 6) {
+                board[rowStart + 5] = board[rowStart + 7];
+                board[rowStart + 7] = '.';
             } else {
-                next.board[sq(row, 3)] = next.board[sq(row, 0)];
-                next.board[sq(row, 0)] = '.';
+                board[rowStart + 3] = board[rowStart];
+                board[rowStart] = '.';
             }
         }
 
-        if (piece == 'K') next.whiteKingside = next.whiteQueenside = false;
-        if (piece == 'k') next.blackKingside = next.blackQueenside = false;
+        if (piece == 'K') castling &= ~(WHITE_KINGSIDE | WHITE_QUEENSIDE);
+        if (piece == 'k') castling &= ~(BLACK_KINGSIDE | BLACK_QUEENSIDE);
         // A rook leaving its corner, or being captured there
-        next.clearCastlingRightsFor(m.fromRow(), m.fromCol());
-        next.clearCastlingRightsFor(m.toRow(), m.toCol());
+        castling &= ~(cornerRight(from) | cornerRight(to));
 
-        next.epRow = next.epCol = -1;
-        if (isPawn && Math.abs(m.toRow() - m.fromRow()) == 2) {
-            next.epRow = (m.fromRow() + m.toRow()) / 2;
-            next.epCol = m.fromCol();
+        epSquare = isPawn && Math.abs(to - from) == 16 ? (from + to) / 2 : -1;
+        whiteToMove = !whiteToMove;
+    }
+
+    /** Takes back the last move played with {@link #make}. */
+    void unmake(int move) {
+        whiteToMove = !whiteToMove;
+        ply--;
+        int from = Moves.from(move), to = Moves.to(move), promo = Moves.promotion(move);
+        char piece = promo != 0 ? (whiteToMove ? 'P' : 'p') : board[to];
+        char captured = undoCaptured[ply];
+
+        board[from] = piece;
+        board[to] = captured;
+
+        boolean isPawn = piece == 'P' || piece == 'p';
+        // A pawn moving diagonally onto an empty square can only be an en passant capture
+        if (isPawn && (from & 7) != (to & 7) && captured == '.') {
+            board[(from & ~7) | (to & 7)] = whiteToMove ? 'p' : 'P';
+        }
+        if ((piece == 'K' || piece == 'k') && Math.abs(to - from) == 2) {
+            int rowStart = from & ~7;
+            if ((to & 7) == 6) {
+                board[rowStart + 7] = board[rowStart + 5];
+                board[rowStart + 5] = '.';
+            } else {
+                board[rowStart] = board[rowStart + 3];
+                board[rowStart + 3] = '.';
+            }
         }
 
-        next.whiteToMove = !whiteToMove;
-        return next;
+        castling = undoCastling[ply];
+        epSquare = undoEpSquare[ply];
     }
 
     /** True if the side to move is in check. */
@@ -102,23 +155,14 @@ public class Position {
         return MoveGenerator.isKingAttacked(this, whiteToMove);
     }
 
-    private void clearCastlingRightsFor(int row, int col) {
-        if (row == 7 && col == 7) whiteKingside = false;
-        if (row == 7 && col == 0) whiteQueenside = false;
-        if (row == 0 && col == 7) blackKingside = false;
-        if (row == 0 && col == 0) blackQueenside = false;
-    }
-
-    private Position copy() {
-        Position p = new Position(board.clone());
-        p.whiteToMove = whiteToMove;
-        p.whiteKingside = whiteKingside;
-        p.whiteQueenside = whiteQueenside;
-        p.blackKingside = blackKingside;
-        p.blackQueenside = blackQueenside;
-        p.epRow = epRow;
-        p.epCol = epCol;
-        return p;
+    private static int cornerRight(int square) {
+        return switch (square) {
+            case 63 -> WHITE_KINGSIDE;  // h1
+            case 56 -> WHITE_QUEENSIDE; // a1
+            case 7 -> BLACK_KINGSIDE;   // h8
+            case 0 -> BLACK_QUEENSIDE;  // a8
+            default -> 0;
+        };
     }
 
     @Override

@@ -4,50 +4,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Naive legal move generation: generate every pseudo-legal move, play it on a copy of the board,
- * and keep it only if the mover's king is not attacked afterwards.
+ * Move generation into caller-provided int arrays (see {@link Moves}): no object is created.
+ * Moves are pseudo-legal; the search keeps a move only if, once played, the mover's king is not attacked.
  */
 public final class MoveGenerator {
+    /** Upper bound on pseudo-legal moves in a position (the legal maximum is 218). */
+    static final int MAX_MOVES = 320;
+
     private static final int[][] KNIGHT_OFFSETS = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
     private static final int[][] KING_OFFSETS = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     private static final int[][] ROOK_DIRS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     private static final int[][] BISHOP_DIRS = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+    // Was a "new int[]{-1, 1}" literal in each call: JFR showed escape analysis did not remove it
+    private static final int[] PAWN_CAPTURE_COLS = {-1, 1};
 
     private MoveGenerator() {
     }
 
-    public static List<Move> legalMoves(Position p) {
+    /** Legal moves as a list of {@link Move} (cold path: UI and tests). */
+    public static List<Move> legalMoves(Position position) {
+        Position p = position.copy();
+        int[] buffer = new int[MAX_MOVES];
+        int count = generate(p, buffer);
         List<Move> legal = new ArrayList<>();
-        for (Move m : pseudoLegalMoves(p)) {
-            Position next = p.makeMove(m);
-            if (!isKingAttacked(next, p.whiteToMove)) legal.add(m);
+        for (int i = 0; i < count; i++) {
+            p.make(buffer[i]);
+            if (!isKingAttacked(p, !p.whiteToMove)) legal.add(Moves.toMove(buffer[i], !p.whiteToMove));
+            p.unmake(buffer[i]);
         }
         return legal;
     }
 
-    static List<Move> pseudoLegalMoves(Position p) {
-        List<Move> moves = new ArrayList<>();
+    /** Writes the pseudo-legal moves of the side to move into {@code moves}; returns how many. */
+    static int generate(Position p, int[] moves) {
+        int n = 0;
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 char piece = p.board[Position.sq(r, c)];
                 if (piece == '.' || isWhite(piece) != p.whiteToMove) continue;
                 switch (Character.toLowerCase(piece)) {
-                    case 'p' -> addPawnMoves(p, r, c, moves);
-                    case 'n' -> addStepMoves(p, r, c, KNIGHT_OFFSETS, moves);
-                    case 'b' -> addSlideMoves(p, r, c, BISHOP_DIRS, moves);
-                    case 'r' -> addSlideMoves(p, r, c, ROOK_DIRS, moves);
+                    case 'p' -> n = addPawnMoves(p, r, c, moves, n);
+                    case 'n' -> n = addStepMoves(p, r, c, KNIGHT_OFFSETS, moves, n);
+                    case 'b' -> n = addSlideMoves(p, r, c, BISHOP_DIRS, moves, n);
+                    case 'r' -> n = addSlideMoves(p, r, c, ROOK_DIRS, moves, n);
                     case 'q' -> {
-                        addSlideMoves(p, r, c, ROOK_DIRS, moves);
-                        addSlideMoves(p, r, c, BISHOP_DIRS, moves);
+                        n = addSlideMoves(p, r, c, ROOK_DIRS, moves, n);
+                        n = addSlideMoves(p, r, c, BISHOP_DIRS, moves, n);
                     }
                     case 'k' -> {
-                        addStepMoves(p, r, c, KING_OFFSETS, moves);
-                        addCastlingMoves(p, r, c, moves);
+                        n = addStepMoves(p, r, c, KING_OFFSETS, moves, n);
+                        n = addCastlingMoves(p, r, c, moves, n);
                     }
                 }
             }
         }
-        return moves;
+        return n;
     }
 
     /** True if the king of the given colour is attacked by the other side. */
@@ -65,7 +76,7 @@ public final class MoveGenerator {
         // A white pawn attacks diagonally upwards, so it sits one row below the square it attacks
         int pawnRow = byWhite ? r + 1 : r - 1;
         char pawn = byWhite ? 'P' : 'p';
-        for (int dc : new int[]{-1, 1}) {
+        for (int dc : PAWN_CAPTURE_COLS) {
             if (onBoard(pawnRow, c + dc) && p.board[Position.sq(pawnRow, c + dc)] == pawn) return true;
         }
         if (attackedByStep(p, r, c, KNIGHT_OFFSETS, byWhite ? 'N' : 'n')) return true;
@@ -75,84 +86,94 @@ public final class MoveGenerator {
         return attackedBySlide(p, r, c, BISHOP_DIRS, byWhite ? 'B' : 'b', queen);
     }
 
-    private static void addPawnMoves(Position p, int r, int c, List<Move> moves) {
+    private static int addPawnMoves(Position p, int r, int c, int[] moves, int n) {
         boolean white = p.whiteToMove;
         int dir = white ? -1 : 1;
         int startRow = white ? 6 : 1;
         int toRow = r + dir; // always on the board: a pawn never stands on its last rank
 
         if (p.board[Position.sq(toRow, c)] == '.') {
-            addPawnMove(r, c, toRow, c, white, moves);
-            if (r == startRow && p.board[Position.sq(r + 2 * dir, c)] == '.') moves.add(new Move(r, c, r + 2 * dir, c));
+            n = addPawnMove(r, c, toRow, c, moves, n);
+            if (r == startRow && p.board[Position.sq(r + 2 * dir, c)] == '.') {
+                moves[n++] = Moves.encode(Position.sq(r, c), Position.sq(r + 2 * dir, c), 0);
+            }
         }
-        for (int dc : new int[]{-1, 1}) {
+        for (int dc : PAWN_CAPTURE_COLS) {
             int toCol = c + dc;
             if (toCol < 0 || toCol > 7) continue;
             char target = p.board[Position.sq(toRow, toCol)];
             boolean capture = target != '.' && isWhite(target) != white;
-            boolean enPassant = toRow == p.epRow && toCol == p.epCol;
-            if (capture || enPassant) addPawnMove(r, c, toRow, toCol, white, moves);
+            boolean enPassant = Position.sq(toRow, toCol) == p.epSquare;
+            if (capture || enPassant) n = addPawnMove(r, c, toRow, toCol, moves, n);
         }
+        return n;
     }
 
-    private static void addPawnMove(int r, int c, int toRow, int toCol, boolean white, List<Move> moves) {
+    private static int addPawnMove(int r, int c, int toRow, int toCol, int[] moves, int n) {
+        int from = Position.sq(r, c), to = Position.sq(toRow, toCol);
         if (toRow == 0 || toRow == 7) {
-            for (char promo : (white ? "QRBN" : "qrbn").toCharArray()) moves.add(new Move(r, c, toRow, toCol, promo));
+            for (int promo = 1; promo <= 4; promo++) moves[n++] = Moves.encode(from, to, promo);
         } else {
-            moves.add(new Move(r, c, toRow, toCol));
+            moves[n++] = Moves.encode(from, to, 0);
         }
+        return n;
     }
 
-    private static void addStepMoves(Position p, int r, int c, int[][] offsets, List<Move> moves) {
+    private static int addStepMoves(Position p, int r, int c, int[][] offsets, int[] moves, int n) {
         for (int[] d : offsets) {
             int tr = r + d[0], tc = c + d[1];
             if (!onBoard(tr, tc)) continue;
             char target = p.board[Position.sq(tr, tc)];
-            if (target == '.' || isWhite(target) != p.whiteToMove) moves.add(new Move(r, c, tr, tc));
+            if (target == '.' || isWhite(target) != p.whiteToMove) {
+                moves[n++] = Moves.encode(Position.sq(r, c), Position.sq(tr, tc), 0);
+            }
         }
+        return n;
     }
 
-    private static void addSlideMoves(Position p, int r, int c, int[][] dirs, List<Move> moves) {
+    private static int addSlideMoves(Position p, int r, int c, int[][] dirs, int[] moves, int n) {
         for (int[] d : dirs) {
             int tr = r + d[0], tc = c + d[1];
             while (onBoard(tr, tc)) {
                 char target = p.board[Position.sq(tr, tc)];
                 if (target == '.') {
-                    moves.add(new Move(r, c, tr, tc));
+                    moves[n++] = Moves.encode(Position.sq(r, c), Position.sq(tr, tc), 0);
                 } else {
-                    if (isWhite(target) != p.whiteToMove) moves.add(new Move(r, c, tr, tc));
+                    if (isWhite(target) != p.whiteToMove) moves[n++] = Moves.encode(Position.sq(r, c), Position.sq(tr, tc), 0);
                     break;
                 }
                 tr += d[0];
                 tc += d[1];
             }
         }
+        return n;
     }
 
-    private static void addCastlingMoves(Position p, int r, int c, List<Move> moves) {
+    private static int addCastlingMoves(Position p, int r, int c, int[] moves, int n) {
         boolean white = p.whiteToMove;
         int home = white ? 7 : 0;
-        if (r != home || c != 4) return;
+        if (r != home || c != 4) return n;
         char rook = white ? 'R' : 'r';
         boolean enemy = !white;
         char[] b = p.board;
         int h = home * 8;
 
         // The king may not castle out of, through, or into check
-        boolean kingside = white ? p.whiteKingside : p.blackKingside;
-        if (kingside && b[h + 5] == '.' && b[h + 6] == '.' && b[h + 7] == rook
+        int kingside = white ? Position.WHITE_KINGSIDE : Position.BLACK_KINGSIDE;
+        if ((p.castling & kingside) != 0 && b[h + 5] == '.' && b[h + 6] == '.' && b[h + 7] == rook
                 && !isSquareAttacked(p, home, 4, enemy)
                 && !isSquareAttacked(p, home, 5, enemy)
                 && !isSquareAttacked(p, home, 6, enemy)) {
-            moves.add(new Move(home, 4, home, 6));
+            moves[n++] = Moves.encode(h + 4, h + 6, 0);
         }
-        boolean queenside = white ? p.whiteQueenside : p.blackQueenside;
-        if (queenside && b[h + 3] == '.' && b[h + 2] == '.' && b[h + 1] == '.' && b[h] == rook
+        int queenside = white ? Position.WHITE_QUEENSIDE : Position.BLACK_QUEENSIDE;
+        if ((p.castling & queenside) != 0 && b[h + 3] == '.' && b[h + 2] == '.' && b[h + 1] == '.' && b[h] == rook
                 && !isSquareAttacked(p, home, 4, enemy)
                 && !isSquareAttacked(p, home, 3, enemy)
                 && !isSquareAttacked(p, home, 2, enemy)) {
-            moves.add(new Move(home, 4, home, 2));
+            moves[n++] = Moves.encode(h + 4, h + 2, 0);
         }
+        return n;
     }
 
     private static boolean attackedByStep(Position p, int r, int c, int[][] offsets, char attacker) {
