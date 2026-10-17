@@ -19,6 +19,7 @@ public class Position {
     boolean whiteToMove;
     int castling;
     int epSquare = -1; // square a pawn may capture onto en passant, -1 if none
+    int whiteKing = -1, blackKing = -1; // king squares, kept up to date by make/unmake
 
     // Undo stack: what make() overwrote, restored by unmake()
     private final char[] undoCaptured = new char[MAX_PLY];
@@ -43,6 +44,8 @@ public class Position {
                 int count = Character.isDigit(ch) ? ch - '0' : 1;
                 for (int i = 0; i < count; i++) {
                     if (c >= 8) throw new IllegalArgumentException("Bad FEN: " + fen);
+                    if (ch == 'K') p.whiteKing = sq(r, c);
+                    if (ch == 'k') p.blackKing = sq(r, c);
                     p.board[sq(r, c++)] = Character.isDigit(ch) ? '.' : ch;
                 }
             }
@@ -69,6 +72,8 @@ public class Position {
         whiteToMove = other.whiteToMove;
         castling = other.castling;
         epSquare = other.epSquare;
+        whiteKing = other.whiteKing;
+        blackKing = other.blackKing;
         ply = 0;
     }
 
@@ -110,8 +115,14 @@ public class Position {
             }
         }
 
-        if (piece == 'K') castling &= ~(WHITE_KINGSIDE | WHITE_QUEENSIDE);
-        if (piece == 'k') castling &= ~(BLACK_KINGSIDE | BLACK_QUEENSIDE);
+        if (piece == 'K') {
+            castling &= ~(WHITE_KINGSIDE | WHITE_QUEENSIDE);
+            whiteKing = to;
+        }
+        if (piece == 'k') {
+            castling &= ~(BLACK_KINGSIDE | BLACK_QUEENSIDE);
+            blackKing = to;
+        }
         // A rook leaving its corner, or being captured there
         castling &= ~(cornerRight(from) | cornerRight(to));
 
@@ -135,6 +146,8 @@ public class Position {
         if (isPawn && (from & 7) != (to & 7) && captured == '.') {
             board[(from & ~7) | (to & 7)] = whiteToMove ? 'p' : 'P';
         }
+        if (piece == 'K') whiteKing = from;
+        if (piece == 'k') blackKing = from;
         if ((piece == 'K' || piece == 'k') && Math.abs(to - from) == 2) {
             int rowStart = from & ~7;
             if ((to & 7) == 6) {

@@ -10,6 +10,7 @@ Chaque optimisation est **justifiée par une mesure**, appliquée dans **un comm
 | 0 | Baseline | — | 329,5 ms | 236,6 ms | 14,8 s | 258,8 Mo |
 | 1 | Plateau 1D contigu | `Position.copy` : 28 % du CPU, 93 % des allocations | 39,6 ms (×8,3) | 57,4 ms (×4,1) | 3,1 s (×4,7) | 86,7 Mo |
 | 2 | Zéro allocation (jouer/annuler, buffers) | `Position.copy` : encore 84 % des allocations | 15,5 ms (×2,6) | 23,5 ms (×2,4) | 1,07 s (×2,9) | 54 o |
+| 3 | Tables précalculées + roi mémorisé | détection d'échec : 61 % du CPU | ×1,19 (A/B) | ×1,34 (A/B) | non concluant | 60 o |
 
 *Temps moyens JMH, intervalle de confiance à 99,9 %. Gain = temps avant / temps après.*
 
@@ -138,3 +139,36 @@ for (int i = 0; i < count; i++) {
 Les quelques octets restants sont alloués une fois par appel hors du chemin critique (résultat `Optional<Move>`, infrastructure JMH). Les intervalles de confiance sont aussi **8 à 25 fois plus étroits** : une partie du bruit des mesures précédentes venait des allocations elles-mêmes.
 
 **Nouveau profil** ([flamegraph](docs/flamegraphs/02-zero-allocation.svg)) : il ne reste aucune allocation applicative (les allocations visibles viennent de JFR lui-même). Le CPU est maintenant dominé par la détection d'échec : `attackedBySlide` **53,2 % de temps propre**, `isKingAttacked` **60,6 % du temps total**, dont 10,3 % de temps propre passé à **chercher le roi case par case** (justifie l'optimisation 3).
+
+---
+
+## 3. Tables précalculées + roi mémorisé — *compromis espace-temps (J1_AM)*
+
+Tag [`opt3-tables`](../../tree/opt3-tables).
+
+**Constat.** Après l'optimisation 2, la détection d'échec représente **60,6 % du temps CPU**. `isKingAttacked` passe 10,3 % du temps à parcourir les 64 cases pour retrouver le roi, et `attackedBySlide` 53,2 % à suivre les lignes des tours, fous et dames.
+
+**Cause racine.** À chaque test, le code recalcule ce qui ne dépend que de la case : les déplacements du cavalier et du roi (8 décalages, chacun avec 4 tests de bord du plateau), les rayons des pièces glissantes (une conversion ligne/colonne et un test de bord à chaque pas). Et la position du roi, qui ne change que quand le roi bouge, est recherchée à chaque fois.
+
+**Technique.** Échanger un peu de mémoire contre du calcul :
+- **tables calculées une fois au démarrage** (environ 30 Ko) : `KNIGHT_TARGETS[64]`, `KING_TARGETS[64]`, `PAWN_ATTACKS[2][64]`, `ROOK_RAYS[64][4]`, `BISHOP_RAYS[64][4]`. Le chemin critique ne fait plus que lire des listes de cases, sans test de bord ;
+- **position des rois mémorisée** dans `Position`, mise à jour par `make` / `unmake` : `isKingAttacked` passe d'un parcours O(64) à un accès O(1).
+
+```java
+for (int s : KNIGHT_TARGETS[sq]) if (b[s] == knight) return true;   // avant : 8 décalages + 4 tests de bord chacun
+int king = whiteKing ? p.whiteKing : p.blackKing;                    // avant : boucle sur les 64 cases
+```
+
+**Mesure : pourquoi un A/B alterné.** La mesure JMH habituelle a donné un résultat incohérent : perft 3 ×1,6 plus rapide, mais perft 4 (exactement le même code) plus lent, 15,5 → 17,3 ms, avec des itérations qui ralentissent au fil du fork (17 → 22 ms). À ce niveau (quelques ms), la baisse de fréquence d'un portable qui chauffe pèse plus que l'optimisation. Les deux versions ont donc été compilées côte à côte et mesurées **en alternance** (A, B, A, B, A, B), pour qu'elles subissent les mêmes conditions ([résultats](docs/results/03-ab-vs-opt2.csv)).
+
+**Résultat** (A = optimisation 2, B = optimisation 3, 3 manches alternées, 5 itérations chacune).
+
+| Charge | A : manches 1 / 2 / 3 | B : manches 1 / 2 / 3 | Gain (médianes) |
+|---|---|---|---|
+| perft 4 | 18,4 / 15,4 / 15,9 ms | **13,5 / 13,4 / 12,6 ms** | **×1,19** |
+| perft 3 (moyenne) | 958 / 821 / 826 µs | **530 / 537 / 501 µs** | **×1,56** |
+| Mat en 3 | 23,9 / 21,5 / 21,2 ms | **17,1 / — / 14,9 ms** | **×1,34** |
+
+B est plus rapide que A dans **chaque** manche et sur chaque charge. Une itération de B (mat en 3, manche 2) a duré plusieurs secondes au lieu de 15 ms, un gel ponctuel de la machine : elle est exclue et signalée. Le mat en 4 (1,07 s dans les deux cas, 3 mesures seulement, écart 0,87–1,30 s) ne permet pas de conclure.
+
+**Analyse.** Gain réel mais plus modeste que les optimisations précédentes : on a enlevé des calculs (tests de bord, recherche du roi), mais le nombre de cases à lire reste le même. Le nouveau [profil](docs/flamegraphs/03-tables.svg) montre que la détection d'échec domine toujours : `attackedAlongRays` 30,3 % + `isSquareAttacked` 22,2 % de temps propre. Aller plus loin à ce niveau demanderait des bitboards (plateau sous forme d'entiers 64 bits). La suite s'attaque plutôt au **nombre de positions visitées**.
