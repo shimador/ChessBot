@@ -9,6 +9,12 @@ final class SearchContext {
 
     final Position position = new Position();
     final int[][] moves = new int[Position.MAX_PLY][MoveGenerator.MAX_MOVES];
+    private MateTable mateTable; // created on first mate search only (perft does not need it)
+
+    MateTable mateTable() {
+        if (mateTable == null) mateTable = new MateTable();
+        return mateTable;
+    }
 
     /** The calling thread's context, loaded with a copy of {@code start}. */
     static SearchContext load(Position start) {

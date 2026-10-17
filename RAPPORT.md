@@ -11,6 +11,7 @@ Chaque optimisation est **justifiée par une mesure**, appliquée dans **un comm
 | 1 | Plateau 1D contigu | `Position.copy` : 28 % du CPU, 93 % des allocations | 39,6 ms (×8,3) | 57,4 ms (×4,1) | 3,1 s (×4,7) | 86,7 Mo |
 | 2 | Zéro allocation (jouer/annuler, buffers) | `Position.copy` : encore 84 % des allocations | 15,5 ms (×2,6) | 23,5 ms (×2,4) | 1,07 s (×2,9) | 54 o |
 | 3 | Tables précalculées + roi mémorisé | détection d'échec : 61 % du CPU | ×1,19 (A/B) | ×1,34 (A/B) | non concluant | 60 o |
+| 4 | Table de transposition (Zobrist) | 78 % des nœuds du mat en 4 déjà analysés | ×0,89 (A/B, coût du hachage) | ×1,7 (A/B) | 0,29 s (×3,7) — mat en 5 : ×9,1 | 60 o |
 
 *Temps moyens JMH, intervalle de confiance à 99,9 %. Gain = temps avant / temps après.*
 
@@ -172,3 +173,45 @@ int king = whiteKing ? p.whiteKing : p.blackKing;                    // avant : 
 B est plus rapide que A dans **chaque** manche et sur chaque charge. Une itération de B (mat en 3, manche 2) a duré plusieurs secondes au lieu de 15 ms, un gel ponctuel de la machine : elle est exclue et signalée. Le mat en 4 (1,07 s dans les deux cas, 3 mesures seulement, écart 0,87–1,30 s) ne permet pas de conclure.
 
 **Analyse.** Gain réel mais plus modeste que les optimisations précédentes : on a enlevé des calculs (tests de bord, recherche du roi), mais le nombre de cases à lire reste le même. Le nouveau [profil](docs/flamegraphs/03-tables.svg) montre que la détection d'échec domine toujours : `attackedAlongRays` 30,3 % + `isSquareAttacked` 22,2 % de temps propre. Aller plus loin à ce niveau demanderait des bitboards (plateau sous forme d'entiers 64 bits). La suite s'attaque plutôt au **nombre de positions visitées**.
+
+---
+
+## 4. Table de transposition — *mémoïsation, macro-optimisation (J1_AM), cache borné (J4_PM)*
+
+Tag [`opt4-table-transposition`](../../tree/opt4-table-transposition).
+
+**Constat.** Les optimisations 1 à 3 rendent chaque position moins chère, mais le nombre de positions explose avec la profondeur : le mat en 5 prend encore **41 s**. Un [diagnostic](src/test/java/com/chessbot/TranspositionDiagnostic.java) rejoue la recherche et compte les nœuds d'attaque (position + nombre de coups restants) déjà rencontrés ([résultats](docs/results/04-transpositions.txt)) :
+
+| Recherche | Nœuds d'attaque visités | Distincts | **Déjà analysés** |
+|---|---|---|---|
+| Mat en 3 | 2 406 | 1 328 | **44,8 %** |
+| Mat en 4 | 116 067 | 25 133 | **78,3 %** |
+
+**Cause racine.** Des ordres de coups différents mènent à la même position (1.Cf3 Cf6 2.Cc3 = 1.Cc3 Cf6 2.Cf3). Sans mémoire, la recherche refait à chaque fois toute la sous-recherche, et cette redondance croît avec la profondeur.
+
+**Technique.**
+- **Hachage Zobrist** : une clé aléatoire de 64 bits par (pièce, case), trait, droits de roque et colonne en passant ; l'empreinte d'une position est le XOR des clés, mise à jour **incrémentalement** par `make` (quelques XOR par coup) et restaurée par `unmake`. Un [test](src/test/java/com/chessbot/ZobristTest.java) vérifie à chaque nœud qu'elle égale un recalcul complet.
+- **[Table de transposition](src/main/java/com/chessbot/MateTable.java)** : pour chaque (empreinte, n), elle mémorise « mat forcé en n : oui / non ». Un mat en k vaut aussi pour tout n ≥ k, une absence de mat en k vaut pour tout n ≤ k.
+- **Taille bornée** (2²⁰ entrées, 12 Mo, comme le cache LRU borné anti-OOM du cours) : chaque empreinte a une seule case, une nouvelle entrée remplace l'ancienne (accès O(1), sans liste LRU). Un compteur de génération vide la table en O(1) à chaque recherche : un appel ne profite jamais du précédent, la mesure reste honnête.
+- **Non-régression** : un [test](src/test/java/com/chessbot/MateTableTest.java) compare le verdict avec et sans table sur 6 positions × 3 profondeurs et vérifie que chaque coup trouvé gagne vraiment.
+
+```java
+if (ply > 0) {
+    int known = table.probe(p.hash, n);                   // déjà analysée ?
+    if (known != MateTable.UNKNOWN) return known == MateTable.MATE ? FOUND : NONE;
+}
+... recherche normale ...
+if (ply > 0) table.store(p.hash, n, result != NONE);
+```
+
+**Résultat** (A/B alterné, A = optimisation 3, B = optimisation 4 ; [résultats](docs/results/04-ab-vs-opt3.csv), [mat en 5](docs/results/04-ab-mateIn5.csv)).
+
+| Charge | A (médiane) | B (médiane) | Effet |
+|---|---|---|---|
+| Mat en 3 | 21,6 ms | **12,9 ms** | **×1,7** |
+| Mat en 4 (mesure JMH normale) | 1,07 s | **0,29 s** (0,28 / 0,32 / 0,27) | **×3,7** |
+| Mat en 5 | 41,5 / 42,3 s | **4,57 / 4,63 s** | **×9,1** |
+| perft 4 | 17,5 ms | 19,7 ms | **−11 %** |
+| perft 3 | 667 µs | 743 µs | **−10 %** |
+
+**Analyse.** Le gain grandit avec la profondeur (×1,7 → ×3,7 → ×9,1), exactement comme la part de positions redondantes mesurée par le diagnostic : c'est une réduction du **nombre** d'opérations, pas de leur coût. Contrepartie mesurée : perft, qui n'utilise pas la table, ralentit de 10 % car `make` met à jour l'empreinte à chaque coup (`Position.make` passe de 10,7 % à 17,9 % de temps propre dans le [profil](docs/flamegraphs/04-table-transposition.svg)). Compromis accepté : le but du programme est la recherche de mat. *(Les A/B ont tourné sur une machine plus chaude que celle de l'optimisation 3 : les valeurs absolues de A sont plus élevées, seul le rapport A/B compte.)*

@@ -71,4 +71,15 @@ public class ChessBenchmark {
     public Object mateIn4() {
         return MateFinder.findMate(kiwipete, 4);
     }
+
+    /** Not part of the default run (too long before the transposition table): run with the "mateIn5" filter. */
+    @Benchmark
+    @BenchmarkMode(Mode.SingleShotTime)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    @Fork(1)
+    @Warmup(iterations = 0)
+    @Measurement(iterations = 2)
+    public Object mateIn5() {
+        return MateFinder.findMate(kiwipete, 5);
+    }
 }

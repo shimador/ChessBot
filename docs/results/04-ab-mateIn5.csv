@@ -1,0 +1,4 @@
+A,round1,"com.chessbot.bench.ChessBenchmark.mateIn5","ss",1,1,"41534,522400",NaN,"ms/op"
+B,round1,"com.chessbot.bench.ChessBenchmark.mateIn5","ss",1,1,"4573,354800",NaN,"ms/op"
+A,round2,"com.chessbot.bench.ChessBenchmark.mateIn5","ss",1,1,"42296,958100",NaN,"ms/op"
+B,round2,"com.chessbot.bench.ChessBenchmark.mateIn5","ss",1,1,"4625,150000",NaN,"ms/op"

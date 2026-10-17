@@ -3,7 +3,10 @@ package com.chessbot;
 import java.util.Optional;
 import java.util.concurrent.CancellationException;
 
-/** Exhaustive mate search: tries every move, on one board, with preallocated move buffers. */
+/**
+ * Exhaustive mate search: tries every move, on one board, with preallocated move buffers.
+ * Results of positions already searched are reused through a {@link MateTable}.
+ */
 public final class MateFinder {
     private MateFinder() {
     }
@@ -23,14 +26,22 @@ public final class MateFinder {
      */
     public static Optional<Move> findMate(Position position, int n) {
         SearchContext ctx = SearchContext.load(position);
-        int move = attackerMates(ctx.position, ctx.moves, n, 0);
+        MateTable table = ctx.mateTable();
+        table.newSearch();
+        int move = attackerMates(ctx.position, ctx.moves, table, n, 0);
         return move == NONE ? Optional.empty() : Optional.of(Moves.toMove(move, position.whiteToMove));
     }
 
     private static final int NONE = -1;
+    private static final int FOUND = Integer.MAX_VALUE; // mate known from the table (no move needed below the root)
 
     /** Side to move attacks: returns a move forcing mate in at most n, or NONE. */
-    private static int attackerMates(Position p, int[][] moves, int n, int ply) {
+    private static int attackerMates(Position p, int[][] moves, MateTable table, int n, int ply) {
+        if (ply > 0) {
+            int known = table.probe(p.hash, n);
+            if (known != MateTable.UNKNOWN) return known == MateTable.MATE ? FOUND : NONE;
+        }
+        int result = NONE;
         int[] buffer = moves[ply];
         int count = MoveGenerator.generate(p, buffer);
         for (int i = 0; i < count; i++) {
@@ -38,18 +49,22 @@ public final class MateFinder {
             int move = buffer[i];
             p.make(move);
             boolean mates = !MoveGenerator.isKingAttacked(p, !p.whiteToMove) // legal
-                    && defenderLoses(p, moves, n, ply + 1);
+                    && defenderLoses(p, moves, table, n, ply + 1);
             p.unmake(move);
-            if (mates) return move;
+            if (mates) {
+                result = move;
+                break;
+            }
         }
-        return NONE;
+        if (ply > 0) table.store(p.hash, n, result != NONE);
+        return result;
     }
 
     /**
      * Side to move defends: true if it is mated now, or if every legal reply still allows
      * the attacker a mate in n - 1. Stalemate is a draw, so it returns false.
      */
-    private static boolean defenderLoses(Position p, int[][] moves, int n, int ply) {
+    private static boolean defenderLoses(Position p, int[][] moves, MateTable table, int n, int ply) {
         // Last move: only a check can be mate, so skip generating replies otherwise
         if (n == 1 && !p.isInCheck()) return false;
         int[] buffer = moves[ply];
@@ -60,7 +75,7 @@ public final class MateFinder {
             p.make(reply);
             boolean legal = !MoveGenerator.isKingAttacked(p, !p.whiteToMove);
             // With no move left (n == 1), any legal reply means it is not mate
-            boolean escapes = legal && (n == 1 || attackerMates(p, moves, n - 1, ply + 1) == NONE);
+            boolean escapes = legal && (n == 1 || attackerMates(p, moves, table, n - 1, ply + 1) == NONE);
             p.unmake(reply);
             if (escapes) return false;
             hasLegalMove |= legal;

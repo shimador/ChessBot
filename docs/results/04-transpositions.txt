@@ -1,0 +1,2 @@
+Mate in 3 on Kiwipete: 2406 attacker nodes, 1328 distinct, 1078 already searched (44,8 %)
+Mate in 4 on Kiwipete: 116067 attacker nodes, 25133 distinct, 90934 already searched (78,3 %)

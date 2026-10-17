@@ -20,11 +20,13 @@ public class Position {
     int castling;
     int epSquare = -1; // square a pawn may capture onto en passant, -1 if none
     int whiteKing = -1, blackKing = -1; // king squares, kept up to date by make/unmake
+    long hash; // Zobrist hash of the position, kept up to date by make/unmake
 
     // Undo stack: what make() overwrote, restored by unmake()
     private final char[] undoCaptured = new char[MAX_PLY];
     private final int[] undoCastling = new int[MAX_PLY];
     private final int[] undoEpSquare = new int[MAX_PLY];
+    private final long[] undoHash = new long[MAX_PLY];
     private int ply;
 
     /** Index of a square in the flat board. */
@@ -63,6 +65,7 @@ public class Position {
             int row = 8 - (parts[3].charAt(1) - '0');
             p.epSquare = sq(row, col);
         }
+        p.hash = p.computeHash();
         return p;
     }
 
@@ -74,6 +77,7 @@ public class Position {
         epSquare = other.epSquare;
         whiteKing = other.whiteKing;
         blackKing = other.blackKing;
+        hash = other.hash;
         ply = 0;
     }
 
@@ -93,23 +97,32 @@ public class Position {
         undoCaptured[ply] = board[to];
         undoCastling[ply] = castling;
         undoEpSquare[ply] = epSquare;
+        undoHash[ply] = hash;
         ply++;
+        hash ^= Zobrist.castling(castling) ^ Zobrist.enPassant(epSquare); // removed, added back below
 
         // En passant: the captured pawn sits beside the moving pawn, not on the target square
         if (isPawn && to == epSquare && (from & 7) != (to & 7)) {
-            board[(from & ~7) | (to & 7)] = '.';
+            int capturedSquare = (from & ~7) | (to & 7);
+            hash ^= Zobrist.piece(board[capturedSquare], capturedSquare);
+            board[capturedSquare] = '.';
         }
 
+        char placed = promo != 0 ? Moves.promotionPiece(promo, whiteToMove) : piece;
+        hash ^= Zobrist.piece(piece, from) ^ Zobrist.piece(placed, to);
+        if (board[to] != '.') hash ^= Zobrist.piece(board[to], to);
         board[from] = '.';
-        board[to] = promo != 0 ? Moves.promotionPiece(promo, whiteToMove) : piece;
+        board[to] = placed;
 
         // Castling: the king moves two squares, bring the rook across
         if ((piece == 'K' || piece == 'k') && Math.abs(to - from) == 2) {
             int rowStart = from & ~7;
             if ((to & 7) == 6) {
+                hash ^= Zobrist.piece(board[rowStart + 7], rowStart + 7) ^ Zobrist.piece(board[rowStart + 7], rowStart + 5);
                 board[rowStart + 5] = board[rowStart + 7];
                 board[rowStart + 7] = '.';
             } else {
+                hash ^= Zobrist.piece(board[rowStart], rowStart) ^ Zobrist.piece(board[rowStart], rowStart + 3);
                 board[rowStart + 3] = board[rowStart];
                 board[rowStart] = '.';
             }
@@ -127,6 +140,7 @@ public class Position {
         castling &= ~(cornerRight(from) | cornerRight(to));
 
         epSquare = isPawn && Math.abs(to - from) == 16 ? (from + to) / 2 : -1;
+        hash ^= Zobrist.castling(castling) ^ Zobrist.enPassant(epSquare) ^ Zobrist.SIDE;
         whiteToMove = !whiteToMove;
     }
 
@@ -161,6 +175,15 @@ public class Position {
 
         castling = undoCastling[ply];
         epSquare = undoEpSquare[ply];
+        hash = undoHash[ply];
+    }
+
+    /** Full Zobrist hash, computed from scratch (used at load time and to check the incremental one). */
+    long computeHash() {
+        long h = 0;
+        for (int s = 0; s < 64; s++) if (board[s] != '.') h ^= Zobrist.piece(board[s], s);
+        h ^= Zobrist.castling(castling) ^ Zobrist.enPassant(epSquare);
+        return whiteToMove ? h : h ^ Zobrist.SIDE;
     }
 
     /** True if the side to move is in check. */
