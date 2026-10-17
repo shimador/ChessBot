@@ -1,0 +1,1065 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/C:/Users/ismae/AppData/Local/Temp/claude/c--Users-ismae-ChessBot/c0ed0df4-b658-476c-9c10-b0606286713d/scratchpad/tools/apache-maven-3.9.9/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/C:/Users/ismae/AppData/Local/Temp/claude/c--Users-ismae-ChessBot/c0ed0df4-b658-476c-9c10-b0606286713d/scratchpad/tools/apache-maven-3.9.9/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 2 s each
+# Measurement: 5 iterations, 2 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.chessbot.bench.ChessBenchmark.mateIn3
+
+# Run progress: 0,00% complete, ETA 00:02:08
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 5,016 ms/op
+# Warmup Iteration   2: 4,677 ms/op
+# Warmup Iteration   3: 4,957 ms/op
+Iteration   1: 4,479 ms/op
+                 gc.alloc.rate:      1,906 MB/sec
+                 gc.alloc.rate.norm: 8955,712 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 4,399 ms/op
+                 gc.alloc.rate:      1,942 MB/sec
+                 gc.alloc.rate.norm: 8957,386 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 4,325 ms/op
+                 gc.alloc.rate:      1,974 MB/sec
+                 gc.alloc.rate.norm: 8955,456 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 4,407 ms/op
+                 gc.alloc.rate:      1,938 MB/sec
+                 gc.alloc.rate.norm: 8957,732 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 5,320 ms/op
+                 gc.alloc.rate:      1,606 MB/sec
+                 gc.alloc.rate.norm: 8961,558 B/op
+                 gc.count:           ≈ 0 counts
+
+
+# Run progress: 12,50% complete, ETA 00:01:57
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 5,028 ms/op
+# Warmup Iteration   2: 4,540 ms/op
+# Warmup Iteration   3: 4,633 ms/op
+Iteration   1: 4,424 ms/op
+                 gc.alloc.rate:      1,930 MB/sec
+                 gc.alloc.rate.norm: 8952,636 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 4,369 ms/op
+                 gc.alloc.rate:      1,955 MB/sec
+                 gc.alloc.rate.norm: 8957,908 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 4,287 ms/op
+                 gc.alloc.rate:      1,990 MB/sec
+                 gc.alloc.rate.norm: 8949,173 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 4,912 ms/op
+                 gc.alloc.rate:      1,739 MB/sec
+                 gc.alloc.rate.norm: 8957,569 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 4,922 ms/op
+                 gc.alloc.rate:      1,736 MB/sec
+                 gc.alloc.rate.norm: 8962,634 B/op
+                 gc.count:           ≈ 0 counts
+
+
+# Run progress: 24,99% complete, ETA 00:01:40
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 5,144 ms/op
+# Warmup Iteration   2: 4,424 ms/op
+# Warmup Iteration   3: 4,342 ms/op
+Iteration   1: 4,416 ms/op
+                 gc.alloc.rate:      1,935 MB/sec
+                 gc.alloc.rate.norm: 8960,706 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 4,136 ms/op
+                 gc.alloc.rate:      2,067 MB/sec
+                 gc.alloc.rate.norm: 8964,619 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 4,330 ms/op
+                 gc.alloc.rate:      1,974 MB/sec
+                 gc.alloc.rate.norm: 8966,216 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 4,243 ms/op
+                 gc.alloc.rate:      2,018 MB/sec
+                 gc.alloc.rate.norm: 8980,627 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 4,241 ms/op
+                 gc.alloc.rate:      2,020 MB/sec
+                 gc.alloc.rate.norm: 8984,220 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ChessBenchmark.mateIn3":
+  4,481 ±(99.9%) 0,342 ms/op [Average]
+  (min, avg, max) = (4,136, 4,481, 5,320), stdev = 0,320
+  CI (99.9%): [4,139, 4,823] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn3:gc.alloc.rate":
+  1,915 ±(99.9%) 0,134 MB/sec [Average]
+  (min, avg, max) = (1,606, 1,915, 2,067), stdev = 0,125
+  CI (99.9%): [1,781, 2,049] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn3:gc.alloc.rate.norm":
+  8961,610 ±(99.9%) 10,205 B/op [Average]
+  (min, avg, max) = (8949,173, 8961,610, 8984,220), stdev = 9,546
+  CI (99.9%): [8951,405, 8971,816] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn3:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 2 s each
+# Measurement: 5 iterations, 2 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.chessbot.bench.ChessBenchmark.perft4
+
+# Run progress: 37,49% complete, ETA 00:01:23
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 17,522 ms/op
+# Warmup Iteration   2: 15,204 ms/op
+# Warmup Iteration   3: 15,530 ms/op
+Iteration   1: 15,183 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 52,788 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 15,565 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 54,016 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 16,281 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 56,452 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 15,473 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 53,846 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 16,688 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 57,851 B/op
+                 gc.count:           ≈ 0 counts
+
+
+# Run progress: 49,98% complete, ETA 00:01:06
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 18,344 ms/op
+# Warmup Iteration   2: 18,210 ms/op
+# Warmup Iteration   3: 17,230 ms/op
+Iteration   1: 27,414 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 93,760 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 44,781 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 155,556 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 26,934 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 93,333 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 26,859 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 93,333 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 24,438 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 84,337 B/op
+                 gc.count:           ≈ 0 counts
+
+
+# Run progress: 62,48% complete, ETA 00:00:50
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 19,473 ms/op
+# Warmup Iteration   2: 16,597 ms/op
+# Warmup Iteration   3: 17,566 ms/op
+Iteration   1: 17,009 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 59,322 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 16,222 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 56,194 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 17,525 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 60,870 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 17,551 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 60,870 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 19,350 ms/op
+                 gc.alloc.rate:      0,003 MB/sec
+                 gc.alloc.rate.norm: 66,667 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ChessBenchmark.perft4":
+  21,151 ±(99.9%) 8,514 ms/op [Average]
+  (min, avg, max) = (15,183, 21,151, 44,781), stdev = 7,964
+  CI (99.9%): [12,638, 29,665] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft4:gc.alloc.rate":
+  0,003 ±(99.9%) 0,001 MB/sec [Average]
+  (min, avg, max) = (0,003, 0,003, 0,003), stdev = 0,001
+  CI (99.9%): [0,003, 0,003] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft4:gc.alloc.rate.norm":
+  73,280 ±(99.9%) 29,477 B/op [Average]
+  (min, avg, max) = (52,788, 73,280, 155,556), stdev = 27,573
+  CI (99.9%): [43,802, 102,757] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft4:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 2 s each
+# Measurement: 5 iterations, 2 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Sampling time
+# Benchmark: com.chessbot.bench.ChessBenchmark.perft3Latency
+
+# Run progress: 74,97% complete, ETA 00:00:33
+# Fork: 1 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 807,334 ±(99.9%) 31,852 us/op
+# Warmup Iteration   2: 787,667 ±(99.9%) 13,657 us/op
+# Warmup Iteration   3: 898,051 ±(99.9%) 19,843 us/op
+Iteration   1: 753,514 ±(99.9%) 13,252 us/op
+                 gc.alloc.rate:      0,042 MB/sec
+                 gc.alloc.rate.norm: 33,392 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              557,056 us/op
+                 p0.50:              671,744 us/op
+                 p0.90:              1048,576 us/op
+                 p0.95:              1204,224 us/op
+                 p0.99:              1494,016 us/op
+                 p0.999:             1820,672 us/op
+                 p0.9999:            2052,096 us/op
+                 p1.00:              2052,096 us/op
+
+Iteration   2: 944,575 ±(99.9%) 28,705 us/op
+                 gc.alloc.rate:      0,072 MB/sec
+                 gc.alloc.rate.norm: 71,785 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              557,056 us/op
+                 p0.50:              797,696 us/op
+                 p0.90:              1427,456 us/op
+                 p0.95:              1669,120 us/op
+                 p0.99:              2505,933 us/op
+                 p0.999:             3785,032 us/op
+                 p0.9999:            4300,800 us/op
+                 p1.00:              4300,800 us/op
+
+Iteration   3: 937,558 ±(99.9%) 36,291 us/op
+                 gc.alloc.rate:      0,085 MB/sec
+                 gc.alloc.rate.norm: 84,039 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              558,080 us/op
+                 p0.50:              766,976 us/op
+                 p0.90:              1396,736 us/op
+                 p0.95:              1573,888 us/op
+                 p0.99:              2421,965 us/op
+                 p0.999:             7464,960 us/op
+                 p0.9999:            13189,120 us/op
+                 p1.00:              13189,120 us/op
+
+Iteration   4: 774,365 ±(99.9%) 14,973 us/op
+                 gc.alloc.rate:      0,056 MB/sec
+                 gc.alloc.rate.norm: 45,772 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              545,792 us/op
+                 p0.50:              683,008 us/op
+                 p0.90:              1099,776 us/op
+                 p0.95:              1273,242 us/op
+                 p0.99:              1591,992 us/op
+                 p0.999:             2177,049 us/op
+                 p0.9999:            2322,432 us/op
+                 p1.00:              2322,432 us/op
+
+Iteration   5: 777,851 ±(99.9%) 13,847 us/op
+                 gc.alloc.rate:      0,042 MB/sec
+                 gc.alloc.rate.norm: 34,596 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              557,056 us/op
+                 p0.50:              701,440 us/op
+                 p0.90:              1098,957 us/op
+                 p0.95:              1241,702 us/op
+                 p0.99:              1456,660 us/op
+                 p0.999:             2012,238 us/op
+                 p0.9999:            2066,432 us/op
+                 p1.00:              2066,432 us/op
+
+
+# Run progress: 87,47% complete, ETA 00:00:16
+# Fork: 2 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 763,612 ±(99.9%) 27,060 us/op
+# Warmup Iteration   2: 813,239 ±(99.9%) 15,369 us/op
+# Warmup Iteration   3: 834,775 ±(99.9%) 15,941 us/op
+Iteration   1: 923,862 ±(99.9%) 25,312 us/op
+                 gc.alloc.rate:      0,058 MB/sec
+                 gc.alloc.rate.norm: 56,628 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              564,224 us/op
+                 p0.50:              773,632 us/op
+                 p0.90:              1405,952 us/op
+                 p0.95:              1582,592 us/op
+                 p0.99:              2186,035 us/op
+                 p0.999:             3276,841 us/op
+                 p0.9999:            3670,016 us/op
+                 p1.00:              3670,016 us/op
+
+Iteration   2: 775,130 ±(99.9%) 12,487 us/op
+                 gc.alloc.rate:      0,055 MB/sec
+                 gc.alloc.rate.norm: 44,905 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              565,248 us/op
+                 p0.50:              704,512 us/op
+                 p0.90:              1067,008 us/op
+                 p0.95:              1179,648 us/op
+                 p0.99:              1419,817 us/op
+                 p0.999:             1790,136 us/op
+                 p0.9999:            2445,312 us/op
+                 p1.00:              2445,312 us/op
+
+Iteration   3: 774,140 ±(99.9%) 13,014 us/op
+                 gc.alloc.rate:      0,042 MB/sec
+                 gc.alloc.rate.norm: 34,122 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              565,248 us/op
+                 p0.50:              695,296 us/op
+                 p0.90:              1080,525 us/op
+                 p0.95:              1224,704 us/op
+                 p0.99:              1469,071 us/op
+                 p0.999:             1805,812 us/op
+                 p0.9999:            1957,888 us/op
+                 p1.00:              1957,888 us/op
+
+Iteration   4: 899,610 ±(99.9%) 24,787 us/op
+                 gc.alloc.rate:      0,071 MB/sec
+                 gc.alloc.rate.norm: 67,592 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              564,224 us/op
+                 p0.50:              752,640 us/op
+                 p0.90:              1370,112 us/op
+                 p0.95:              1547,674 us/op
+                 p0.99:              2100,552 us/op
+                 p0.999:             4236,321 us/op
+                 p0.9999:            5300,224 us/op
+                 p1.00:              5300,224 us/op
+
+Iteration   5: 764,808 ±(99.9%) 12,620 us/op
+                 gc.alloc.rate:      0,042 MB/sec
+                 gc.alloc.rate.norm: 33,466 B/op
+                 gc.count:           ≈ 0 counts
+                 p0.00:              564,224 us/op
+                 p0.50:              695,296 us/op
+                 p0.90:              1048,064 us/op
+                 p0.95:              1202,176 us/op
+                 p0.99:              1470,976 us/op
+                 p0.999:             1836,288 us/op
+                 p0.9999:            2045,952 us/op
+                 p1.00:              2045,952 us/op
+
+
+
+Result "com.chessbot.bench.ChessBenchmark.perft3Latency":
+  N = 24238
+  mean =    825,539 ±(99.9%) 6,448 us/op
+
+  Histogram, us/op:
+    [    0,000,  1250,000) = 22108 
+    [ 1250,000,  2500,000) = 2069 
+    [ 2500,000,  3750,000) = 48 
+    [ 3750,000,  5000,000) = 8 
+    [ 5000,000,  6250,000) = 2 
+    [ 6250,000,  7500,000) = 1 
+    [ 7500,000,  8750,000) = 1 
+    [ 8750,000, 10000,000) = 0 
+    [10000,000, 11250,000) = 0 
+    [11250,000, 12500,000) = 0 
+    [12500,000, 13750,000) = 1 
+    [13750,000, 15000,000) = 0 
+    [15000,000, 16250,000) = 0 
+    [16250,000, 17500,000) = 0 
+    [17500,000, 18750,000) = 0 
+
+  Percentiles, us/op:
+      p(0,0000) =    545,792 us/op
+     p(50,0000) =    711,680 us/op
+     p(90,0000) =   1214,464 us/op
+     p(95,0000) =   1384,550 us/op
+     p(99,0000) =   1816,576 us/op
+     p(99,9000) =   3096,936 us/op
+     p(99,9900) =   7284,388 us/op
+     p(99,9990) =  13189,120 us/op
+     p(99,9999) =  13189,120 us/op
+    p(100,0000) =  13189,120 us/op
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft3Latency:gc.alloc.rate":
+  0,057 ±(99.9%) 0,023 MB/sec [Average]
+  (min, avg, max) = (0,042, 0,057, 0,085), stdev = 0,015
+  CI (99.9%): [0,033, 0,080] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft3Latency:gc.alloc.rate.norm":
+  50,630 ±(99.9%) 27,901 B/op [Average]
+  (min, avg, max) = (33,392, 50,630, 84,039), stdev = 18,455
+  CI (99.9%): [22,729, 78,530] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.perft3Latency:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 1 iterations, 2 s each
+# Measurement: 3 iterations, 2 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ChessBenchmark.mateIn4
+
+# Run progress: 99,96% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 497,154 ms/op
+Iteration   1: 178,054 ms/op
+                 gc.alloc.rate:      0,085 MB/sec
+                 gc.alloc.rate.norm: 15992,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 109,542 ms/op
+                 gc.alloc.rate:      0,139 MB/sec
+                 gc.alloc.rate.norm: 16000,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 106,019 ms/op
+                 gc.alloc.rate:      0,143 MB/sec
+                 gc.alloc.rate.norm: 16008,000 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ChessBenchmark.mateIn4":
+  N = 3
+  mean =    131,205 ±(99.9%) 740,886 ms/op
+
+  Histogram, ms/op:
+    [100,000, 105,000) = 0 
+    [105,000, 110,000) = 2 
+    [110,000, 115,000) = 0 
+    [115,000, 120,000) = 0 
+    [120,000, 125,000) = 0 
+    [125,000, 130,000) = 0 
+    [130,000, 135,000) = 0 
+    [135,000, 140,000) = 0 
+    [140,000, 145,000) = 0 
+    [145,000, 150,000) = 0 
+    [150,000, 155,000) = 0 
+    [155,000, 160,000) = 0 
+    [160,000, 165,000) = 0 
+    [165,000, 170,000) = 0 
+    [170,000, 175,000) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =    106,019 ms/op
+     p(50,0000) =    109,542 ms/op
+     p(90,0000) =    178,054 ms/op
+     p(95,0000) =    178,054 ms/op
+     p(99,0000) =    178,054 ms/op
+     p(99,9000) =    178,054 ms/op
+     p(99,9900) =    178,054 ms/op
+     p(99,9990) =    178,054 ms/op
+     p(99,9999) =    178,054 ms/op
+    p(100,0000) =    178,054 ms/op
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn4:gc.alloc.rate":
+  0,122 ±(99.9%) 0,583 MB/sec [Average]
+  (min, avg, max) = (0,085, 0,122, 0,143), stdev = 0,032
+  CI (99.9%): [≈ 0, 0,705] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn4:gc.alloc.rate.norm":
+  16000,000 ±(99.9%) 145,950 B/op [Average]
+  (min, avg, max) = (15992,000, 16000,000, 16008,000), stdev = 8,000
+  CI (99.9%): [15854,050, 16145,950] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ChessBenchmark.mateIn4:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 1)
+
+# Run progress: 99,97% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 577,008 ms/op
+# Warmup Iteration   2: 303,062 ms/op
+# Warmup Iteration   3: 273,343 ms/op
+Iteration   1: 263,167 ms/op
+                 gc.alloc.rate:      0,025 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 292,851 ms/op
+                 gc.alloc.rate:      0,022 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 265,780 ms/op
+                 gc.alloc.rate:      0,025 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 269,780 ms/op
+                 gc.alloc.rate:      0,024 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 265,008 ms/op
+                 gc.alloc.rate:      0,025 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   6: 264,494 ms/op
+                 gc.alloc.rate:      0,025 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   7: 271,738 ms/op
+                 gc.alloc.rate:      0,024 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   8: 256,302 ms/op
+                 gc.alloc.rate:      0,025 MB/sec
+                 gc.alloc.rate.norm: 6840,000 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    268,640 ±(99.9%) 20,666 ms/op
+
+  Histogram, ms/op:
+    [250,000, 255,000) = 0 
+    [255,000, 260,000) = 1 
+    [260,000, 265,000) = 2 
+    [265,000, 270,000) = 3 
+    [270,000, 275,000) = 1 
+    [275,000, 280,000) = 0 
+    [280,000, 285,000) = 0 
+    [285,000, 290,000) = 0 
+    [290,000, 295,000) = 1 
+
+  Percentiles, ms/op:
+      p(0,0000) =    256,302 ms/op
+     p(50,0000) =    265,394 ms/op
+     p(90,0000) =    292,851 ms/op
+     p(95,0000) =    292,851 ms/op
+     p(99,0000) =    292,851 ms/op
+     p(99,9000) =    292,851 ms/op
+     p(99,9900) =    292,851 ms/op
+     p(99,9990) =    292,851 ms/op
+     p(99,9999) =    292,851 ms/op
+    p(100,0000) =    292,851 ms/op
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate":
+  0,024 ±(99.9%) 0,002 MB/sec [Average]
+  (min, avg, max) = (0,022, 0,024, 0,025), stdev = 0,001
+  CI (99.9%): [0,023, 0,026] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate.norm":
+  6840,000 ±(99.9%) 0,001 B/op [Average]
+  (min, avg, max) = (6840,000, 6840,000, 6840,000), stdev = 0,001
+  CI (99.9%): [6840,000, 6840,000] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 2)
+
+# Run progress: 99,97% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 734,247 ms/op
+# Warmup Iteration   2: 264,431 ms/op
+# Warmup Iteration   3: 219,945 ms/op
+Iteration   1: 183,910 ms/op
+                 gc.alloc.rate:      0,085 MB/sec
+                 gc.alloc.rate.norm: 16456,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 177,424 ms/op
+                 gc.alloc.rate:      0,088 MB/sec
+                 gc.alloc.rate.norm: 16456,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 196,922 ms/op
+                 gc.alloc.rate:      0,080 MB/sec
+                 gc.alloc.rate.norm: 16480,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 200,349 ms/op
+                 gc.alloc.rate:      0,078 MB/sec
+                 gc.alloc.rate.norm: 16432,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 244,363 ms/op
+                 gc.alloc.rate:      0,064 MB/sec
+                 gc.alloc.rate.norm: 16552,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   6: 183,139 ms/op
+                 gc.alloc.rate:      0,085 MB/sec
+                 gc.alloc.rate.norm: 16384,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   7: 220,490 ms/op
+                 gc.alloc.rate:      0,071 MB/sec
+                 gc.alloc.rate.norm: 16432,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   8: 187,916 ms/op
+                 gc.alloc.rate:      0,084 MB/sec
+                 gc.alloc.rate.norm: 16480,000 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    199,314 ±(99.9%) 43,315 ms/op
+
+  Histogram, ms/op:
+    [170,000, 175,000) = 0 
+    [175,000, 180,000) = 1 
+    [180,000, 185,000) = 2 
+    [185,000, 190,000) = 1 
+    [190,000, 195,000) = 0 
+    [195,000, 200,000) = 1 
+    [200,000, 205,000) = 1 
+    [205,000, 210,000) = 0 
+    [210,000, 215,000) = 0 
+    [215,000, 220,000) = 0 
+    [220,000, 225,000) = 1 
+    [225,000, 230,000) = 0 
+    [230,000, 235,000) = 0 
+    [235,000, 240,000) = 0 
+    [240,000, 245,000) = 1 
+
+  Percentiles, ms/op:
+      p(0,0000) =    177,424 ms/op
+     p(50,0000) =    192,419 ms/op
+     p(90,0000) =    244,363 ms/op
+     p(95,0000) =    244,363 ms/op
+     p(99,0000) =    244,363 ms/op
+     p(99,9000) =    244,363 ms/op
+     p(99,9900) =    244,363 ms/op
+     p(99,9990) =    244,363 ms/op
+     p(99,9999) =    244,363 ms/op
+    p(100,0000) =    244,363 ms/op
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate":
+  0,079 ±(99.9%) 0,016 MB/sec [Average]
+  (min, avg, max) = (0,064, 0,079, 0,088), stdev = 0,008
+  CI (99.9%): [0,064, 0,095] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate.norm":
+  16459,000 ±(99.9%) 93,198 B/op [Average]
+  (min, avg, max) = (16384,000, 16459,000, 16552,000), stdev = 48,744
+  CI (99.9%): [16365,802, 16552,198] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 4)
+
+# Run progress: 99,98% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 304,120 ms/op
+# Warmup Iteration   2: 156,814 ms/op
+# Warmup Iteration   3: 130,297 ms/op
+Iteration   1: 123,375 ms/op
+                 gc.alloc.rate:      0,125 MB/sec
+                 gc.alloc.rate.norm: 16160,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 112,307 ms/op
+                 gc.alloc.rate:      0,138 MB/sec
+                 gc.alloc.rate.norm: 16384,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 155,894 ms/op
+                 gc.alloc.rate:      0,100 MB/sec
+                 gc.alloc.rate.norm: 16328,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 126,160 ms/op
+                 gc.alloc.rate:      0,122 MB/sec
+                 gc.alloc.rate.norm: 16208,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 123,096 ms/op
+                 gc.alloc.rate:      0,126 MB/sec
+                 gc.alloc.rate.norm: 16336,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   6: 116,224 ms/op
+                 gc.alloc.rate:      0,134 MB/sec
+                 gc.alloc.rate.norm: 16336,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   7: 114,251 ms/op
+                 gc.alloc.rate:      0,134 MB/sec
+                 gc.alloc.rate.norm: 16136,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   8: 130,253 ms/op
+                 gc.alloc.rate:      0,119 MB/sec
+                 gc.alloc.rate.norm: 16304,000 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    125,195 ±(99.9%) 26,483 ms/op
+
+  Histogram, ms/op:
+    [110,000, 115,000) = 2 
+    [115,000, 120,000) = 1 
+    [120,000, 125,000) = 2 
+    [125,000, 130,000) = 1 
+    [130,000, 135,000) = 1 
+    [135,000, 140,000) = 0 
+    [140,000, 145,000) = 0 
+    [145,000, 150,000) = 0 
+    [150,000, 155,000) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =    112,307 ms/op
+     p(50,0000) =    123,236 ms/op
+     p(90,0000) =    155,894 ms/op
+     p(95,0000) =    155,894 ms/op
+     p(99,0000) =    155,894 ms/op
+     p(99,9000) =    155,894 ms/op
+     p(99,9900) =    155,894 ms/op
+     p(99,9990) =    155,894 ms/op
+     p(99,9999) =    155,894 ms/op
+    p(100,0000) =    155,894 ms/op
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate":
+  0,125 ±(99.9%) 0,023 MB/sec [Average]
+  (min, avg, max) = (0,100, 0,125, 0,138), stdev = 0,012
+  CI (99.9%): [0,102, 0,148] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate.norm":
+  16274,000 ±(99.9%) 177,015 B/op [Average]
+  (min, avg, max) = (16136,000, 16274,000, 16384,000), stdev = 92,582
+  CI (99.9%): [16096,985, 16451,015] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.count":
+  ≈ 0 counts
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 8)
+
+# Run progress: 99,99% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 310,743 ms/op
+# Warmup Iteration   2: 181,282 ms/op
+# Warmup Iteration   3: 114,828 ms/op
+Iteration   1: 94,513 ms/op
+                 gc.alloc.rate:      0,161 MB/sec
+                 gc.alloc.rate.norm: 16024,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   2: 93,056 ms/op
+                 gc.alloc.rate:      0,164 MB/sec
+                 gc.alloc.rate.norm: 16024,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   3: 103,903 ms/op
+                 gc.alloc.rate:      0,146 MB/sec
+                 gc.alloc.rate.norm: 15976,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   4: 109,810 ms/op
+                 gc.alloc.rate:      0,139 MB/sec
+                 gc.alloc.rate.norm: 16048,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   5: 104,809 ms/op
+                 gc.alloc.rate:      0,145 MB/sec
+                 gc.alloc.rate.norm: 15976,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   6: 111,694 ms/op
+                 gc.alloc.rate:      0,136 MB/sec
+                 gc.alloc.rate.norm: 16000,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   7: 107,850 ms/op
+                 gc.alloc.rate:      0,141 MB/sec
+                 gc.alloc.rate.norm: 15952,000 B/op
+                 gc.count:           ≈ 0 counts
+
+Iteration   8: 103,586 ms/op
+                 gc.alloc.rate:      0,146 MB/sec
+                 gc.alloc.rate.norm: 15904,000 B/op
+                 gc.count:           ≈ 0 counts
+
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    103,652 ±(99.9%) 12,875 ms/op
+
+  Histogram, ms/op:
+    [ 90,000,  92,500) = 0 
+    [ 92,500,  95,000) = 2 
+    [ 95,000,  97,500) = 0 
+    [ 97,500, 100,000) = 0 
+    [100,000, 102,500) = 0 
+    [102,500, 105,000) = 3 
+    [105,000, 107,500) = 0 
+    [107,500, 110,000) = 2 
+    [110,000, 112,500) = 1 
+    [112,500, 115,000) = 0 
+    [115,000, 117,500) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =     93,056 ms/op
+     p(50,0000) =    104,356 ms/op
+     p(90,0000) =    111,694 ms/op
+     p(95,0000) =    111,694 ms/op
+     p(99,0000) =    111,694 ms/op
+     p(99,9000) =    111,694 ms/op
+     p(99,9900) =    111,694 ms/op
+     p(99,9990) =    111,694 ms/op
+     p(99,9999) =    111,694 ms/op
+    p(100,0000) =    111,694 ms/op
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate":
+  0,147 ±(99.9%) 0,019 MB/sec [Average]
+  (min, avg, max) = (0,136, 0,147, 0,164), stdev = 0,010
+  CI (99.9%): [0,128, 0,167] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.alloc.rate.norm":
+  15988,000 ±(99.9%) 88,436 B/op [Average]
+  (min, avg, max) = (15904,000, 15988,000, 16048,000), stdev = 46,254
+  CI (99.9%): [15899,564, 16076,436] (assumes normal distribution)
+
+Secondary result "com.chessbot.bench.ScalingBenchmark.mateIn4:gc.count":
+  ≈ 0 counts
+
+
+# Run complete. Total time: 00:02:27
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                                        (threads)    Mode    Cnt      Score     Error   Units
+ChessBenchmark.mateIn3                                 N/A    avgt     15      4,481 ±   0,342   ms/op
+ChessBenchmark.mateIn3:gc.alloc.rate                   N/A    avgt     15      1,915 ±   0,134  MB/sec
+ChessBenchmark.mateIn3:gc.alloc.rate.norm              N/A    avgt     15   8961,610 ±  10,205    B/op
+ChessBenchmark.mateIn3:gc.count                        N/A    avgt     15        ≈ 0            counts
+ChessBenchmark.perft4                                  N/A    avgt     15     21,151 ±   8,514   ms/op
+ChessBenchmark.perft4:gc.alloc.rate                    N/A    avgt     15      0,003 ±   0,001  MB/sec
+ChessBenchmark.perft4:gc.alloc.rate.norm               N/A    avgt     15     73,280 ±  29,477    B/op
+ChessBenchmark.perft4:gc.count                         N/A    avgt     15        ≈ 0            counts
+ChessBenchmark.perft3Latency                           N/A  sample  24238    825,539 ±   6,448   us/op
+ChessBenchmark.perft3Latency:gc.alloc.rate             N/A  sample     10      0,057 ±   0,023  MB/sec
+ChessBenchmark.perft3Latency:gc.alloc.rate.norm        N/A  sample     10     50,630 ±  27,901    B/op
+ChessBenchmark.perft3Latency:gc.count                  N/A  sample     10        ≈ 0            counts
+ChessBenchmark.perft3Latency:p0.00                     N/A  sample           545,792             us/op
+ChessBenchmark.perft3Latency:p0.50                     N/A  sample           711,680             us/op
+ChessBenchmark.perft3Latency:p0.90                     N/A  sample          1214,464             us/op
+ChessBenchmark.perft3Latency:p0.95                     N/A  sample          1384,550             us/op
+ChessBenchmark.perft3Latency:p0.99                     N/A  sample          1816,576             us/op
+ChessBenchmark.perft3Latency:p0.999                    N/A  sample          3096,936             us/op
+ChessBenchmark.perft3Latency:p0.9999                   N/A  sample          7284,388             us/op
+ChessBenchmark.perft3Latency:p1.00                     N/A  sample         13189,120             us/op
+ChessBenchmark.mateIn4                                 N/A      ss      3    131,205 ± 740,886   ms/op
+ChessBenchmark.mateIn4:gc.alloc.rate                   N/A      ss      3      0,122 ±   0,583  MB/sec
+ChessBenchmark.mateIn4:gc.alloc.rate.norm              N/A      ss      3  16000,000 ± 145,950    B/op
+ChessBenchmark.mateIn4:gc.count                        N/A      ss      3        ≈ 0            counts
+ScalingBenchmark.mateIn4                                 1      ss      8    268,640 ±  20,666   ms/op
+ScalingBenchmark.mateIn4:gc.alloc.rate                   1      ss      8      0,024 ±   0,002  MB/sec
+ScalingBenchmark.mateIn4:gc.alloc.rate.norm              1      ss      8   6840,000 ±   0,001    B/op
+ScalingBenchmark.mateIn4:gc.count                        1      ss      8        ≈ 0            counts
+ScalingBenchmark.mateIn4                                 2      ss      8    199,314 ±  43,315   ms/op
+ScalingBenchmark.mateIn4:gc.alloc.rate                   2      ss      8      0,079 ±   0,016  MB/sec
+ScalingBenchmark.mateIn4:gc.alloc.rate.norm              2      ss      8  16459,000 ±  93,198    B/op
+ScalingBenchmark.mateIn4:gc.count                        2      ss      8        ≈ 0            counts
+ScalingBenchmark.mateIn4                                 4      ss      8    125,195 ±  26,483   ms/op
+ScalingBenchmark.mateIn4:gc.alloc.rate                   4      ss      8      0,125 ±   0,023  MB/sec
+ScalingBenchmark.mateIn4:gc.alloc.rate.norm              4      ss      8  16274,000 ± 177,015    B/op
+ScalingBenchmark.mateIn4:gc.count                        4      ss      8        ≈ 0            counts
+ScalingBenchmark.mateIn4                                 8      ss      8    103,652 ±  12,875   ms/op
+ScalingBenchmark.mateIn4:gc.alloc.rate                   8      ss      8      0,147 ±   0,019  MB/sec
+ScalingBenchmark.mateIn4:gc.alloc.rate.norm              8      ss      8  15988,000 ±  88,436    B/op
+ScalingBenchmark.mateIn4:gc.count                        8      ss      8        ≈ 0            counts
+
+Benchmark result is saved to docs/results/05-parallele.json

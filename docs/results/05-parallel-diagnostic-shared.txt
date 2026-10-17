@@ -1,0 +1,6 @@
+Mate in 5 on Kiwipete
+ threads   wall (s)    CPU (s)   busy cores  work vs 1 thr
+       1       6,71       6,52         0,97          1,00x
+       2       2,94       5,69         1,93          0,87x
+       4       2,15       7,44         3,46          1,14x
+       8       2,12      10,17         4,80          1,56x

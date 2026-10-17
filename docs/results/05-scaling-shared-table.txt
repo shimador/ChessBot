@@ -1,0 +1,528 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/C:/Users/ismae/AppData/Local/Temp/claude/c--Users-ismae-ChessBot/c0ed0df4-b658-476c-9c10-b0606286713d/scratchpad/tools/apache-maven-3.9.9/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/C:/Users/ismae/AppData/Local/Temp/claude/c--Users-ismae-ChessBot/c0ed0df4-b658-476c-9c10-b0606286713d/scratchpad/tools/apache-maven-3.9.9/lib/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 1)
+
+# Run progress: 0,00% complete, ETA 00:00:00
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 407,399 ms/op
+# Warmup Iteration   2: 265,029 ms/op
+# Warmup Iteration   3: 225,411 ms/op
+Iteration   1: 228,812 ms/op
+Iteration   2: 254,294 ms/op
+Iteration   3: 234,515 ms/op
+Iteration   4: 243,867 ms/op
+Iteration   5: 227,810 ms/op
+Iteration   6: 299,422 ms/op
+Iteration   7: 265,797 ms/op
+Iteration   8: 234,645 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    248,645 ±(99.9%) 46,556 ms/op
+
+  Histogram, ms/op:
+    [220,000, 225,000) = 0 
+    [225,000, 230,000) = 2 
+    [230,000, 235,000) = 2 
+    [235,000, 240,000) = 0 
+    [240,000, 245,000) = 1 
+    [245,000, 250,000) = 0 
+    [250,000, 255,000) = 1 
+    [255,000, 260,000) = 0 
+    [260,000, 265,000) = 0 
+    [265,000, 270,000) = 1 
+    [270,000, 275,000) = 0 
+    [275,000, 280,000) = 0 
+    [280,000, 285,000) = 0 
+    [285,000, 290,000) = 0 
+    [290,000, 295,000) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =    227,810 ms/op
+     p(50,0000) =    239,256 ms/op
+     p(90,0000) =    299,422 ms/op
+     p(95,0000) =    299,422 ms/op
+     p(99,0000) =    299,422 ms/op
+     p(99,9000) =    299,422 ms/op
+     p(99,9900) =    299,422 ms/op
+     p(99,9990) =    299,422 ms/op
+     p(99,9999) =    299,422 ms/op
+    p(100,0000) =    299,422 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 2)
+
+# Run progress: 18,33% complete, ETA 00:00:15
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 339,317 ms/op
+# Warmup Iteration   2: 176,682 ms/op
+# Warmup Iteration   3: 150,441 ms/op
+Iteration   1: 158,203 ms/op
+Iteration   2: 143,620 ms/op
+Iteration   3: 150,132 ms/op
+Iteration   4: 168,459 ms/op
+Iteration   5: 209,404 ms/op
+Iteration   6: 169,254 ms/op
+Iteration   7: 151,273 ms/op
+Iteration   8: 153,989 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =    163,042 ±(99.9%) 39,615 ms/op
+
+  Histogram, ms/op:
+    [140,000, 145,000) = 1 
+    [145,000, 150,000) = 0 
+    [150,000, 155,000) = 3 
+    [155,000, 160,000) = 1 
+    [160,000, 165,000) = 0 
+    [165,000, 170,000) = 2 
+    [170,000, 175,000) = 0 
+    [175,000, 180,000) = 0 
+    [180,000, 185,000) = 0 
+    [185,000, 190,000) = 0 
+    [190,000, 195,000) = 0 
+    [195,000, 200,000) = 0 
+    [200,000, 205,000) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =    143,620 ms/op
+     p(50,0000) =    156,096 ms/op
+     p(90,0000) =    209,404 ms/op
+     p(95,0000) =    209,404 ms/op
+     p(99,0000) =    209,404 ms/op
+     p(99,9000) =    209,404 ms/op
+     p(99,9900) =    209,404 ms/op
+     p(99,9990) =    209,404 ms/op
+     p(99,9999) =    209,404 ms/op
+    p(100,0000) =    209,404 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 4)
+
+# Run progress: 36,67% complete, ETA 00:00:10
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 253,640 ms/op
+# Warmup Iteration   2: 112,627 ms/op
+# Warmup Iteration   3: 99,109 ms/op
+Iteration   1: 99,356 ms/op
+Iteration   2: 95,429 ms/op
+Iteration   3: 95,809 ms/op
+Iteration   4: 98,668 ms/op
+Iteration   5: 91,748 ms/op
+Iteration   6: 98,784 ms/op
+Iteration   7: 94,436 ms/op
+Iteration   8: 95,371 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =     96,200 ±(99.9%) 4,959 ms/op
+
+  Histogram, ms/op:
+    [ 91,000,  91,500) = 0 
+    [ 91,500,  92,000) = 1 
+    [ 92,000,  92,500) = 0 
+    [ 92,500,  93,000) = 0 
+    [ 93,000,  93,500) = 0 
+    [ 93,500,  94,000) = 0 
+    [ 94,000,  94,500) = 1 
+    [ 94,500,  95,000) = 0 
+    [ 95,000,  95,500) = 2 
+    [ 95,500,  96,000) = 1 
+    [ 96,000,  96,500) = 0 
+    [ 96,500,  97,000) = 0 
+    [ 97,000,  97,500) = 0 
+    [ 97,500,  98,000) = 0 
+    [ 98,000,  98,500) = 0 
+    [ 98,500,  99,000) = 2 
+    [ 99,000,  99,500) = 1 
+
+  Percentiles, ms/op:
+      p(0,0000) =     91,748 ms/op
+     p(50,0000) =     95,619 ms/op
+     p(90,0000) =     99,356 ms/op
+     p(95,0000) =     99,356 ms/op
+     p(99,0000) =     99,356 ms/op
+     p(99,9000) =     99,356 ms/op
+     p(99,9900) =     99,356 ms/op
+     p(99,9990) =     99,356 ms/op
+     p(99,9999) =     99,356 ms/op
+    p(100,0000) =     99,356 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, single-shot each
+# Measurement: 8 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn4
+# Parameters: (threads = 8)
+
+# Run progress: 55,00% complete, ETA 00:00:06
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 356,949 ms/op
+# Warmup Iteration   2: 104,784 ms/op
+# Warmup Iteration   3: 168,934 ms/op
+Iteration   1: 80,192 ms/op
+Iteration   2: 80,660 ms/op
+Iteration   3: 80,399 ms/op
+Iteration   4: 74,084 ms/op
+Iteration   5: 76,709 ms/op
+Iteration   6: 77,285 ms/op
+Iteration   7: 77,210 ms/op
+Iteration   8: 74,878 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn4":
+  N = 8
+  mean =     77,677 ±(99.9%) 4,831 ms/op
+
+  Histogram, ms/op:
+    [74,000, 74,500) = 1 
+    [74,500, 75,000) = 1 
+    [75,000, 75,500) = 0 
+    [75,500, 76,000) = 0 
+    [76,000, 76,500) = 0 
+    [76,500, 77,000) = 1 
+    [77,000, 77,500) = 2 
+    [77,500, 78,000) = 0 
+    [78,000, 78,500) = 0 
+    [78,500, 79,000) = 0 
+    [79,000, 79,500) = 0 
+    [79,500, 80,000) = 0 
+    [80,000, 80,500) = 2 
+
+  Percentiles, ms/op:
+      p(0,0000) =     74,084 ms/op
+     p(50,0000) =     77,248 ms/op
+     p(90,0000) =     80,660 ms/op
+     p(95,0000) =     80,660 ms/op
+     p(99,0000) =     80,660 ms/op
+     p(99,9000) =     80,660 ms/op
+     p(99,9900) =     80,660 ms/op
+     p(99,9990) =     80,660 ms/op
+     p(99,9999) =     80,660 ms/op
+    p(100,0000) =     80,660 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 1 iterations, single-shot each
+# Measurement: 3 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn5
+# Parameters: (threads = 1)
+
+# Run progress: 73,33% complete, ETA 00:00:03
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 4696,822 ms/op
+Iteration   1: 4602,672 ms/op
+Iteration   2: 4119,503 ms/op
+Iteration   3: 4240,554 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn5":
+  N = 3
+  mean =   4320,910 ±(99.9%) 4586,616 ms/op
+
+  Histogram, ms/op:
+    [4100,000, 4150,000) = 1 
+    [4150,000, 4200,000) = 0 
+    [4200,000, 4250,000) = 1 
+    [4250,000, 4300,000) = 0 
+    [4300,000, 4350,000) = 0 
+    [4350,000, 4400,000) = 0 
+    [4400,000, 4450,000) = 0 
+    [4450,000, 4500,000) = 0 
+    [4500,000, 4550,000) = 0 
+    [4550,000, 4600,000) = 0 
+    [4600,000, 4650,000) = 1 
+
+  Percentiles, ms/op:
+      p(0,0000) =   4119,503 ms/op
+     p(50,0000) =   4240,554 ms/op
+     p(90,0000) =   4602,672 ms/op
+     p(95,0000) =   4602,672 ms/op
+     p(99,0000) =   4602,672 ms/op
+     p(99,9000) =   4602,672 ms/op
+     p(99,9900) =   4602,672 ms/op
+     p(99,9990) =   4602,672 ms/op
+     p(99,9999) =   4602,672 ms/op
+    p(100,0000) =   4602,672 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 1 iterations, single-shot each
+# Measurement: 3 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn5
+# Parameters: (threads = 2)
+
+# Run progress: 80,00% complete, ETA 00:00:06
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 2775,906 ms/op
+Iteration   1: 2467,278 ms/op
+Iteration   2: 2571,614 ms/op
+Iteration   3: 2486,357 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn5":
+  N = 3
+  mean =   2508,416 ±(99.9%) 1013,549 ms/op
+
+  Histogram, ms/op:
+    [2400,000, 2412,500) = 0 
+    [2412,500, 2425,000) = 0 
+    [2425,000, 2437,500) = 0 
+    [2437,500, 2450,000) = 0 
+    [2450,000, 2462,500) = 0 
+    [2462,500, 2475,000) = 1 
+    [2475,000, 2487,500) = 1 
+    [2487,500, 2500,000) = 0 
+    [2500,000, 2512,500) = 0 
+    [2512,500, 2525,000) = 0 
+    [2525,000, 2537,500) = 0 
+    [2537,500, 2550,000) = 0 
+    [2550,000, 2562,500) = 0 
+    [2562,500, 2575,000) = 1 
+    [2575,000, 2587,500) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =   2467,278 ms/op
+     p(50,0000) =   2486,357 ms/op
+     p(90,0000) =   2571,614 ms/op
+     p(95,0000) =   2571,614 ms/op
+     p(99,0000) =   2571,614 ms/op
+     p(99,9000) =   2571,614 ms/op
+     p(99,9900) =   2571,614 ms/op
+     p(99,9990) =   2571,614 ms/op
+     p(99,9999) =   2571,614 ms/op
+    p(100,0000) =   2571,614 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 1 iterations, single-shot each
+# Measurement: 3 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn5
+# Parameters: (threads = 4)
+
+# Run progress: 86,67% complete, ETA 00:00:05
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 2138,148 ms/op
+Iteration   1: 1660,864 ms/op
+Iteration   2: 1684,750 ms/op
+Iteration   3: 1681,741 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn5":
+  N = 3
+  mean =   1675,785 ±(99.9%) 237,339 ms/op
+
+  Histogram, ms/op:
+    [1660,000, 1662,500) = 1 
+    [1662,500, 1665,000) = 0 
+    [1665,000, 1667,500) = 0 
+    [1667,500, 1670,000) = 0 
+    [1670,000, 1672,500) = 0 
+    [1672,500, 1675,000) = 0 
+    [1675,000, 1677,500) = 0 
+    [1677,500, 1680,000) = 0 
+    [1680,000, 1682,500) = 1 
+    [1682,500, 1685,000) = 1 
+    [1685,000, 1687,500) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =   1660,864 ms/op
+     p(50,0000) =   1681,741 ms/op
+     p(90,0000) =   1684,750 ms/op
+     p(95,0000) =   1684,750 ms/op
+     p(99,0000) =   1684,750 ms/op
+     p(99,9000) =   1684,750 ms/op
+     p(99,9900) =   1684,750 ms/op
+     p(99,9990) =   1684,750 ms/op
+     p(99,9999) =   1684,750 ms/op
+    p(100,0000) =   1684,750 ms/op
+
+
+# JMH version: 1.37
+# VM version: JDK 25.0.4.1, OpenJDK 64-Bit Server VM, 25.0.4.1+1-LTS
+# VM invoker: C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe
+# VM options: -Xms2g -Xmx2g
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 1 iterations, single-shot each
+# Measurement: 3 iterations, single-shot each
+# Timeout: 10 min per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.chessbot.bench.ScalingBenchmark.mateIn5
+# Parameters: (threads = 8)
+
+# Run progress: 93,33% complete, ETA 00:00:03
+# Fork: 1 of 1
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/ismae/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 1954,289 ms/op
+Iteration   1: 1469,697 ms/op
+Iteration   2: 1596,052 ms/op
+Iteration   3: 1533,996 ms/op
+
+
+Result "com.chessbot.bench.ScalingBenchmark.mateIn5":
+  N = 3
+  mean =   1533,248 ±(99.9%) 1152,657 ms/op
+
+  Histogram, ms/op:
+    [1400,000, 1412,500) = 0 
+    [1412,500, 1425,000) = 0 
+    [1425,000, 1437,500) = 0 
+    [1437,500, 1450,000) = 0 
+    [1450,000, 1462,500) = 0 
+    [1462,500, 1475,000) = 1 
+    [1475,000, 1487,500) = 0 
+    [1487,500, 1500,000) = 0 
+    [1500,000, 1512,500) = 0 
+    [1512,500, 1525,000) = 0 
+    [1525,000, 1537,500) = 1 
+    [1537,500, 1550,000) = 0 
+    [1550,000, 1562,500) = 0 
+    [1562,500, 1575,000) = 0 
+    [1575,000, 1587,500) = 0 
+
+  Percentiles, ms/op:
+      p(0,0000) =   1469,697 ms/op
+     p(50,0000) =   1533,996 ms/op
+     p(90,0000) =   1596,052 ms/op
+     p(95,0000) =   1596,052 ms/op
+     p(99,0000) =   1596,052 ms/op
+     p(99,9000) =   1596,052 ms/op
+     p(99,9900) =   1596,052 ms/op
+     p(99,9990) =   1596,052 ms/op
+     p(99,9999) =   1596,052 ms/op
+    p(100,0000) =   1596,052 ms/op
+
+
+# Run complete. Total time: 00:00:52
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                 (threads)  Mode  Cnt     Score      Error  Units
+ScalingBenchmark.mateIn4          1    ss    8   248,645 ±   46,556  ms/op
+ScalingBenchmark.mateIn4          2    ss    8   163,042 ±   39,615  ms/op
+ScalingBenchmark.mateIn4          4    ss    8    96,200 ±    4,959  ms/op
+ScalingBenchmark.mateIn4          8    ss    8    77,677 ±    4,831  ms/op
+ScalingBenchmark.mateIn5          1    ss    3  4320,910 ± 4586,616  ms/op
+ScalingBenchmark.mateIn5          2    ss    3  2508,416 ± 1013,549  ms/op
+ScalingBenchmark.mateIn5          4    ss    3  1675,785 ±  237,339  ms/op
+ScalingBenchmark.mateIn5          8    ss    3  1533,248 ± 1152,657  ms/op
+
+Benchmark result is saved to docs/results/05-scaling-shared-table.json

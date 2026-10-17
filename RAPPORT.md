@@ -12,8 +12,12 @@ Chaque optimisation est **justifiée par une mesure**, appliquée dans **un comm
 | 2 | Zéro allocation (jouer/annuler, buffers) | `Position.copy` : encore 84 % des allocations | 15,5 ms (×2,6) | 23,5 ms (×2,4) | 1,07 s (×2,9) | 54 o |
 | 3 | Tables précalculées + roi mémorisé | détection d'échec : 61 % du CPU | ×1,19 (A/B) | ×1,34 (A/B) | non concluant | 60 o |
 | 4 | Table de transposition (Zobrist) | 78 % des nœuds du mat en 4 déjà analysés | ×0,89 (A/B, coût du hachage) | ×1,7 (A/B) | 0,29 s (×3,7) — mat en 5 : ×9,1 | 60 o |
+| 5 | Recherche parallèle, table partagée sans verrou | JVM à 12 % du CPU (1 thread sur 8) | — (non parallélisé) | 4,48 ms (×2,6) | 0,08–0,11 s (×2,6 à ×3,2) | 73 o |
+| ✗ | *Tables privées par worker (essai)* | *idem* | — | — | *×1,0 : travail ×4,2* | — |
+| ✗ | *Réordonner les champs (essai)* | *exploratoire* | *aucun effet : la JVM réordonne déjà (JOL)* | | | |
+| **Total** | **Baseline → final** | | **329,5 → 21,2 ms (×16)** | **236,6 → 4,48 ms (×53)** | **14,8 s → 0,11 s (×134)** | **258,8 Mo → 73 o** |
 
-*Temps moyens JMH, intervalle de confiance à 99,9 %. Gain = temps avant / temps après.*
+*Temps moyens JMH, intervalle de confiance à 99,9 %. Gain = temps avant / temps après. Mat en 5 : plus de 9 min (arrêté) avec la baseline, 41,9 s après l'optimisation 3, **1,5 s** en version finale. Latence perft 3 : p99 de 54,8 ms à 1,8 ms (×30).*
 
 ## Protocole de mesure
 
@@ -215,3 +219,85 @@ if (ply > 0) table.store(p.hash, n, result != NONE);
 | perft 3 | 667 µs | 743 µs | **−10 %** |
 
 **Analyse.** Le gain grandit avec la profondeur (×1,7 → ×3,7 → ×9,1), exactement comme la part de positions redondantes mesurée par le diagnostic : c'est une réduction du **nombre** d'opérations, pas de leur coût. Contrepartie mesurée : perft, qui n'utilise pas la table, ralentit de 10 % car `make` met à jour l'empreinte à chaque coup (`Position.make` passe de 10,7 % à 17,9 % de temps propre dans le [profil](docs/flamegraphs/04-table-transposition.svg)). Compromis accepté : le but du programme est la recherche de mat. *(Les A/B ont tourné sur une machine plus chaude que celle de l'optimisation 3 : les valeurs absolues de A sont plus élevées, seul le rapport A/B compte.)*
+
+---
+
+## 5. Recherche parallèle — *worker pool borné, mémoire partagée sans verrou (J3)*
+
+Tag [`opt5-parallele`](../../tree/opt5-parallele).
+
+**Constat.** Pendant la charge de profilage de l'optimisation 4, JFR mesure une charge CPU de la JVM de **11,9 %** en moyenne, soit 1 thread logique sur 8 (12,5 %) : **7/8 du processeur restent inutilisés**.
+
+**Technique.** Les coups de départ (racine) sont répartis sur un **pool de threads de taille fixe**, créé une fois et réutilisé. Chaque worker a ses propres buffers (thread-local, aucun partage). Le résultat reste **déterministe** : on retient le premier coup gagnant dans l'ordre de génération, comme la version séquentielle ; dès qu'il est connu, un drapeau `AtomicBoolean` fait abandonner les autres workers.
+
+### Première tentative : une table de transposition par worker — échec
+
+Pour éviter tout partage de mémoire, chaque worker avait d'abord **sa propre table**. Résultat ([mesures](docs/results/05-scaling-private-tables.txt), tag [`essai-parallele-tables-privees`](../../tree/essai-parallele-tables-privees)) : **aucun gain** (mat en 4 : 311 ms avec 1 thread, 304 ms avec 8 ; mat en 5 : 5,4 s → 4,9 s, dans la marge d'erreur).
+
+Un [diagnostic](src/test/java/com/chessbot/bench/ParallelDiagnostic.java) mesure le temps CPU total du processus pendant un mat en 5 ([résultats](docs/results/05-parallel-diagnostic-private.txt)) :
+
+| Threads | Temps réel | Cœurs réellement occupés | Travail CPU total (vs 1 thread) |
+|---|---|---|---|
+| 1 | 5,68 s | 1,05 | ×1,00 |
+| 8 | 4,25 s | 5,86 | **×4,19** |
+
+Les cœurs travaillent, mais **le travail total est multiplié par 4,2** : chaque worker refait les transpositions déjà analysées par les autres. L'optimisation 4 avait montré que 78 % des nœuds sont des transpositions ; séparer les tables détruit ce gain.
+
+### Correction : une table partagée, sans verrou
+
+Tous les workers partagent **une seule table**. Un verrou (`synchronized`) sur chaque accès créerait de la contention sur des millions d'accès ; à la place, chaque case stocke **deux `long` : `empreinte ^ donnée` et `donnée`** (« lockless hashing »). Si deux threads écrivent la même case en même temps et qu'un lecteur voit un mélange des deux, le XOR ne redonne plus l'empreinte et l'entrée est ignorée : une entrée erronée ne peut jamais être lue, sans aucune synchronisation. Les 16 tests (dont la comparaison avec et sans table) passent avec la recherche parallèle.
+
+**Résultat** ([JMH](docs/results/05-scaling-shared-table.txt), 8 mesures par point pour le mat en 4, 3 pour le mat en 5).
+
+| Threads | Mat en 4 | Accélération | Mat en 5 | Accélération |
+|---|---|---|---|---|
+| 1 (séquentiel) | 248,6 ± 46,6 ms | ×1,0 | 4,32 s | ×1,0 |
+| 2 | 163,0 ± 39,6 ms | ×1,5 | 2,51 s | ×1,7 |
+| 4 | 96,2 ± 5,0 ms | ×2,6 | 1,68 s | ×2,6 |
+| 8 | **77,7 ± 4,8 ms** | **×3,2** | **1,53 s** | **×2,8** |
+| *8, tables privées* | *304,1 ms* | *×1,0* | *4,87 s* | *×1,1* |
+
+Diagnostic CPU avec table partagée ([résultats](docs/results/05-parallel-diagnostic-shared.txt)) : avec 8 threads, 4,8 cœurs occupés et un travail total de ×1,56 seulement (au lieu de ×4,19).
+
+**Analyse (loi d'Amdahl).** Avec 4 threads, l'accélération de ×2,58 correspond à une fraction parallélisable **P ≈ 82 %** (S = 1 / ((1 − P) + P/4)). La loi prédit alors au mieux ×3,5 avec 8 vrais cœurs ; on mesure ×3,2, cohérent car le i5-8300H n'a que **4 cœurs physiques** (les 8 threads sont de l'hyper-threading). Les 18 % non parallélisables viennent surtout du **déséquilibre de charge** (certains coups de départ demandent beaucoup plus de travail que d'autres : la fin de la recherche attend le plus long) et du travail encore dupliqué entre workers qui analysent la même position au même moment.
+
+**Reproductibilité.** La mesure finale ([résultats](docs/results/05-parallele.txt)), faite plus tard sur une machine plus chaude, redonne une courbe de même forme : 268,6 → 199,3 → 125,2 → 103,7 ms, soit ×2,6 avec 8 threads (contre ×3,2). L'ordre de grandeur est stable, la valeur exacte dépend de l'état thermique du portable.
+
+---
+
+## 6. Optimisation sans effet : réordonner les champs — *struct padding (J2_AM)*
+
+**Pourquoi l'essayer.** Pas de mesure préalable cette fois : c'est un **essai exploratoire** d'une technique du cours. En Go, trier les champs d'une structure par taille décroissante supprime le padding (exemple du cours : `CandidateBad` 40 octets → `CandidateGood` 32 octets).
+
+**Mesure.** [JOL](src/test/java/com/chessbot/FieldLayoutDiagnostic.java) (Java Object Layout, équivalent de `fieldalignment`) affiche la disposition réelle des objets en mémoire ([résultats](docs/results/06-field-layout.txt)). Les deux classes de l'exemple du cours, recopiées en Java, et `Position` avant / après tri de ses champs :
+
+| Classe | Go (cours) | Java (JOL) |
+|---|---|---|
+| `CandidateBad` (champs désordonnés) | 40 octets | **32 octets** |
+| `CandidateGood` (champs triés) | 32 octets | **32 octets**, disposition identique octet par octet |
+| `Position`, ordre d'origine | — | 64 octets, 3 octets de padding |
+| `Position`, champs triés par taille | — | **64 octets, mêmes offsets** ([résultats](docs/results/06-field-layout-position-sorted.txt)) |
+
+**Explication.** Contrairement au compilateur Go, qui respecte l'ordre de déclaration, la JVM HotSpot **réorganise elle-même les champs** au chargement de la classe (les `long` d'abord, puis les `int`, puis les petits types, et les références à la fin). L'ordre écrit dans le code source n'a donc aucune influence : `Position` occupe déjà exactement **64 octets, une ligne de cache**, avec seulement 3 octets perdus. La disposition mémoire étant identique, le code exécuté l'est aussi : aucun gain de temps n'est possible, et le changement n'a pas été conservé.
+
+**Leçon.** Une technique valable dans un langage ne l'est pas forcément dans un autre : il faut **mesurer avant de conclure**. Le même cas s'est produit dans l'autre sens à l'optimisation 2 : l'escape analysis devait supprimer un petit tableau temporaire, la mesure a montré que ce n'était pas le cas.
+
+---
+
+## Conclusion
+
+| | Baseline | Final | Gain |
+|---|---|---|---|
+| perft 4 (génération de coups) | 329,5 ms | 21,2 ms | **×16** |
+| Latence perft 3, p99 | 54,8 ms | 1,8 ms | **×30** |
+| Mat en 3 | 236,6 ms | 4,48 ms | **×53** |
+| Mat en 4 | 14,8 s | 0,11 s | **×134** |
+| Mat en 5 | > 9 min (arrêté) | 1,5 s | **> ×360** |
+| Allocations par perft 4 | 258,8 Mo | 73 o | **≈ −100 %** |
+
+1. **Chaque optimisation a été choisie à partir d'une mesure** (profil CPU, profil d'allocation, comptage des transpositions, charge CPU), sauf le réordonnancement des champs, présenté comme essai exploratoire.
+2. **Les gains de structure de données et de mémoire** (optimisations 1 et 2) ont rendu chaque position environ 20 fois moins chère et supprimé le travail du GC ; **les gains d'algorithme et de parallélisme** (optimisations 4 et 5) ont réduit le *nombre* de positions et réparti le travail : ce sont eux qui font passer le mat en 5 de « inutilisable » à 1,5 s.
+3. **Deux essais n'ont rien donné et sont documentés** : des tables de transposition privées par worker (le travail total explose, ×4,2), et le réordonnancement des champs (la JVM le fait déjà).
+4. **Pièges de mesure rencontrés** : le bruit thermique d'un portable (résolu par des mesures A/B alternées), l'IDE qui écrasait les classes mesurées (build séparé), une mise en veille pendant un benchmark (mesure écartée et refaite), et une escape analysis qui ne s'appliquait pas là où on l'attendait.
+
+**Pistes non réalisées** : bitboards (plateau en entiers 64 bits, pour réduire le coût de la détection d'échec, encore ~45 % du CPU) ; ordonner les coups (échecs d'abord) pour trouver les mats plus tôt ; répartir le travail plus finement que par coup de départ pour réduire le déséquilibre de charge.

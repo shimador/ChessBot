@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Exhaustive mate search: tries every move, on one board, with preallocated move buffers.
@@ -57,7 +56,7 @@ public final class MateFinder {
     // ---- Parallel search: the root moves are shared out to a bounded pool of worker threads ----
 
     private static final Map<Integer, ExecutorService> POOLS = new ConcurrentHashMap<>();
-    private static final AtomicLong SEARCH_IDS = new AtomicLong();
+    private static final MateTable SHARED_TABLE = new MateTable(); // one table for all workers (lock-free)
 
     /** One fixed-size pool per thread count, created once and reused (daemon threads). */
     private static ExecutorService pool(int threads) {
@@ -69,17 +68,24 @@ public final class MateFinder {
     }
 
     /**
-     * Each legal root move becomes a task. Every worker has its own buffers and its own table
-     * (thread-local), so workers share nothing and need no lock. The answer is the first mating
+     * Each legal root move becomes a task. Every worker has its own buffers (thread-local) but all
+     * share one transposition table, so a position analysed by one worker is not analysed again by
+     * another. The table needs no lock (see {@link MateTable}). The answer is the first mating
      * root move in generation order, as in the sequential search; once it is known, the stop flag
      * makes the remaining workers give up.
      */
     private static Optional<Move> findMateParallel(Position position, int n, int threads) {
+        synchronized (SHARED_TABLE) { // one parallel search at a time owns the shared table
+            return searchRootMoves(position, n, threads);
+        }
+    }
+
+    private static Optional<Move> searchRootMoves(Position position, int n, int threads) {
         Position root = position.copy();
         int[] buffer = new int[MoveGenerator.MAX_MOVES];
         int count = MoveGenerator.generate(root, buffer);
-        long searchId = SEARCH_IDS.incrementAndGet();
         AtomicBoolean stop = new AtomicBoolean();
+        SHARED_TABLE.newSearch(stop);
 
         List<Integer> rootMoves = new ArrayList<>();
         List<Future<Boolean>> results = new ArrayList<>();
@@ -90,7 +96,7 @@ public final class MateFinder {
             root.unmake(move);
             if (!legal) continue;
             rootMoves.add(move);
-            results.add(pool(threads).submit(() -> rootMoveMates(position, move, n, searchId, stop)));
+            results.add(pool(threads).submit(() -> rootMoveMates(position, move, n)));
         }
 
         try {
@@ -110,12 +116,10 @@ public final class MateFinder {
     }
 
     /** Worker task: does this root move force mate in n? */
-    private static boolean rootMoveMates(Position start, int move, int n, long searchId, AtomicBoolean stop) {
+    private static boolean rootMoveMates(Position start, int move, int n) {
         SearchContext ctx = SearchContext.load(start);
-        MateTable table = ctx.mateTable();
-        table.joinSearch(searchId, stop);
         ctx.position.make(move);
-        return defenderLoses(ctx.position, ctx.moves, table, n, 1);
+        return defenderLoses(ctx.position, ctx.moves, SHARED_TABLE, n, 1);
     }
 
     private static final int NONE = -1;
