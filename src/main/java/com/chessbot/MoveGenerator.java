@@ -29,7 +29,7 @@ public final class MoveGenerator {
         List<Move> moves = new ArrayList<>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                char piece = p.board[r][c];
+                char piece = p.board[Position.sq(r, c)];
                 if (piece == '.' || isWhite(piece) != p.whiteToMove) continue;
                 switch (Character.toLowerCase(piece)) {
                     case 'p' -> addPawnMoves(p, r, c, moves);
@@ -55,7 +55,7 @@ public final class MoveGenerator {
         char king = whiteKing ? 'K' : 'k';
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if (p.board[r][c] == king) return isSquareAttacked(p, r, c, !whiteKing);
+                if (p.board[Position.sq(r, c)] == king) return isSquareAttacked(p, r, c, !whiteKing);
             }
         }
         return false;
@@ -66,7 +66,7 @@ public final class MoveGenerator {
         int pawnRow = byWhite ? r + 1 : r - 1;
         char pawn = byWhite ? 'P' : 'p';
         for (int dc : new int[]{-1, 1}) {
-            if (onBoard(pawnRow, c + dc) && p.board[pawnRow][c + dc] == pawn) return true;
+            if (onBoard(pawnRow, c + dc) && p.board[Position.sq(pawnRow, c + dc)] == pawn) return true;
         }
         if (attackedByStep(p, r, c, KNIGHT_OFFSETS, byWhite ? 'N' : 'n')) return true;
         if (attackedByStep(p, r, c, KING_OFFSETS, byWhite ? 'K' : 'k')) return true;
@@ -81,14 +81,14 @@ public final class MoveGenerator {
         int startRow = white ? 6 : 1;
         int toRow = r + dir; // always on the board: a pawn never stands on its last rank
 
-        if (p.board[toRow][c] == '.') {
+        if (p.board[Position.sq(toRow, c)] == '.') {
             addPawnMove(r, c, toRow, c, white, moves);
-            if (r == startRow && p.board[r + 2 * dir][c] == '.') moves.add(new Move(r, c, r + 2 * dir, c));
+            if (r == startRow && p.board[Position.sq(r + 2 * dir, c)] == '.') moves.add(new Move(r, c, r + 2 * dir, c));
         }
         for (int dc : new int[]{-1, 1}) {
             int toCol = c + dc;
             if (toCol < 0 || toCol > 7) continue;
-            char target = p.board[toRow][toCol];
+            char target = p.board[Position.sq(toRow, toCol)];
             boolean capture = target != '.' && isWhite(target) != white;
             boolean enPassant = toRow == p.epRow && toCol == p.epCol;
             if (capture || enPassant) addPawnMove(r, c, toRow, toCol, white, moves);
@@ -107,7 +107,7 @@ public final class MoveGenerator {
         for (int[] d : offsets) {
             int tr = r + d[0], tc = c + d[1];
             if (!onBoard(tr, tc)) continue;
-            char target = p.board[tr][tc];
+            char target = p.board[Position.sq(tr, tc)];
             if (target == '.' || isWhite(target) != p.whiteToMove) moves.add(new Move(r, c, tr, tc));
         }
     }
@@ -116,7 +116,7 @@ public final class MoveGenerator {
         for (int[] d : dirs) {
             int tr = r + d[0], tc = c + d[1];
             while (onBoard(tr, tc)) {
-                char target = p.board[tr][tc];
+                char target = p.board[Position.sq(tr, tc)];
                 if (target == '.') {
                     moves.add(new Move(r, c, tr, tc));
                 } else {
@@ -135,18 +135,19 @@ public final class MoveGenerator {
         if (r != home || c != 4) return;
         char rook = white ? 'R' : 'r';
         boolean enemy = !white;
-        char[] row = p.board[home];
+        char[] b = p.board;
+        int h = home * 8;
 
         // The king may not castle out of, through, or into check
         boolean kingside = white ? p.whiteKingside : p.blackKingside;
-        if (kingside && row[5] == '.' && row[6] == '.' && row[7] == rook
+        if (kingside && b[h + 5] == '.' && b[h + 6] == '.' && b[h + 7] == rook
                 && !isSquareAttacked(p, home, 4, enemy)
                 && !isSquareAttacked(p, home, 5, enemy)
                 && !isSquareAttacked(p, home, 6, enemy)) {
             moves.add(new Move(home, 4, home, 6));
         }
         boolean queenside = white ? p.whiteQueenside : p.blackQueenside;
-        if (queenside && row[3] == '.' && row[2] == '.' && row[1] == '.' && row[0] == rook
+        if (queenside && b[h + 3] == '.' && b[h + 2] == '.' && b[h + 1] == '.' && b[h] == rook
                 && !isSquareAttacked(p, home, 4, enemy)
                 && !isSquareAttacked(p, home, 3, enemy)
                 && !isSquareAttacked(p, home, 2, enemy)) {
@@ -157,7 +158,7 @@ public final class MoveGenerator {
     private static boolean attackedByStep(Position p, int r, int c, int[][] offsets, char attacker) {
         for (int[] d : offsets) {
             int tr = r + d[0], tc = c + d[1];
-            if (onBoard(tr, tc) && p.board[tr][tc] == attacker) return true;
+            if (onBoard(tr, tc) && p.board[Position.sq(tr, tc)] == attacker) return true;
         }
         return false;
     }
@@ -166,7 +167,7 @@ public final class MoveGenerator {
         for (int[] d : dirs) {
             int tr = r + d[0], tc = c + d[1];
             while (onBoard(tr, tc)) {
-                char piece = p.board[tr][tc];
+                char piece = p.board[Position.sq(tr, tc)];
                 if (piece != '.') {
                     if (piece == slider || piece == queen) return true;
                     break;

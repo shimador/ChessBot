@@ -63,7 +63,7 @@ class BoardPanel extends JPanel {
                 if (c == 0) g2.drawString(String.valueOf(8 - r), x + 3, y + labelFont.getSize() + 1);
                 if (r == 7) g2.drawString(String.valueOf((char) ('a' + c)), x + sq - labelFont.getSize(), y + sq - 4);
 
-                char piece = position.board[r][c];
+                char piece = position.board[Position.sq(r, c)];
                 if (piece != '.') drawPiece(g2, pieceFont, piece, x, y, sq);
             }
         }
