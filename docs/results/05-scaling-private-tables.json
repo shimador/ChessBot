@@ -1,0 +1,456 @@
+[
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn4",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 8,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 311.2308875,
+            "scoreError" : 38.26323463133784,
+            "scoreConfidence" : [
+                272.9676528686622,
+                349.4941221313378
+            ],
+            "scorePercentiles" : {
+                "0.0" : 290.3761,
+                "50.0" : 306.55190000000005,
+                "90.0" : 346.1818,
+                "95.0" : 346.1818,
+                "99.0" : 346.1818,
+                "99.9" : 346.1818,
+                "99.99" : 346.1818,
+                "99.999" : 346.1818,
+                "99.9999" : 346.1818,
+                "100.0" : 346.1818
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    295.3149,
+                    293.0873,
+                    305.1548,
+                    319.2993,
+                    332.4839,
+                    307.949,
+                    346.1818,
+                    290.3761
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn4",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 8,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "2"
+        },
+        "primaryMetric" : {
+            "score" : 331.816575,
+            "scoreError" : 47.45614620897686,
+            "scoreConfidence" : [
+                284.36042879102314,
+                379.27272120897686
+            ],
+            "scorePercentiles" : {
+                "0.0" : 295.4835,
+                "50.0" : 322.8126,
+                "90.0" : 366.5178,
+                "95.0" : 366.5178,
+                "99.0" : 366.5178,
+                "99.9" : 366.5178,
+                "99.99" : 366.5178,
+                "99.999" : 366.5178,
+                "99.9999" : 366.5178,
+                "100.0" : 366.5178
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    317.9215,
+                    295.4835,
+                    348.1488,
+                    366.5178,
+                    362.8261,
+                    325.4535,
+                    318.0097,
+                    320.1717
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn4",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 8,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 286.0117,
+            "scoreError" : 31.49007642121083,
+            "scoreConfidence" : [
+                254.5216235787892,
+                317.5017764212108
+            ],
+            "scorePercentiles" : {
+                "0.0" : 264.009,
+                "50.0" : 288.31579999999997,
+                "90.0" : 315.7888,
+                "95.0" : 315.7888,
+                "99.0" : 315.7888,
+                "99.9" : 315.7888,
+                "99.99" : 315.7888,
+                "99.999" : 315.7888,
+                "99.9999" : 315.7888,
+                "100.0" : 315.7888
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    264.009,
+                    293.8515,
+                    292.588,
+                    286.2347,
+                    315.7888,
+                    290.3969,
+                    277.3525,
+                    267.8722
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn4",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 8,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "8"
+        },
+        "primaryMetric" : {
+            "score" : 304.129975,
+            "scoreError" : 86.41294997068147,
+            "scoreConfidence" : [
+                217.71702502931853,
+                390.5429249706815
+            ],
+            "scorePercentiles" : {
+                "0.0" : 244.538,
+                "50.0" : 307.31745,
+                "90.0" : 384.4764,
+                "95.0" : 384.4764,
+                "99.0" : 384.4764,
+                "99.9" : 384.4764,
+                "99.99" : 384.4764,
+                "99.999" : 384.4764,
+                "99.9999" : 384.4764,
+                "100.0" : 384.4764
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    299.6757,
+                    265.5738,
+                    244.538,
+                    266.5993,
+                    334.1365,
+                    314.9592,
+                    384.4764,
+                    323.0809
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn5",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 1,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "1"
+        },
+        "primaryMetric" : {
+            "score" : 5443.245533333333,
+            "scoreError" : 1198.3446921003908,
+            "scoreConfidence" : [
+                4244.900841232942,
+                6641.590225433723
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5367.4085,
+                "50.0" : 5480.1062,
+                "90.0" : 5482.2219,
+                "95.0" : 5482.2219,
+                "99.0" : 5482.2219,
+                "99.9" : 5482.2219,
+                "99.99" : 5482.2219,
+                "99.999" : 5482.2219,
+                "99.9999" : 5482.2219,
+                "100.0" : 5482.2219
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    5482.2219,
+                    5480.1062,
+                    5367.4085
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn5",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 1,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "2"
+        },
+        "primaryMetric" : {
+            "score" : 5754.712066666667,
+            "scoreError" : 2964.8628362313916,
+            "scoreConfidence" : [
+                2789.8492304352753,
+                8719.574902898059
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5567.2968,
+                "50.0" : 5840.2049,
+                "90.0" : 5856.6345,
+                "95.0" : 5856.6345,
+                "99.0" : 5856.6345,
+                "99.9" : 5856.6345,
+                "99.99" : 5856.6345,
+                "99.999" : 5856.6345,
+                "99.9999" : 5856.6345,
+                "100.0" : 5856.6345
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    5856.6345,
+                    5567.2968,
+                    5840.2049
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn5",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 1,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 4681.148066666667,
+            "scoreError" : 3705.310277364751,
+            "scoreConfidence" : [
+                975.8377893019156,
+                8386.458344031418
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4479.7796,
+                "50.0" : 4677.7271,
+                "90.0" : 4885.9375,
+                "95.0" : 4885.9375,
+                "99.0" : 4885.9375,
+                "99.9" : 4885.9375,
+                "99.99" : 4885.9375,
+                "99.999" : 4885.9375,
+                "99.9999" : 4885.9375,
+                "100.0" : 4885.9375
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    4885.9375,
+                    4479.7796,
+                    4677.7271
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.37",
+        "benchmark" : "com.chessbot.bench.ScalingBenchmark.mateIn5",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+        "jvmArgs" : [
+            "-Xms2g",
+            "-Xmx2g"
+        ],
+        "jdkVersion" : "25.0.4.1",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.0.4.1+1-LTS",
+        "warmupIterations" : 1,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "single-shot",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "threads" : "8"
+        },
+        "primaryMetric" : {
+            "score" : 4866.728633333333,
+            "scoreError" : 2521.4832723365184,
+            "scoreConfidence" : [
+                2345.2453609968147,
+                7388.211905669852
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4711.3778,
+                "50.0" : 4912.7517,
+                "90.0" : 4976.0564,
+                "95.0" : 4976.0564,
+                "99.0" : 4976.0564,
+                "99.9" : 4976.0564,
+                "99.99" : 4976.0564,
+                "99.999" : 4976.0564,
+                "99.9999" : 4976.0564,
+                "100.0" : 4976.0564
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    4711.3778,
+                    4912.7517,
+                    4976.0564
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+
