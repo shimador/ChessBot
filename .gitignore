@@ -5,3 +5,5 @@ out/
 *.iml
 .vscode/
 target-bench/
+.tools/
+bench-results/

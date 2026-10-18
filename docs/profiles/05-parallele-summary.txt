@@ -1,0 +1,36 @@
+samples	3190
+cpuload	29.1
+self	25.5	MoveGenerator.attackedAlongRays
+self	19.2	MoveGenerator.isSquareAttacked
+self	18.1	Position.make
+self	12.0	MoveGenerator.addSlideMoves
+self	6.6	MoveGenerator.addPawnMoves
+self	6.4	Position.unmake
+self	4.6	Perft.perft
+self	2.4	MateFinder.attackerMates
+self	1.1	MoveGenerator.isKingAttacked
+self	0.9	MoveGenerator.addCastlingMoves
+self	0.6	MoveGenerator.addStepMoves
+self	0.4	MateFinder.defenderLoses
+self	0.3	Character.isUpperCase
+self	0.2	MoveGenerator.addPawnMove
+self	0.2	ThreadPoolExecutor.runWorker
+total	61.7	ProfileWorkload.main
+total	61.5	Perft.perft
+total	44.8	MoveGenerator.isSquareAttacked
+total	44.0	MoveGenerator.isKingAttacked
+total	38.3	Thread.run
+total	38.3	Thread.runWith
+total	38.1	ThreadPoolExecutor$Worker.run
+total	38.1	ThreadPoolExecutor.runWorker
+total	37.4	FutureTask.run
+total	37.3	0x000000001f0470f8.call
+total	37.3	MateFinder.lambda$searchRootMoves$0
+total	37.3	MateFinder.rootMoveMates
+total	37.3	MateFinder.defenderLoses
+total	37.2	MateFinder.attackerMates
+total	25.5	MoveGenerator.attackedAlongRays
+alloc	49.6	ConcurrentHashMap.initTable
+alloc	48.6	MateTable.<init>
+alloc	1.7	Arrays.copyOf
+alloc	0.1	BufWriterImpl.join

@@ -1,0 +1,746 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1400" height="502" onload="init(evt)" viewBox="0 0 1400 502" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:12px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:17px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Function: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 12 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1400.0" height="358.0" fill="url(#background)"  />
+<text id="title" x="700.00" y="24" >05-parallele : profil CPU (JFR, 1 ms)</text>
+<text id="details" x="10.00" y="341" > </text>
+<text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
+<text id="search" x="1290.00" y="24" >Search</text>
+<text id="ignorecase" x="1374.00" y="24" >ic</text>
+<text id="matched" x="1290.00" y="341" > </text>
+<g id="frames">
+<g >
+<title>MoveGenerator.addPawnMoves (20 samples, 0.63%)</title><rect x="1053.9" y="85" width="8.6" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="1056.87" y="95.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (9 samples, 0.28%)</title><rect x="908.9" y="69" width="3.9" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="911.95" y="79.5" ></text>
+</g>
+<g >
+<title>Position.unmake (7 samples, 0.22%)</title><rect x="857.0" y="213" width="3.1" height="15.0" fill="rgb(215,47,11)" rx="2" ry="2" />
+<text  x="860.03" y="223.5" ></text>
+</g>
+<g >
+<title>ThreadPoolExecutor.getTask (15 samples, 0.47%)</title><rect x="1383.5" y="229" width="6.5" height="15.0" fill="rgb(249,206,49)" rx="2" ry="2" />
+<text  x="1386.51" y="239.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (34 samples, 1.07%)</title><rect x="1292.7" y="85" width="14.7" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1295.66" y="95.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (19 samples, 0.60%)</title><rect x="1045.6" y="53" width="8.3" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1048.65" y="63.5" ></text>
+</g>
+<g >
+<title>PlatformRecorder.lambda$startDiskMonitor$0 (7 samples, 0.22%)</title><rect x="861.4" y="245" width="3.0" height="15.0" fill="rgb(227,104,25)" rx="2" ry="2" />
+<text  x="864.36" y="255.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.generate (165 samples, 5.17%)</title><rect x="1290.1" y="117" width="71.3" height="15.0" fill="rgb(251,214,51)" rx="2" ry="2" />
+<text  x="1293.07" y="127.5" >MoveGene..</text>
+</g>
+<g >
+<title>MateFinder.attackerMates (966 samples, 30.28%)</title><rect x="872.2" y="117" width="417.9" height="15.0" fill="rgb(224,89,21)" rx="2" ry="2" />
+<text  x="875.18" y="127.5" >MateFinder.attackerMates</text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (168 samples, 5.27%)</title><rect x="966.9" y="37" width="72.7" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="969.92" y="47.5" >MoveGene..</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (7 samples, 0.22%)</title><rect x="913.3" y="85" width="3.0" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="916.27" y="95.5" ></text>
+</g>
+<g >
+<title>ProfileWorkload.main (1,967 samples, 61.66%)</title><rect x="10.4" y="293" width="851.0" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="13.43" y="303.5" >ProfileWorkload.main</text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (12 samples, 0.38%)</title><rect x="1365.3" y="85" width="5.2" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1368.34" y="95.5" ></text>
+</g>
+<g >
+<title>Perft.perft (1,836 samples, 57.55%)</title><rect x="54.6" y="213" width="794.2" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="57.56" y="223.5" >Perft.perft</text>
+</g>
+<g >
+<title>0x000000001f0470f8.call (1,191 samples, 37.34%)</title><rect x="867.4" y="213" width="515.2" height="15.0" fill="rgb(231,122,29)" rx="2" ry="2" />
+<text  x="870.42" y="223.5" >0x000000001f0470f8.call</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (295 samples, 9.25%)</title><rect x="1081.1" y="101" width="127.6" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="1084.12" y="111.5" >MoveGenerator.is..</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (45 samples, 1.41%)</title><rect x="35.1" y="213" width="19.5" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="38.09" y="223.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (736 samples, 23.07%)</title><rect x="271.3" y="197" width="318.4" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="274.29" y="207.5" >MoveGenerator.isKingAttacked</text>
+</g>
+<g >
+<title>MoveGenerator.addCastlingMoves (28 samples, 0.88%)</title><rect x="1041.8" y="85" width="12.1" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
+<text  x="1044.76" y="95.5" ></text>
+</g>
+<g >
+<title>Perft.perft (1,963 samples, 61.54%)</title><rect x="12.2" y="277" width="849.2" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="15.16" y="287.5" >Perft.perft</text>
+</g>
+<g >
+<title>MoveGenerator.addStepMoves (9 samples, 0.28%)</title><rect x="265.2" y="181" width="3.9" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="268.24" y="191.5" ></text>
+</g>
+<g >
+<title>Position.make (132 samples, 4.14%)</title><rect x="1208.7" y="101" width="57.1" height="15.0" fill="rgb(231,122,29)" rx="2" ry="2" />
+<text  x="1211.74" y="111.5" >Positi..</text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (7 samples, 0.22%)</title><rect x="913.3" y="69" width="3.0" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="916.27" y="79.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (179 samples, 5.61%)</title><rect x="1131.3" y="69" width="77.4" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1134.30" y="79.5" >MoveGene..</text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (15 samples, 0.47%)</title><rect x="1373.6" y="117" width="6.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1376.56" y="127.5" ></text>
+</g>
+<g >
+<title>Perft.perft (1,963 samples, 61.54%)</title><rect x="12.2" y="261" width="849.2" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="15.16" y="271.5" >Perft.perft</text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (69 samples, 2.16%)</title><rect x="1326.8" y="101" width="29.9" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="1329.84" y="111.5" >Mo..</text>
+</g>
+<g >
+<title>Thread.runWith (1,222 samples, 38.31%)</title><rect x="861.4" y="277" width="528.6" height="15.0" fill="rgb(226,97,23)" rx="2" ry="2" />
+<text  x="864.36" y="287.5" >Thread.runWith</text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (19 samples, 0.60%)</title><rect x="1362.3" y="101" width="8.2" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1365.31" y="111.5" ></text>
+</g>
+<g >
+<title>0x000000001f079a78.run (7 samples, 0.22%)</title><rect x="861.4" y="261" width="3.0" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="864.36" y="271.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.generate (413 samples, 12.95%)</title><rect x="92.6" y="197" width="178.7" height="15.0" fill="rgb(251,214,51)" rx="2" ry="2" />
+<text  x="95.63" y="207.5" >MoveGenerator.generate</text>
+</g>
+<g >
+<title>MoveGenerator.addStepMoves (9 samples, 0.28%)</title><rect x="1356.7" y="101" width="3.9" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="1359.69" y="111.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (287 samples, 9.00%)</title><rect x="1084.6" y="85" width="124.1" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1087.58" y="95.5" >MoveGenerator.i..</text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (14 samples, 0.44%)</title><rect x="1374.0" y="101" width="6.1" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1376.99" y="111.5" ></text>
+</g>
+<g >
+<title>Position.unmake (56 samples, 1.76%)</title><rect x="1265.8" y="101" width="24.3" height="15.0" fill="rgb(215,47,11)" rx="2" ry="2" />
+<text  x="1268.84" y="111.5" >P..</text>
+</g>
+<g >
+<title>ThreadPoolExecutor$Worker.run (1,215 samples, 38.09%)</title><rect x="864.4" y="261" width="525.6" height="15.0" fill="rgb(239,158,37)" rx="2" ry="2" />
+<text  x="867.39" y="271.5" >ThreadPoolExecutor$Worker.run</text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (244 samples, 7.65%)</title><rect x="159.7" y="181" width="105.5" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="162.68" y="191.5" >MoveGenerato..</text>
+</g>
+<g >
+<title>MoveGenerator.generate (91 samples, 2.85%)</title><rect x="1041.8" y="101" width="39.3" height="15.0" fill="rgb(251,214,51)" rx="2" ry="2" />
+<text  x="1044.76" y="111.5" >Mov..</text>
+</g>
+<g >
+<title>Position.isInCheck (285 samples, 8.93%)</title><rect x="916.3" y="85" width="123.3" height="15.0" fill="rgb(214,45,10)" rx="2" ry="2" />
+<text  x="919.30" y="95.5" >Position.isInCh..</text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (25 samples, 0.78%)</title><rect x="1043.1" y="69" width="10.8" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1046.05" y="79.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (38 samples, 1.19%)</title><rect x="38.1" y="197" width="16.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="41.12" y="207.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addPawnMoves (7 samples, 0.22%)</title><rect x="905.9" y="69" width="3.0" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="908.92" y="79.5" ></text>
+</g>
+<g >
+<title>Perft.perft (1,957 samples, 61.35%)</title><rect x="13.5" y="229" width="846.6" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="16.46" y="239.5" >Perft.perft</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (21 samples, 0.66%)</title><rect x="1361.4" y="117" width="9.1" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="1364.45" y="127.5" ></text>
+</g>
+<g >
+<title>LinkedBlockingQueue.take (15 samples, 0.47%)</title><rect x="1383.5" y="213" width="6.5" height="15.0" fill="rgb(211,29,7)" rx="2" ry="2" />
+<text  x="1386.51" y="223.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (16 samples, 0.50%)</title><rect x="1300.5" y="69" width="6.9" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1303.45" y="79.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (719 samples, 22.54%)</title><rect x="278.6" y="181" width="311.1" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="281.65" y="191.5" >MoveGenerator.isSquareAttacked</text>
+</g>
+<g >
+<title>MateFinder.rootMoveMates (1,190 samples, 37.30%)</title><rect x="867.8" y="181" width="514.8" height="15.0" fill="rgb(246,192,46)" rx="2" ry="2" />
+<text  x="870.85" y="191.5" >MateFinder.rootMoveMates</text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (382 samples, 11.97%)</title><rect x="424.4" y="165" width="165.3" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="427.43" y="175.5" >MoveGenerator.attacke..</text>
+</g>
+<g >
+<title>MoveGenerator.addPawnMoves (131 samples, 4.11%)</title><rect x="103.0" y="181" width="56.7" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="106.01" y="191.5" >MoveGe..</text>
+</g>
+<g >
+<title>MateFinder.attackerMates (1,187 samples, 37.21%)</title><rect x="867.8" y="149" width="513.5" height="15.0" fill="rgb(224,89,21)" rx="2" ry="2" />
+<text  x="870.85" y="159.5" >MateFinder.attackerMates</text>
+</g>
+<g >
+<title>MateFinder.defenderLoses (1,190 samples, 37.30%)</title><rect x="867.8" y="165" width="514.8" height="15.0" fill="rgb(213,37,8)" rx="2" ry="2" />
+<text  x="870.85" y="175.5" >MateFinder.defenderLoses</text>
+</g>
+<g >
+<title>FutureTask.run (1,193 samples, 37.40%)</title><rect x="867.0" y="229" width="516.1" height="15.0" fill="rgb(208,14,3)" rx="2" ry="2" />
+<text  x="869.98" y="239.5" >FutureTask.run</text>
+</g>
+<g >
+<title>Position.unmake (136 samples, 4.26%)</title><rect x="790.0" y="197" width="58.8" height="15.0" fill="rgb(215,47,11)" rx="2" ry="2" />
+<text  x="792.98" y="207.5" >Positi..</text>
+</g>
+<g >
+<title>ThreadPoolExecutor.runWorker (1,215 samples, 38.09%)</title><rect x="864.4" y="245" width="525.6" height="15.0" fill="rgb(221,78,18)" rx="2" ry="2" />
+<text  x="867.39" y="255.5" >ThreadPoolExecutor.runWorker</text>
+</g>
+<g >
+<title>all (3,190 samples, 100%)</title><rect x="10.0" y="309" width="1380.0" height="15.0" fill="rgb(213,39,9)" rx="2" ry="2" />
+<text  x="13.00" y="319.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (18 samples, 0.56%)</title><rect x="26.9" y="197" width="7.8" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="29.87" y="207.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (283 samples, 8.87%)</title><rect x="917.2" y="69" width="122.4" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="920.17" y="79.5" >MoveGenerator.i..</text>
+</g>
+<g >
+<title>MateFinder.defenderLoses (319 samples, 10.00%)</title><rect x="903.3" y="101" width="138.0" height="15.0" fill="rgb(213,37,8)" rx="2" ry="2" />
+<text  x="906.32" y="111.5" >MateFinder.defend..</text>
+</g>
+<g >
+<title>AbstractQueuedSynchronizer$ConditionObject.await (13 samples, 0.41%)</title><rect x="1383.5" y="197" width="5.6" height="15.0" fill="rgb(232,128,30)" rx="2" ry="2" />
+<text  x="1386.51" y="207.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (41 samples, 1.29%)</title><rect x="1062.5" y="85" width="17.8" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="1065.52" y="95.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addCastlingMoves (21 samples, 0.66%)</title><rect x="93.9" y="181" width="9.1" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
+<text  x="96.92" y="191.5" ></text>
+</g>
+<g >
+<title>Thread.run (1,222 samples, 38.31%)</title><rect x="861.4" y="293" width="528.6" height="15.0" fill="rgb(237,150,35)" rx="2" ry="2" />
+<text  x="864.36" y="303.5" >Thread.run</text>
+</g>
+<g >
+<title>MoveGenerator.generate (17 samples, 0.53%)</title><rect x="905.9" y="85" width="7.4" height="15.0" fill="rgb(251,214,51)" rx="2" ry="2" />
+<text  x="908.92" y="95.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addPawnMoves (45 samples, 1.41%)</title><rect x="1307.4" y="101" width="19.4" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="1310.37" y="111.5" ></text>
+</g>
+<g >
+<title>MateFinder.lambda$searchRootMoves$0 (1,191 samples, 37.34%)</title><rect x="867.4" y="197" width="515.2" height="15.0" fill="rgb(250,209,49)" rx="2" ry="2" />
+<text  x="870.42" y="207.5" >MateFinder.lambda$searchRootMoves$0</text>
+</g>
+<g >
+<title>Perft.perft (1,962 samples, 61.50%)</title><rect x="12.6" y="245" width="848.8" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="15.60" y="255.5" >Perft.perft</text>
+</g>
+<g >
+<title>Position.make (19 samples, 0.60%)</title><rect x="848.8" y="213" width="8.2" height="15.0" fill="rgb(231,122,29)" rx="2" ry="2" />
+<text  x="851.82" y="223.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (283 samples, 8.87%)</title><rect x="917.2" y="53" width="122.4" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="920.17" y="63.5" >MoveGenerator.i..</text>
+</g>
+<g >
+<title>MoveGenerator.generate (29 samples, 0.91%)</title><rect x="22.5" y="213" width="12.6" height="15.0" fill="rgb(251,214,51)" rx="2" ry="2" />
+<text  x="25.55" y="223.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addCastlingMoves (39 samples, 1.22%)</title><rect x="1290.5" y="101" width="16.9" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
+<text  x="1293.50" y="111.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.attackedAlongRays (21 samples, 0.66%)</title><rect x="45.5" y="181" width="9.1" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="48.47" y="191.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addPawnMoves (10 samples, 0.31%)</title><rect x="22.5" y="197" width="4.4" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="25.55" y="207.5" ></text>
+</g>
+<g >
+<title>Perft.perft (37 samples, 1.16%)</title><rect x="589.7" y="197" width="16.0" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="592.69" y="207.5" ></text>
+</g>
+<g >
+<title>PlatformRecorder.periodicTask (7 samples, 0.22%)</title><rect x="861.4" y="229" width="3.0" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="864.36" y="239.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (15 samples, 0.47%)</title><rect x="1373.6" y="133" width="6.5" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="1376.56" y="143.5" ></text>
+</g>
+<g >
+<title>MateFinder.defenderLoses (1,163 samples, 36.46%)</title><rect x="869.1" y="133" width="503.2" height="15.0" fill="rgb(213,37,8)" rx="2" ry="2" />
+<text  x="872.15" y="143.5" >MateFinder.defenderLoses</text>
+</g>
+<g >
+<title>Position.make (426 samples, 13.35%)</title><rect x="605.7" y="197" width="184.3" height="15.0" fill="rgb(231,122,29)" rx="2" ry="2" />
+<text  x="608.69" y="207.5" >Position.make</text>
+</g>
+</g>
+<rect x="1045.6" y="53.0" width="8.3" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="966.9" y="37.0" width="72.7" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1365.3" y="85.0" width="5.2" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1131.3" y="69.0" width="77.4" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1374.0" y="101.0" width="6.1" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1300.5" y="69.0" width="6.9" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="424.4" y="165.0" width="165.3" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="45.5" y="181.0" width="9.1" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><circle cx="410.4" cy="172.5" r="12" fill="#0b0b0b"/><text x="410.4" y="177.5" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:15px;fill:#ffffff" text-anchor="middle">1</text><rect x="1292.7" y="85.0" width="14.7" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="913.3" y="69.0" width="3.0" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1373.6" y="117.0" width="6.5" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1362.3" y="101.0" width="8.2" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1084.6" y="85.0" width="124.1" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="1043.1" y="69.0" width="10.8" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="38.1" y="197.0" width="16.5" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="278.6" y="181.0" width="311.1" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="917.2" y="53.0" width="122.4" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><circle cx="264.6" cy="188.5" r="12" fill="#0b0b0b"/><text x="264.6" y="193.5" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:15px;fill:#ffffff" text-anchor="middle">2</text><rect x="1208.7" y="101.0" width="57.1" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="848.8" y="213.0" width="8.2" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><rect x="605.7" y="197.0" width="184.3" height="15.0" fill="none" stroke="#0b0b0b" stroke-width="2.5" rx="2"/><circle cx="591.7" cy="204.5" r="12" fill="#0b0b0b"/><text x="591.7" y="209.5" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:15px;fill:#ffffff" text-anchor="middle">3</text><rect x="0" y="358.0" width="1400.0" height="144" fill="#ffffff"/><circle cx="30" cy="388.0" r="14" fill="#0b0b0b"/><text x="30" y="394.0" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:17px;fill:#ffffff" text-anchor="middle">1</text><text x="54" y="396.0" font-family="Segoe UI, Calibri, Arial, sans-serif"  style="font-size:26px;fill:#0b0b0b">MoveGenerator.attackedAlongRays : 25,5 % du temps CPU (temps propre)</text><circle cx="30" cy="428.0" r="14" fill="#0b0b0b"/><text x="30" y="434.0" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:17px;fill:#ffffff" text-anchor="middle">2</text><text x="54" y="436.0" font-family="Segoe UI, Calibri, Arial, sans-serif"  style="font-size:26px;fill:#0b0b0b">MoveGenerator.isSquareAttacked : 19,2 % du temps CPU (temps propre)</text><circle cx="30" cy="468.0" r="14" fill="#0b0b0b"/><text x="30" y="474.0" font-family="Segoe UI, Calibri, Arial, sans-serif" font-weight="700" style="font-size:17px;fill:#ffffff" text-anchor="middle">3</text><text x="54" y="476.0" font-family="Segoe UI, Calibri, Arial, sans-serif"  style="font-size:26px;fill:#0b0b0b">Position.make : 18,1 % du temps CPU (temps propre)</text></svg>

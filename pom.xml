@@ -16,6 +16,8 @@
         <jmh.args></jmh.args>
         <!-- Output file of the JFR profiling run -->
         <profile.out>target/profile.jfr</profile.out>
+        <!-- Duration of the JFR profiling workload, in seconds -->
+        <profile.seconds>20</profile.seconds>
         <!-- Build output; benchmarks use -Dbuild.dir=target-bench so the IDE compiler cannot overwrite the measured classes -->
         <build.dir>${project.basedir}/target</build.dir>
     </properties>
@@ -92,7 +94,7 @@
                         <configuration>
                             <executable>java</executable>
                             <classpathScope>test</classpathScope>
-                            <commandlineArgs>-XX:StartFlightRecording=filename=${profile.out},settings=tools/profile.jfc -cp %classpath com.chessbot.bench.ProfileWorkload</commandlineArgs>
+                            <commandlineArgs>-XX:StartFlightRecording=filename=${profile.out},settings=tools/profile.jfc -cp %classpath com.chessbot.bench.ProfileWorkload ${profile.seconds}</commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>

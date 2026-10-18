@@ -1,0 +1,4 @@
+ProfileWorkload.main;MateFinder.findMate;SearchContext.mateTable;MateTable.<init> 12582944
+ProfileWorkload.main;Perft.perft;SearchContext.load;ThreadLocal.get;ThreadLocal.get;ThreadLocal.setInitialValue;ThreadLocal$SuppliedThreadLocal.initialValue;0x0000000029046218.get;SearchContext.<init> 35600
+ProfileWorkload.main;Perft.perft;SearchContext.<clinit>;MethodHandleNatives.linkCallSite;MethodHandleNatives.linkCallSiteImpl;CallSite.makeSite;BootstrapMethodInvoker.invoke;DirectMethodHandle$Holder.invokeStatic;LambdaMetafactory.metafactory;InnerClassLambdaMetafactory.<init>;ConstantPoolBuilder.of;SplitConstantPool.<init> 586128
+AbstractDCmd.execute;DCmdStart.execute;Recording.start;PlatformRecording.start;PlatformRecorder.start;PlatformRecorder.writeMetaEvents;ActiveRecordingEvent.commit;EventWriter.putString;StringPool.addString;StringPool.storeString;ConcurrentHashMap.put;ConcurrentHashMap.putVal;ConcurrentHashMap.initTable 17140600

@@ -1,0 +1,36 @@
+samples	2452
+cpuload	12.2
+self	33.2	MoveGenerator.attackedAlongRays
+self	21.2	MoveGenerator.isSquareAttacked
+self	18.0	Position.make
+self	6.4	Position.unmake
+self	5.5	MoveGenerator.addSlideMoves
+self	5.1	MoveGenerator.addPawnMoves
+self	3.8	Perft.perft
+self	2.5	MateFinder.attackerMates
+self	1.3	MoveGenerator.addStepMoves
+self	0.8	MoveGenerator.generate
+self	0.6	Character.isUpperCase
+self	0.4	Character.toLowerCase
+self	0.2	MoveGenerator.addPawnMove
+self	0.1	MateFinder.defenderLoses
+self	0.1	MoveGenerator.addCastlingMoves
+total	99.6	ProfileWorkload.main
+total	57.8	Perft.perft
+total	54.4	MoveGenerator.isSquareAttacked
+total	44.7	MoveGenerator.isKingAttacked
+total	41.7	MateFinder.defenderLoses
+total	41.7	MateFinder.findMate
+total	41.7	MateFinder.attackerMates
+total	33.2	MoveGenerator.attackedAlongRays
+total	23.4	MoveGenerator.generate
+total	18.6	Position.make
+total	9.7	MoveGenerator.addCastlingMoves
+total	9.0	Position.isInCheck
+total	6.4	Position.unmake
+total	5.5	MoveGenerator.addSlideMoves
+total	5.4	MoveGenerator.addPawnMoves
+alloc	56.5	ConcurrentHashMap.initTable
+alloc	41.5	MateTable.<init>
+alloc	1.9	SplitConstantPool.<init>
+alloc	0.1	SearchContext.<init>

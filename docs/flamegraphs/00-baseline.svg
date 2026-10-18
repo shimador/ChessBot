@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="1400" height="454" onload="init(evt)" viewBox="0 0 1400 454" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg version="1.1" width="1400" height="294" onload="init(evt)" viewBox="0 0 1400 294" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
 <!-- NOTES:  -->
 <defs>
@@ -422,841 +422,417 @@
 	}
 ]]>
 </script>
-<rect x="0.0" y="0" width="1400.0" height="454.0" fill="url(#background)"  />
-<text id="title" x="700.00" y="24" >Baseline : perft 4 + mat en 3</text>
-<text id="details" x="10.00" y="437" > </text>
+<rect x="0.0" y="0" width="1400.0" height="294.0" fill="url(#background)"  />
+<text id="title" x="700.00" y="24" >00-baseline : profil CPU (JFR, 1 ms)</text>
+<text id="details" x="10.00" y="277" > </text>
 <text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
 <text id="search" x="1290.00" y="24" >Search</text>
 <text id="ignorecase" x="1374.00" y="24" >ic</text>
-<text id="matched" x="1290.00" y="437" > </text>
+<text id="matched" x="1290.00" y="277" > </text>
 <g id="frames">
 <g >
-<title>AtomicLong.incrementAndGet (1 samples, 0.04%)</title><rect x="10.5" y="261" width="0.6" height="15.0" fill="rgb(253,223,53)" rx="2" ry="2" />
-<text  x="13.54" y="271.5" ></text>
+<title>MoveGenerator.addStepMoves (2 samples, 0.31%)</title><rect x="664.5" y="149" width="4.3" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="667.48" y="159.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.addStepMoves (10 samples, 0.39%)</title><rect x="1169.9" y="277" width="5.4" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="1172.91" y="287.5" ></text>
+<title>MoveGenerator.addPawnMoves (3 samples, 0.47%)</title><rect x="311.4" y="133" width="6.5" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="314.40" y="143.5" ></text>
 </g>
 <g >
-<title>Position.makeMove (14 samples, 0.55%)</title><rect x="1381.3" y="325" width="7.6" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="1384.35" y="335.5" ></text>
+<title>MoveGenerator.addSlideMoves (3 samples, 0.47%)</title><rect x="1168.3" y="117" width="6.4" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="1171.25" y="127.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (2 samples, 0.08%)</title><rect x="337.7" y="245" width="1.1" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="340.70" y="255.5" ></text>
+<title>MoveGenerator.isWhite (2 samples, 0.31%)</title><rect x="1183.3" y="117" width="4.3" height="15.0" fill="rgb(212,32,7)" rx="2" ry="2" />
+<text  x="1186.32" y="127.5" ></text>
 </g>
 <g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="700.0" y="277" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="703.00" y="287.5" ></text>
+<title>ArrayList.grow (2 samples, 0.31%)</title><rect x="1052.0" y="85" width="4.3" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="1055.00" y="95.5" ></text>
 </g>
 <g >
-<title>Position.isInCheck (88 samples, 3.45%)</title><rect x="439.9" y="325" width="47.6" height="15.0" fill="rgb(214,45,10)" rx="2" ry="2" />
-<text  x="442.90" y="335.5" >Posi..</text>
+<title>ArrayList.grow (3 samples, 0.47%)</title><rect x="1174.7" y="69" width="6.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="1177.71" y="79.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.attackedBySlide (152 samples, 5.96%)</title><rect x="1043.4" y="261" width="82.2" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="1046.38" y="271.5" >MoveGener..</text>
+<title>Character.toLowerCase (2 samples, 0.31%)</title><rect x="1198.4" y="117" width="4.3" height="15.0" fill="rgb(207,11,2)" rx="2" ry="2" />
+<text  x="1201.39" y="127.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (2 samples, 0.08%)</title><rect x="614.0" y="293" width="1.1" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="617.02" y="303.5" ></text>
+<title>ArrayList.add (3 samples, 0.47%)</title><rect x="1174.7" y="101" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="1177.71" y="111.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.isSquareAttacked (106 samples, 4.15%)</title><rect x="621.1" y="309" width="57.3" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="624.05" y="319.5" >MoveGe..</text>
+<title>PeriodicEvents.doPeriodic (2 samples, 0.31%)</title><rect x="1383.5" y="149" width="4.3" height="15.0" fill="rgb(210,25,6)" rx="2" ry="2" />
+<text  x="1386.54" y="159.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.addSlideMoves (10 samples, 0.39%)</title><rect x="695.1" y="309" width="5.4" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
-<text  x="698.13" y="319.5" ></text>
+<title>Position.makeMove (38 samples, 5.93%)</title><rect x="330.8" y="149" width="81.8" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="333.78" y="159.5" >Position...</text>
 </g>
 <g >
-<title>MoveGenerator.attackedBySlide (12 samples, 0.47%)</title><rect x="794.6" y="277" width="6.5" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="797.63" y="287.5" ></text>
+<title>ArrayList.add (2 samples, 0.31%)</title><rect x="1052.0" y="117" width="4.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="1055.00" y="127.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="1169.4" y="229" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1172.37" y="239.5" ></text>
+<title>ArrayList.grow (3 samples, 0.47%)</title><rect x="324.3" y="85" width="6.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="327.32" y="95.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.addSlideMoves (2 samples, 0.08%)</title><rect x="775.7" y="325" width="1.1" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
-<text  x="778.71" y="335.5" ></text>
+<title>ArrayList.grow (2 samples, 0.31%)</title><rect x="664.5" y="85" width="4.3" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="667.48" y="95.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="776.8" y="261" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="779.79" y="271.5" ></text>
+<title>MoveGenerator.isSquareAttacked (22 samples, 3.43%)</title><rect x="251.1" y="133" width="47.4" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="254.12" y="143.5" >Move..</text>
 </g>
 <g >
-<title>MoveGenerator.attackedByStep (2 samples, 0.08%)</title><rect x="1125.6" y="261" width="1.1" height="15.0" fill="rgb(246,191,45)" rx="2" ry="2" />
-<text  x="1128.57" y="271.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (169 samples, 6.62%)</title><rect x="348.5" y="309" width="91.4" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="351.51" y="319.5" >Position.m..</text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="700.0" y="245" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="703.00" y="255.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (12 samples, 0.47%)</title><rect x="794.6" y="293" width="6.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="797.63" y="303.5" ></text>
-</g>
-<g >
-<title>Position.&lt;init&gt; (6 samples, 0.24%)</title><rect x="544.8" y="293" width="3.2" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="547.80" y="303.5" ></text>
-</g>
-<g >
-<title>0x000000000c068b58.run (1 samples, 0.04%)</title><rect x="10.0" y="261" width="0.5" height="15.0" fill="rgb(240,162,38)" rx="2" ry="2" />
-<text  x="13.00" y="271.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (1 samples, 0.04%)</title><rect x="779.5" y="357" width="0.5" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="782.49" y="367.5" ></text>
-</g>
-<g >
-<title>Unsafe.ensureClassInitialized (1 samples, 0.04%)</title><rect x="10.0" y="181" width="0.5" height="15.0" fill="rgb(205,0,0)" rx="2" ry="2" />
-<text  x="13.00" y="191.5" ></text>
-</g>
-<g >
-<title>MethodHandles$Lookup.ensureInitialized (1 samples, 0.04%)</title><rect x="10.0" y="197" width="0.5" height="15.0" fill="rgb(235,138,33)" rx="2" ry="2" />
-<text  x="13.00" y="207.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addCastlingMoves (12 samples, 0.47%)</title><rect x="684.9" y="309" width="6.4" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
-<text  x="687.86" y="319.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isWhite (1 samples, 0.04%)</title><rect x="1175.3" y="277" width="0.6" height="15.0" fill="rgb(212,32,7)" rx="2" ry="2" />
-<text  x="1178.32" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="776.2" y="293" width="0.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="779.25" y="303.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (1 samples, 0.04%)</title><rect x="694.6" y="213" width="0.5" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="697.59" y="223.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (2 samples, 0.08%)</title><rect x="614.0" y="325" width="1.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="617.02" y="335.5" ></text>
-</g>
-<g >
-<title>SharedSecrets.ensureClassInitialized (1 samples, 0.04%)</title><rect x="10.0" y="213" width="0.5" height="15.0" fill="rgb(217,55,13)" rx="2" ry="2" />
-<text  x="13.00" y="223.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (1 samples, 0.04%)</title><rect x="1147.2" y="261" width="0.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="1150.20" y="271.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (2 samples, 0.08%)</title><rect x="337.7" y="277" width="1.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="340.70" y="287.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addSlideMoves (17 samples, 0.67%)</title><rect x="1160.7" y="277" width="9.2" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
-<text  x="1163.72" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="776.8" y="277" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="779.79" y="287.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (2 samples, 0.08%)</title><rect x="614.0" y="261" width="1.1" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="617.02" y="271.5" ></text>
-</g>
-<g >
-<title>MateFinder.findMate (1,409 samples, 55.21%)</title><rect x="11.1" y="357" width="761.9" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="14.08" y="367.5" >MateFinder.findMate</text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (11 samples, 0.43%)</title><rect x="685.4" y="277" width="5.9" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="688.40" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="700.0" y="293" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="703.00" y="303.5" ></text>
-</g>
-<g >
-<title>all (2,552 samples, 100%)</title><rect x="10.0" y="405" width="1380.0" height="15.0" fill="rgb(213,39,9)" rx="2" ry="2" />
-<text  x="13.00" y="415.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (2 samples, 0.08%)</title><rect x="774.1" y="325" width="1.1" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="777.08" y="335.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.pseudoLegalMoves (4 samples, 0.16%)</title><rect x="775.2" y="341" width="2.1" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="778.16" y="351.5" ></text>
-</g>
-<g >
-<title>JavaEventTask.execute (1 samples, 0.04%)</title><rect x="10.0" y="277" width="0.5" height="15.0" fill="rgb(221,77,18)" rx="2" ry="2" />
-<text  x="13.00" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (14 samples, 0.55%)</title><rect x="340.9" y="245" width="7.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="343.94" y="255.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (1 samples, 0.04%)</title><rect x="775.2" y="293" width="0.5" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="778.16" y="303.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (2 samples, 0.08%)</title><rect x="337.7" y="261" width="1.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="340.70" y="271.5" ></text>
-</g>
-<g >
-<title>Unsafe.getAndAddLong (1 samples, 0.04%)</title><rect x="10.5" y="245" width="0.6" height="15.0" fill="rgb(236,144,34)" rx="2" ry="2" />
-<text  x="13.54" y="255.5" ></text>
-</g>
-<g >
-<title>ProfileWorkload.main (2,548 samples, 99.84%)</title><rect x="11.1" y="389" width="1377.8" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="14.08" y="399.5" >ProfileWorkload.main</text>
-</g>
-<g >
-<title>MoveGenerator.addStepMoves (1 samples, 0.04%)</title><rect x="776.8" y="325" width="0.5" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="779.79" y="335.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (9 samples, 0.35%)</title><rect x="194.4" y="293" width="4.9" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="197.40" y="303.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (9 samples, 0.35%)</title><rect x="1170.5" y="197" width="4.8" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="1173.45" y="207.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (9 samples, 0.35%)</title><rect x="1170.5" y="213" width="4.8" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1173.45" y="223.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.legalMoves (637 samples, 24.96%)</title><rect x="95.4" y="325" width="344.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="98.44" y="335.5" >MoveGenerator.legalMoves</text>
-</g>
-<g >
-<title>PlatformRecorder.isToDisk (2 samples, 0.08%)</title><rect x="1388.9" y="309" width="1.1" height="15.0" fill="rgb(216,54,13)" rx="2" ry="2" />
-<text  x="1391.92" y="319.5" ></text>
-</g>
-<g >
-<title>Position.copy (11 samples, 0.43%)</title><rect x="767.1" y="325" width="5.9" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="770.05" y="335.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isKingAttacked (17 samples, 0.67%)</title><rect x="791.9" y="309" width="9.2" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="794.93" y="319.5" ></text>
-</g>
-<g >
-<title>PlatformRecorder.start (2 samples, 0.08%)</title><rect x="10.0" y="325" width="1.1" height="15.0" fill="rgb(244,183,43)" rx="2" ry="2" />
-<text  x="13.00" y="335.5" ></text>
-</g>
-<g >
-<title>MateFinder.findMate (1,422 samples, 55.72%)</title><rect x="11.1" y="373" width="768.9" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="14.08" y="383.5" >MateFinder.findMate</text>
-</g>
-<g >
-<title>Perft.perft (1,126 samples, 44.12%)</title><rect x="780.0" y="341" width="608.9" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
-<text  x="783.03" y="351.5" >Perft.perft</text>
-</g>
-<g >
-<title>ArrayList.add (9 samples, 0.35%)</title><rect x="194.4" y="309" width="4.9" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="197.40" y="319.5" ></text>
-</g>
-<g >
-<title>MateFinder.findMate (10 samples, 0.39%)</title><rect x="90.0" y="325" width="5.4" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="93.03" y="335.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (9 samples, 0.35%)</title><rect x="194.4" y="261" width="4.9" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="197.40" y="271.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (116 samples, 4.55%)</title><rect x="227.4" y="277" width="62.7" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="230.38" y="287.5" >MoveGe..</text>
-</g>
-<g >
-<title>Position.copy (116 samples, 4.55%)</title><rect x="704.3" y="309" width="62.8" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="707.33" y="319.5" >Positi..</text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="694.6" y="261" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="697.59" y="271.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (1 samples, 0.04%)</title><rect x="1147.2" y="245" width="0.5" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="1150.20" y="255.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (9 samples, 0.35%)</title><rect x="1170.5" y="261" width="4.8" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1173.45" y="271.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (8 samples, 0.31%)</title><rect x="1030.9" y="293" width="4.4" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1033.94" y="303.5" ></text>
-</g>
-<g >
-<title>PlatformRecorder.lambda$startDiskMonitor$0 (2 samples, 0.08%)</title><rect x="1388.9" y="341" width="1.1" height="15.0" fill="rgb(227,104,25)" rx="2" ry="2" />
-<text  x="1391.92" y="351.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedByStep (1 samples, 0.04%)</title><rect x="677.8" y="293" width="0.6" height="15.0" fill="rgb(246,191,45)" rx="2" ry="2" />
-<text  x="680.83" y="303.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="776.2" y="261" width="0.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="779.25" y="271.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (5 samples, 0.20%)</title><rect x="700.5" y="261" width="2.7" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="703.54" y="271.5" ></text>
-</g>
-<g >
-<title>AbstractDCmd.execute (2 samples, 0.08%)</title><rect x="10.0" y="389" width="1.1" height="15.0" fill="rgb(219,68,16)" rx="2" ry="2" />
-<text  x="13.00" y="399.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (9 samples, 0.35%)</title><rect x="194.4" y="277" width="4.9" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="197.40" y="287.5" ></text>
-</g>
-<g >
-<title>Position.copy (168 samples, 6.58%)</title><rect x="349.1" y="293" width="90.8" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="352.05" y="303.5" >Position.c..</text>
-</g>
-<g >
-<title>ArrayList.add (9 samples, 0.35%)</title><rect x="1170.5" y="245" width="4.8" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1173.45" y="255.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addCastlingMoves (1 samples, 0.04%)</title><rect x="775.2" y="325" width="0.5" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
-<text  x="778.16" y="335.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (155 samples, 6.07%)</title><rect x="1042.8" y="277" width="83.9" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="1045.84" y="287.5" >MoveGener..</text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (1 samples, 0.04%)</title><rect x="775.2" y="309" width="0.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="778.16" y="319.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="694.6" y="245" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="697.59" y="255.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="773.5" y="293" width="0.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="776.54" y="303.5" ></text>
-</g>
-<g >
-<title>PeriodicEvents.setFlushInterval (1 samples, 0.04%)</title><rect x="10.5" y="309" width="0.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="13.54" y="319.5" ></text>
-</g>
-<g >
-<title>Properties.load0 (1 samples, 0.04%)</title><rect x="10.0" y="53" width="0.5" height="15.0" fill="rgb(213,38,9)" rx="2" ry="2" />
-<text  x="13.00" y="63.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (5 samples, 0.20%)</title><rect x="803.3" y="309" width="2.7" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="806.28" y="319.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (5 samples, 0.20%)</title><rect x="700.5" y="293" width="2.7" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="703.54" y="303.5" ></text>
-</g>
-<g >
-<title>PlatformRecorder.periodicTask (2 samples, 0.08%)</title><rect x="1388.9" y="325" width="1.1" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
-<text  x="1391.92" y="335.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isKingAttacked (117 samples, 4.58%)</title><rect x="615.1" y="325" width="63.3" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="618.10" y="335.5" >MoveGe..</text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="776.2" y="277" width="0.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="779.25" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList$Itr.next (2 samples, 0.08%)</title><rect x="922.2" y="309" width="1.1" height="15.0" fill="rgb(226,98,23)" rx="2" ry="2" />
-<text  x="925.25" y="319.5" ></text>
-</g>
-<g >
-<title>Character.isUpperCase (1 samples, 0.04%)</title><rect x="1175.3" y="245" width="0.6" height="15.0" fill="rgb(233,130,31)" rx="2" ry="2" />
-<text  x="1178.32" y="255.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (7 samples, 0.27%)</title><rect x="1156.9" y="197" width="3.8" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1159.94" y="207.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedByStep (2 samples, 0.08%)</title><rect x="486.4" y="277" width="1.1" height="15.0" fill="rgb(246,191,45)" rx="2" ry="2" />
-<text  x="489.40" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (7 samples, 0.27%)</title><rect x="1156.9" y="229" width="3.8" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1159.94" y="239.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (8 samples, 0.31%)</title><rect x="1030.9" y="277" width="4.4" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1033.94" y="287.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (5 samples, 0.20%)</title><rect x="700.5" y="229" width="2.7" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="703.54" y="239.5" ></text>
-</g>
-<g >
-<title>Position.&lt;init&gt; (11 samples, 0.43%)</title><rect x="1375.4" y="277" width="5.9" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="1378.40" y="287.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addPawnMoves (24 samples, 0.94%)</title><rect x="1147.7" y="277" width="13.0" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
-<text  x="1150.74" y="287.5" ></text>
-</g>
-<g >
-<title>Properties.load (1 samples, 0.04%)</title><rect x="10.0" y="69" width="0.5" height="15.0" fill="rgb(223,84,20)" rx="2" ry="2" />
-<text  x="13.00" y="79.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="694.6" y="277" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="697.59" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (2 samples, 0.08%)</title><rect x="614.0" y="277" width="1.1" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="617.02" y="287.5" ></text>
-</g>
-<g >
-<title>Position.copy (5 samples, 0.20%)</title><rect x="803.3" y="293" width="2.7" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="806.28" y="303.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="776.2" y="309" width="0.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="779.25" y="319.5" ></text>
-</g>
-<g >
-<title>Position.copy (4 samples, 0.16%)</title><rect x="777.3" y="325" width="2.2" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="780.33" y="335.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addStepMoves (5 samples, 0.20%)</title><rect x="700.5" y="309" width="2.7" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="703.54" y="319.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.legalMoves (405 samples, 15.87%)</title><rect x="548.0" y="341" width="219.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="551.05" y="351.5" >MoveGenerator.legalMoves</text>
-</g>
-<g >
-<title>ArrayList.add (5 samples, 0.20%)</title><rect x="700.5" y="277" width="2.7" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="703.54" y="287.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addPawnMoves (10 samples, 0.39%)</title><rect x="315.0" y="293" width="5.4" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
-<text  x="317.98" y="303.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (124 samples, 4.86%)</title><rect x="226.8" y="293" width="67.1" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="229.84" y="303.5" >MoveGen..</text>
-</g>
-<g >
-<title>Arrays.copyOf (7 samples, 0.27%)</title><rect x="1156.9" y="181" width="3.8" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="1159.94" y="191.5" ></text>
-</g>
-<g >
-<title>PeriodicTask.run (1 samples, 0.04%)</title><rect x="10.0" y="293" width="0.5" height="15.0" fill="rgb(245,185,44)" rx="2" ry="2" />
-<text  x="13.00" y="303.5" ></text>
-</g>
-<g >
-<title>Character.toLowerCase (1 samples, 0.04%)</title><rect x="1178.0" y="277" width="0.6" height="15.0" fill="rgb(207,11,2)" rx="2" ry="2" />
-<text  x="1181.03" y="287.5" ></text>
-</g>
-<g >
-<title>Security.initialize (1 samples, 0.04%)</title><rect x="10.0" y="133" width="0.5" height="15.0" fill="rgb(248,201,48)" rx="2" ry="2" />
-<text  x="13.00" y="143.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (8 samples, 0.31%)</title><rect x="1030.9" y="245" width="4.4" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1033.94" y="255.5" ></text>
-</g>
-<g >
-<title>Position.&lt;init&gt; (13 samples, 0.51%)</title><rect x="760.0" y="293" width="7.1" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="763.02" y="303.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (11 samples, 0.43%)</title><rect x="685.4" y="293" width="5.9" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="688.40" y="303.5" ></text>
-</g>
-<g >
-<title>0x000000000c079a78.run (2 samples, 0.08%)</title><rect x="1388.9" y="357" width="1.1" height="15.0" fill="rgb(220,72,17)" rx="2" ry="2" />
-<text  x="1391.92" y="367.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="773.5" y="325" width="0.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="776.54" y="335.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (112 samples, 4.39%)</title><rect x="487.5" y="325" width="60.5" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="490.48" y="335.5" >Positi..</text>
-</g>
-<g >
-<title>MoveGenerator.addPawnMoves (7 samples, 0.27%)</title><rect x="691.3" y="309" width="3.8" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
-<text  x="694.35" y="319.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isKingAttacked (175 samples, 6.86%)</title><rect x="199.3" y="309" width="94.6" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="202.26" y="319.5" >MoveGenerat..</text>
-</g>
-<g >
-<title>Security$SecPropLoader.loadAll (1 samples, 0.04%)</title><rect x="10.0" y="117" width="0.5" height="15.0" fill="rgb(210,24,5)" rx="2" ry="2" />
-<text  x="13.00" y="127.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (175 samples, 6.86%)</title><rect x="1286.7" y="309" width="94.6" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="1289.72" y="319.5" >Position.ma..</text>
-</g>
-<g >
-<title>FlushTask.setInterval (1 samples, 0.04%)</title><rect x="10.5" y="293" width="0.6" height="15.0" fill="rgb(241,165,39)" rx="2" ry="2" />
-<text  x="13.54" y="303.5" ></text>
-</g>
-<g >
-<title>Position.copy (170 samples, 6.66%)</title><rect x="1289.4" y="293" width="91.9" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="1292.42" y="303.5" >Position.c..</text>
-</g>
-<g >
-<title>PeriodicEvents.doChunkBegin (1 samples, 0.04%)</title><rect x="10.0" y="309" width="0.5" height="15.0" fill="rgb(229,114,27)" rx="2" ry="2" />
-<text  x="13.00" y="319.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.pseudoLegalMoves (101 samples, 3.96%)</title><rect x="293.9" y="309" width="54.6" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="296.89" y="319.5" >MoveG..</text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="1169.4" y="245" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1172.37" y="255.5" ></text>
-</g>
-<g >
-<title>Position.makeMove (118 samples, 4.62%)</title><rect x="703.2" y="325" width="63.9" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="706.24" y="335.5" >Positio..</text>
-</g>
-<g >
-<title>MoveGenerator.addSlideMoves (34 samples, 1.33%)</title><rect x="320.4" y="293" width="18.4" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
-<text  x="323.39" y="303.5" ></text>
-</g>
-<g >
-<title>Position.copy (1 samples, 0.04%)</title><rect x="779.5" y="341" width="0.5" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="782.49" y="351.5" ></text>
-</g>
-<g >
-<title>Recording.start (2 samples, 0.08%)</title><rect x="10.0" y="357" width="1.1" height="15.0" fill="rgb(236,144,34)" rx="2" ry="2" />
-<text  x="13.00" y="367.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (14 samples, 0.55%)</title><rect x="340.9" y="277" width="7.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="343.94" y="287.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (1 samples, 0.04%)</title><rect x="338.2" y="213" width="0.6" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="341.24" y="223.5" ></text>
-</g>
-<g >
-<title>Position.&lt;init&gt; (15 samples, 0.59%)</title><rect x="431.8" y="277" width="8.1" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="434.79" y="287.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (9 samples, 0.35%)</title><rect x="1170.5" y="229" width="4.8" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1173.45" y="239.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.pseudoLegalMoves (91 samples, 3.57%)</title><rect x="1126.7" y="293" width="49.2" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="1129.65" y="303.5" >Move..</text>
-</g>
-<g >
-<title>Position.copy (13 samples, 0.51%)</title><rect x="1381.9" y="309" width="7.0" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="1384.89" y="319.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="694.6" y="229" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="697.59" y="239.5" ></text>
-</g>
-<g >
-<title>PeriodicEvents.setChanged (1 samples, 0.04%)</title><rect x="10.5" y="277" width="0.6" height="15.0" fill="rgb(237,151,36)" rx="2" ry="2" />
-<text  x="13.54" y="287.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addCastlingMoves (1 samples, 0.04%)</title><rect x="1147.2" y="277" width="0.5" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
-<text  x="1150.20" y="287.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (1 samples, 0.04%)</title><rect x="773.5" y="277" width="0.6" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="776.54" y="287.5" ></text>
-</g>
-<g >
-<title>Unsafe.ensureClassInitialized0 (1 samples, 0.04%)</title><rect x="10.0" y="165" width="0.5" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="13.00" y="175.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="773.5" y="309" width="0.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="776.54" y="319.5" ></text>
-</g>
-<g >
-<title>Character.isUpperCase (1 samples, 0.04%)</title><rect x="1175.3" y="261" width="0.6" height="15.0" fill="rgb(233,130,31)" rx="2" ry="2" />
-<text  x="1178.32" y="271.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (14 samples, 0.55%)</title><rect x="340.9" y="213" width="7.6" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="343.94" y="223.5" ></text>
-</g>
-<g >
-<title>Security$SecPropLoader.loadFromPath (1 samples, 0.04%)</title><rect x="10.0" y="85" width="0.5" height="15.0" fill="rgb(251,212,50)" rx="2" ry="2" />
-<text  x="13.00" y="95.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (105 samples, 4.11%)</title><rect x="621.1" y="293" width="56.7" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="624.05" y="303.5" >MoveGe..</text>
-</g>
-<g >
-<title>MoveGenerator.pseudoLegalMoves (4 samples, 0.16%)</title><rect x="801.1" y="309" width="2.2" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="804.12" y="319.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.legalMoves (38 samples, 1.49%)</title><rect x="785.4" y="325" width="20.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="788.44" y="335.5" ></text>
-</g>
-<g >
-<title>Security$SecPropLoader.loadMaster (1 samples, 0.04%)</title><rect x="10.0" y="101" width="0.5" height="15.0" fill="rgb(220,70,16)" rx="2" ry="2" />
-<text  x="13.00" y="111.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.legalMoves (668 samples, 26.18%)</title><rect x="923.3" y="309" width="361.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="926.33" y="319.5" >MoveGenerator.legalMoves</text>
-</g>
-<g >
-<title>Properties$LineReader.readLine (1 samples, 0.04%)</title><rect x="10.0" y="37" width="0.5" height="15.0" fill="rgb(208,16,3)" rx="2" ry="2" />
-<text  x="13.00" y="47.5" ></text>
-</g>
-<g >
-<title>Position.copy (112 samples, 4.39%)</title><rect x="487.5" y="309" width="60.5" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="490.48" y="319.5" >Positi..</text>
-</g>
-<g >
-<title>Perft.perft (1,064 samples, 41.69%)</title><rect x="806.0" y="325" width="575.3" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
-<text  x="808.99" y="335.5" >Perft.perft</text>
-</g>
-<g >
-<title>ArrayList.add (7 samples, 0.27%)</title><rect x="1156.9" y="245" width="3.8" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1159.94" y="255.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (14 samples, 0.55%)</title><rect x="340.9" y="261" width="7.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="343.94" y="271.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (7 samples, 0.27%)</title><rect x="1156.9" y="213" width="3.8" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1159.94" y="223.5" ></text>
-</g>
-<g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="1169.4" y="213" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1172.37" y="223.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="776.8" y="293" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="779.79" y="303.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (83 samples, 3.25%)</title><rect x="441.5" y="277" width="44.9" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="444.52" y="287.5" >Move..</text>
-</g>
-<g >
-<title>MoveGenerator.isSquareAttacked (85 samples, 3.33%)</title><rect x="441.5" y="293" width="46.0" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="444.52" y="303.5" >Move..</text>
-</g>
-<g >
-<title>Thread.run (2 samples, 0.08%)</title><rect x="1388.9" y="389" width="1.1" height="15.0" fill="rgb(237,150,35)" rx="2" ry="2" />
-<text  x="1391.92" y="399.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addPawnMove (1 samples, 0.04%)</title><rect x="694.6" y="293" width="0.5" height="15.0" fill="rgb(226,100,23)" rx="2" ry="2" />
-<text  x="697.59" y="303.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (9 samples, 0.35%)</title><rect x="194.4" y="245" width="4.9" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="197.40" y="255.5" ></text>
-</g>
-<g >
-<title>SharedSecrets.getJavaSecurityPropertiesAccess (1 samples, 0.04%)</title><rect x="10.0" y="229" width="0.5" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="13.00" y="239.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addSlideMoves (1 samples, 0.04%)</title><rect x="802.7" y="293" width="0.6" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
-<text  x="805.74" y="303.5" ></text>
-</g>
-<g >
-<title>Position.&lt;init&gt; (1 samples, 0.04%)</title><rect x="1388.4" y="293" width="0.5" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="1391.38" y="303.5" ></text>
-</g>
-<g >
-<title>Position.copy (196 samples, 7.68%)</title><rect x="1178.6" y="277" width="106.0" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
-<text  x="1181.57" y="287.5" >Position.copy</text>
-</g>
-<g >
-<title>Thread.runWith (2 samples, 0.08%)</title><rect x="1388.9" y="373" width="1.1" height="15.0" fill="rgb(226,97,23)" rx="2" ry="2" />
-<text  x="1391.92" y="383.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addStepMoves (18 samples, 0.71%)</title><rect x="338.8" y="293" width="9.7" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="341.78" y="303.5" ></text>
-</g>
-<g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="773.5" y="341" width="0.6" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="776.54" y="351.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.addPawnMove (8 samples, 0.31%)</title><rect x="1156.4" y="261" width="4.3" height="15.0" fill="rgb(226,100,23)" rx="2" ry="2" />
-<text  x="1159.39" y="271.5" ></text>
-</g>
-<g >
-<title>Arrays.copyOf (8 samples, 0.31%)</title><rect x="1030.9" y="229" width="4.4" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="1033.94" y="239.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.isKingAttacked (88 samples, 3.45%)</title><rect x="439.9" y="309" width="47.6" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="442.90" y="319.5" >Move..</text>
-</g>
-<g >
-<title>ArrayList.grow (2 samples, 0.08%)</title><rect x="337.7" y="229" width="1.1" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="340.70" y="239.5" ></text>
-</g>
-<g >
-<title>MoveGenerator.attackedBySlide (2 samples, 0.08%)</title><rect x="774.1" y="309" width="1.1" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="777.08" y="319.5" ></text>
-</g>
-<g >
-<title>Security.&lt;clinit&gt; (1 samples, 0.04%)</title><rect x="10.0" y="149" width="0.5" height="15.0" fill="rgb(244,183,43)" rx="2" ry="2" />
+<title>PeriodicEvents.doChunkBegin (2 samples, 0.31%)</title><rect x="10.0" y="149" width="4.3" height="15.0" fill="rgb(229,114,27)" rx="2" ry="2" />
 <text  x="13.00" y="159.5" ></text>
 </g>
 <g >
-<title>Perft.perft (1,126 samples, 44.12%)</title><rect x="780.0" y="373" width="608.9" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
-<text  x="783.03" y="383.5" >Perft.perft</text>
+<title>PlatformRecording.start (3 samples, 0.47%)</title><rect x="10.0" y="181" width="6.5" height="15.0" fill="rgb(229,112,26)" rx="2" ry="2" />
+<text  x="13.00" y="191.5" ></text>
 </g>
 <g >
-<title>ArrayList$Itr.next (1 samples, 0.04%)</title><rect x="89.5" y="325" width="0.5" height="15.0" fill="rgb(226,98,23)" rx="2" ry="2" />
-<text  x="92.49" y="335.5" ></text>
+<title>Arrays.copyOf (3 samples, 0.47%)</title><rect x="1174.7" y="37" width="6.5" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
+<text  x="1177.71" y="47.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.attackedBySlide (12 samples, 0.47%)</title><rect x="308.5" y="261" width="6.5" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
-<text  x="311.50" y="271.5" ></text>
+<title>Arrays.copyOf (2 samples, 0.31%)</title><rect x="1052.0" y="69" width="4.3" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
+<text  x="1055.00" y="79.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.addCastlingMoves (13 samples, 0.51%)</title><rect x="308.0" y="293" width="7.0" height="15.0" fill="rgb(253,220,52)" rx="2" ry="2" />
-<text  x="310.95" y="303.5" ></text>
+<title>MoveGenerator.isSquareAttacked (30 samples, 4.68%)</title><rect x="1056.3" y="117" width="64.6" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="1059.30" y="127.5" >MoveGen..</text>
 </g>
 <g >
-<title>PlatformRecording.start (2 samples, 0.08%)</title><rect x="10.0" y="341" width="1.1" height="15.0" fill="rgb(229,112,26)" rx="2" ry="2" />
-<text  x="13.00" y="351.5" ></text>
+<title>MoveGenerator.addSlideMoves (3 samples, 0.47%)</title><rect x="317.9" y="133" width="6.4" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="320.86" y="143.5" ></text>
 </g>
 <g >
-<title>Position.&lt;init&gt; (3 samples, 0.12%)</title><rect x="804.4" y="277" width="1.6" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="807.37" y="287.5" ></text>
+<title>MateFinder.findMate (332 samples, 51.79%)</title><rect x="16.5" y="197" width="714.7" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="19.46" y="207.5" >MateFinder.findMate</text>
 </g>
 <g >
-<title>ArrayList.add (2 samples, 0.08%)</title><rect x="614.0" y="309" width="1.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="617.02" y="319.5" ></text>
+<title>MoveGenerator.pseudoLegalMoves (12 samples, 1.87%)</title><rect x="642.9" y="165" width="25.9" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
+<text  x="645.95" y="175.5" >M..</text>
 </g>
 <g >
-<title>Perft.perft (1,126 samples, 44.12%)</title><rect x="780.0" y="357" width="608.9" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
-<text  x="783.03" y="367.5" >Perft.perft</text>
+<title>MateFinder.findMate (230 samples, 35.88%)</title><rect x="20.8" y="181" width="495.1" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="23.76" y="191.5" >MateFinder.findMate</text>
 </g>
 <g >
-<title>ArrayList.grow (5 samples, 0.20%)</title><rect x="700.5" y="245" width="2.7" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="703.54" y="255.5" ></text>
+<title>MoveGenerator.addStepMoves (3 samples, 0.47%)</title><rect x="324.3" y="133" width="6.5" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="327.32" y="143.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.isKingAttacked (169 samples, 6.62%)</title><rect x="1035.3" y="293" width="91.4" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="1038.27" y="303.5" >MoveGenera..</text>
+<title>MoveGenerator.pseudoLegalMoves (15 samples, 2.34%)</title><rect x="298.5" y="149" width="32.3" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
+<text  x="301.49" y="159.5" >Mo..</text>
 </g>
 <g >
-<title>MoveGenerator.pseudoLegalMoves (46 samples, 1.80%)</title><rect x="678.4" y="325" width="24.8" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
-<text  x="681.37" y="335.5" >M..</text>
+<title>Position.copy (26 samples, 4.06%)</title><rect x="670.9" y="149" width="56.0" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="673.94" y="159.5" >Posit..</text>
 </g>
 <g >
-<title>MoveGenerator.isSquareAttacked (12 samples, 0.47%)</title><rect x="308.5" y="277" width="6.5" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
-<text  x="311.50" y="287.5" ></text>
+<title>Arrays.copyOf (3 samples, 0.47%)</title><rect x="324.3" y="53" width="6.5" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
+<text  x="327.32" y="63.5" ></text>
 </g>
 <g >
-<title>MoveGenerator.legalMoves (12 samples, 0.47%)</title><rect x="773.0" y="357" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="776.00" y="367.5" ></text>
+<title>MoveGenerator.isSquareAttacked (17 samples, 2.65%)</title><rect x="606.3" y="149" width="36.6" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="609.35" y="159.5" >Mov..</text>
 </g>
 <g >
-<title>Position.&lt;init&gt; (27 samples, 1.06%)</title><rect x="1270.0" y="261" width="14.6" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
-<text  x="1272.95" y="271.5" ></text>
+<title>0x000000001b079a78.run (3 samples, 0.47%)</title><rect x="1383.5" y="197" width="6.5" height="15.0" fill="rgb(220,72,17)" rx="2" ry="2" />
+<text  x="1386.54" y="207.5" ></text>
 </g>
 <g >
-<title>Position.makeMove (201 samples, 7.88%)</title><rect x="1175.9" y="293" width="108.7" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="1178.86" y="303.5" >Position.make..</text>
+<title>Position.makeMove (4 samples, 0.62%)</title><rect x="1374.9" y="165" width="8.6" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="1377.93" y="175.5" ></text>
 </g>
 <g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="776.8" y="309" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="779.79" y="319.5" ></text>
+<title>MoveGenerator.attackedBySlide (21 samples, 3.28%)</title><rect x="251.1" y="117" width="45.2" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
+<text  x="254.12" y="127.5" >Move..</text>
 </g>
 <g >
-<title>MateFinder.findMate (984 samples, 38.56%)</title><rect x="15.9" y="341" width="532.1" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
-<text  x="18.95" y="351.5" >MateFinder.findMate</text>
+<title>Position.makeMove (2 samples, 0.31%)</title><rect x="726.9" y="181" width="4.3" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="729.91" y="191.5" ></text>
 </g>
 <g >
-<title>ArrayList.add (1 samples, 0.04%)</title><rect x="1169.4" y="261" width="0.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
-<text  x="1172.37" y="271.5" ></text>
+<title>MoveGenerator.isKingAttacked (5 samples, 0.78%)</title><rect x="748.4" y="149" width="10.8" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="751.44" y="159.5" ></text>
 </g>
 <g >
-<title>JDKEvents.emitInitialSecurityProperties (1 samples, 0.04%)</title><rect x="10.0" y="245" width="0.5" height="15.0" fill="rgb(219,66,15)" rx="2" ry="2" />
+<title>Position.&lt;init&gt; (2 samples, 0.31%)</title><rect x="1370.6" y="117" width="4.3" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
+<text  x="1373.62" y="127.5" ></text>
+</g>
+<g >
+<title>AbstractDCmd.execute (3 samples, 0.47%)</title><rect x="10.0" y="229" width="6.5" height="15.0" fill="rgb(219,68,16)" rx="2" ry="2" />
+<text  x="13.00" y="239.5" ></text>
+</g>
+<g >
+<title>Position.copy (31 samples, 4.84%)</title><rect x="449.2" y="149" width="66.7" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="452.19" y="159.5" >Positio..</text>
+</g>
+<g >
+<title>ArrayList.add (3 samples, 0.47%)</title><rect x="324.3" y="101" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="327.32" y="111.5" ></text>
+</g>
+<g >
+<title>Position.makeMove (45 samples, 7.02%)</title><rect x="1187.6" y="133" width="96.9" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="1190.63" y="143.5" >Position.ma..</text>
+</g>
+<g >
+<title>MoveGenerator.legalMoves (3 samples, 0.47%)</title><rect x="731.2" y="197" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="734.22" y="207.5" ></text>
+</g>
+<g >
+<title>all (641 samples, 100%)</title><rect x="10.0" y="245" width="1380.0" height="15.0" fill="rgb(213,39,9)" rx="2" ry="2" />
 <text  x="13.00" y="255.5" ></text>
 </g>
 <g >
-<title>Arrays.copyOf (1 samples, 0.04%)</title><rect x="776.8" y="245" width="0.5" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
-<text  x="779.79" y="255.5" ></text>
+<title>ArrayList.grow (2 samples, 0.31%)</title><rect x="664.5" y="101" width="4.3" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="667.48" y="111.5" ></text>
 </g>
 <g >
-<title>DCmdStart.execute (2 samples, 0.08%)</title><rect x="10.0" y="373" width="1.1" height="15.0" fill="rgb(219,64,15)" rx="2" ry="2" />
-<text  x="13.00" y="383.5" ></text>
+<title>MoveGenerator.isKingAttacked (18 samples, 2.81%)</title><rect x="604.2" y="165" width="38.7" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="607.20" y="175.5" >Mov..</text>
 </g>
 <g >
-<title>MoveGenerator.addPawnMoves (2 samples, 0.08%)</title><rect x="801.7" y="293" width="1.0" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
-<text  x="804.66" y="303.5" ></text>
+<title>Perft.perft (300 samples, 46.80%)</title><rect x="737.7" y="197" width="645.8" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="740.68" y="207.5" >Perft.perft</text>
 </g>
 <g >
-<title>MoveGenerator.isKingAttacked (2 samples, 0.08%)</title><rect x="774.1" y="341" width="1.1" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
-<text  x="777.08" y="351.5" ></text>
+<title>Position.copy (37 samples, 5.77%)</title><rect x="1295.3" y="133" width="79.6" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="1298.27" y="143.5" >Position...</text>
 </g>
 <g >
-<title>Unsafe.weakCompareAndSetLong (1 samples, 0.04%)</title><rect x="10.5" y="229" width="0.6" height="15.0" fill="rgb(245,186,44)" rx="2" ry="2" />
-<text  x="13.54" y="239.5" ></text>
+<title>MoveGenerator.attackedBySlide (16 samples, 2.50%)</title><rect x="412.6" y="117" width="34.4" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
+<text  x="415.59" y="127.5" >Mo..</text>
 </g>
 <g >
-<title>ArrayList.grow (8 samples, 0.31%)</title><rect x="1030.9" y="261" width="4.4" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="1033.94" y="271.5" ></text>
+<title>MoveGenerator.legalMoves (11 samples, 1.72%)</title><rect x="742.0" y="165" width="23.7" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="744.98" y="175.5" >M..</text>
 </g>
 <g >
-<title>MoveGenerator.attackedByStep (7 samples, 0.27%)</title><rect x="290.1" y="277" width="3.8" height="15.0" fill="rgb(246,191,45)" rx="2" ry="2" />
-<text  x="293.11" y="287.5" ></text>
+<title>ArrayList.add (2 samples, 0.31%)</title><rect x="664.5" y="133" width="4.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="667.48" y="143.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (14 samples, 0.55%)</title><rect x="340.9" y="229" width="7.6" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="343.94" y="239.5" ></text>
+<title>PlatformRecorder.periodicTask (3 samples, 0.47%)</title><rect x="1383.5" y="165" width="6.5" height="15.0" fill="rgb(224,90,21)" rx="2" ry="2" />
+<text  x="1386.54" y="175.5" ></text>
 </g>
 <g >
-<title>Perft.perft (4 samples, 0.16%)</title><rect x="1284.6" y="309" width="2.1" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
-<text  x="1287.55" y="319.5" ></text>
+<title>MoveGenerator.attackedBySlide (29 samples, 4.52%)</title><rect x="1056.3" y="101" width="62.4" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
+<text  x="1059.30" y="111.5" >MoveGe..</text>
 </g>
 <g >
-<title>Position.makeMove (11 samples, 0.43%)</title><rect x="767.1" y="341" width="5.9" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="770.05" y="351.5" ></text>
+<title>Recording.start (3 samples, 0.47%)</title><rect x="10.0" y="197" width="6.5" height="15.0" fill="rgb(236,144,34)" rx="2" ry="2" />
+<text  x="13.00" y="207.5" ></text>
 </g>
 <g >
-<title>ArrayList.grow (1 samples, 0.04%)</title><rect x="700.0" y="261" width="0.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
-<text  x="703.00" y="271.5" ></text>
+<title>ArrayList.add (3 samples, 0.47%)</title><rect x="324.3" y="117" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="327.32" y="127.5" ></text>
 </g>
 <g >
-<title>Character.toLowerCase (1 samples, 0.04%)</title><rect x="1178.0" y="261" width="0.6" height="15.0" fill="rgb(207,11,2)" rx="2" ry="2" />
-<text  x="1181.03" y="271.5" ></text>
+<title>MoveGenerator.attackedBySlide (2 samples, 0.31%)</title><rect x="754.9" y="117" width="4.3" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
+<text  x="757.90" y="127.5" ></text>
 </g>
 <g >
-<title>Position.makeMove (4 samples, 0.16%)</title><rect x="777.3" y="341" width="2.2" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
-<text  x="780.33" y="351.5" ></text>
+<title>Arrays.copyOf (2 samples, 0.31%)</title><rect x="664.5" y="69" width="4.3" height="15.0" fill="rgb(241,168,40)" rx="2" ry="2" />
+<text  x="667.48" y="79.5" ></text>
+</g>
+<g >
+<title>Perft.perft (283 samples, 44.15%)</title><rect x="765.7" y="165" width="609.2" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="768.66" y="175.5" >Perft.perft</text>
+</g>
+<g >
+<title>Position.&lt;init&gt; (3 samples, 0.47%)</title><rect x="406.1" y="117" width="6.5" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
+<text  x="409.13" y="127.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.legalMoves (98 samples, 15.29%)</title><rect x="515.9" y="181" width="211.0" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="518.93" y="191.5" >MoveGenerator.legalMoves</text>
+</g>
+<g >
+<title>ArrayList.add (2 samples, 0.31%)</title><rect x="664.5" y="117" width="4.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="667.48" y="127.5" ></text>
+</g>
+<g >
+<title>Position.makeMove (41 samples, 6.40%)</title><rect x="1286.7" y="149" width="88.2" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="1289.66" y="159.5" >Position.m..</text>
+</g>
+<g >
+<title>MoveGenerator.legalMoves (171 samples, 26.68%)</title><rect x="916.4" y="149" width="368.1" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="919.37" y="159.5" >MoveGenerator.legalMoves</text>
+</g>
+<g >
+<title>JDKEvents.emitInitialSecurityProperties (2 samples, 0.31%)</title><rect x="10.0" y="85" width="4.3" height="15.0" fill="rgb(219,66,15)" rx="2" ry="2" />
+<text  x="13.00" y="95.5" ></text>
+</g>
+<g >
+<title>Character.isUpperCase (2 samples, 0.31%)</title><rect x="1183.3" y="85" width="4.3" height="15.0" fill="rgb(233,130,31)" rx="2" ry="2" />
+<text  x="1186.32" y="95.5" ></text>
+</g>
+<g >
+<title>0x000000001b068b58.run (2 samples, 0.31%)</title><rect x="10.0" y="101" width="4.3" height="15.0" fill="rgb(240,162,38)" rx="2" ry="2" />
+<text  x="13.00" y="111.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addStepMoves (4 samples, 0.62%)</title><rect x="1174.7" y="117" width="8.6" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="1177.71" y="127.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (30 samples, 4.68%)</title><rect x="1056.3" y="133" width="64.6" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="1059.30" y="143.5" >MoveGen..</text>
+</g>
+<g >
+<title>MateFinder.findMate (335 samples, 52.26%)</title><rect x="16.5" y="213" width="721.2" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="19.46" y="223.5" >MateFinder.findMate</text>
+</g>
+<g >
+<title>MoveGenerator.addPawnMoves (7 samples, 1.09%)</title><rect x="1153.2" y="117" width="15.1" height="15.0" fill="rgb(233,132,31)" rx="2" ry="2" />
+<text  x="1156.18" y="127.5" ></text>
+</g>
+<g >
+<title>ArrayList.grow (3 samples, 0.47%)</title><rect x="1174.7" y="53" width="6.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="1177.71" y="63.5" ></text>
+</g>
+<g >
+<title>JavaEventTask.execute (2 samples, 0.31%)</title><rect x="10.0" y="117" width="4.3" height="15.0" fill="rgb(221,77,18)" rx="2" ry="2" />
+<text  x="13.00" y="127.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.addSlideMoves (5 samples, 0.78%)</title><rect x="653.7" y="149" width="10.8" height="15.0" fill="rgb(246,188,45)" rx="2" ry="2" />
+<text  x="656.71" y="159.5" ></text>
+</g>
+<g >
+<title>Position.&lt;init&gt; (3 samples, 0.47%)</title><rect x="509.5" y="133" width="6.4" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
+<text  x="512.47" y="143.5" ></text>
+</g>
+<g >
+<title>Perft.perft (300 samples, 46.80%)</title><rect x="737.7" y="181" width="645.8" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="740.68" y="191.5" >Perft.perft</text>
+</g>
+<g >
+<title>ArrayList.grow (3 samples, 0.47%)</title><rect x="324.3" y="69" width="6.5" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="327.32" y="79.5" ></text>
+</g>
+<g >
+<title>Position.copy (37 samples, 5.77%)</title><rect x="332.9" y="133" width="79.7" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="335.93" y="143.5" >Position...</text>
+</g>
+<g >
+<title>Position.makeMove (27 samples, 4.21%)</title><rect x="668.8" y="165" width="58.1" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="671.78" y="175.5" >Positi..</text>
+</g>
+<g >
+<title>MoveGenerator.attackedBySlide (17 samples, 2.65%)</title><rect x="606.3" y="133" width="36.6" height="15.0" fill="rgb(247,195,46)" rx="2" ry="2" />
+<text  x="609.35" y="143.5" >Mov..</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (16 samples, 2.50%)</title><rect x="412.6" y="149" width="34.4" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="415.59" y="159.5" >Mo..</text>
+</g>
+<g >
+<title>ArrayList.add (3 samples, 0.47%)</title><rect x="1174.7" y="85" width="6.5" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="1177.71" y="95.5" ></text>
+</g>
+<g >
+<title>Thread.run (3 samples, 0.47%)</title><rect x="1383.5" y="229" width="6.5" height="15.0" fill="rgb(237,150,35)" rx="2" ry="2" />
+<text  x="1386.54" y="239.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.pseudoLegalMoves (31 samples, 4.84%)</title><rect x="1120.9" y="133" width="66.7" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
+<text  x="1123.89" y="143.5" >MoveGen..</text>
+</g>
+<g >
+<title>Position.copy (38 samples, 5.93%)</title><rect x="1202.7" y="117" width="81.8" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="1205.70" y="127.5" >Position...</text>
+</g>
+<g >
+<title>ArrayList.grow (2 samples, 0.31%)</title><rect x="1052.0" y="101" width="4.3" height="15.0" fill="rgb(216,52,12)" rx="2" ry="2" />
+<text  x="1055.00" y="111.5" ></text>
+</g>
+<g >
+<title>Position.copy (2 samples, 0.31%)</title><rect x="726.9" y="165" width="4.3" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="729.91" y="175.5" ></text>
+</g>
+<g >
+<title>Character.isUpperCase (2 samples, 0.31%)</title><rect x="1183.3" y="101" width="4.3" height="15.0" fill="rgb(233,130,31)" rx="2" ry="2" />
+<text  x="1186.32" y="111.5" ></text>
+</g>
+<g >
+<title>Position.copy (4 samples, 0.62%)</title><rect x="1374.9" y="149" width="8.6" height="15.0" fill="rgb(244,181,43)" rx="2" ry="2" />
+<text  x="1377.93" y="159.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (2 samples, 0.31%)</title><rect x="754.9" y="133" width="4.3" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="757.90" y="143.5" ></text>
+</g>
+<g >
+<title>Position.&lt;init&gt; (2 samples, 0.31%)</title><rect x="722.6" y="133" width="4.3" height="15.0" fill="rgb(251,213,51)" rx="2" ry="2" />
+<text  x="725.61" y="143.5" ></text>
+</g>
+<g >
+<title>PeriodicTask.run (2 samples, 0.31%)</title><rect x="10.0" y="133" width="4.3" height="15.0" fill="rgb(245,185,44)" rx="2" ry="2" />
+<text  x="13.00" y="143.5" ></text>
+</g>
+<g >
+<title>MoveGenerator.legalMoves (146 samples, 22.78%)</title><rect x="98.3" y="165" width="314.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="101.27" y="175.5" >MoveGenerator.legalMoves</text>
+</g>
+<g >
+<title>MoveGenerator.isSquareAttacked (16 samples, 2.50%)</title><rect x="412.6" y="133" width="34.4" height="15.0" fill="rgb(214,42,10)" rx="2" ry="2" />
+<text  x="415.59" y="143.5" >Mo..</text>
+</g>
+<g >
+<title>MoveGenerator.isKingAttacked (38 samples, 5.93%)</title><rect x="216.7" y="149" width="81.8" height="15.0" fill="rgb(212,36,8)" rx="2" ry="2" />
+<text  x="219.68" y="159.5" >MoveGener..</text>
+</g>
+<g >
+<title>Thread.runWith (3 samples, 0.47%)</title><rect x="1383.5" y="213" width="6.5" height="15.0" fill="rgb(226,97,23)" rx="2" ry="2" />
+<text  x="1386.54" y="223.5" ></text>
+</g>
+<g >
+<title>Position.isInCheck (16 samples, 2.50%)</title><rect x="412.6" y="165" width="34.4" height="15.0" fill="rgb(214,45,10)" rx="2" ry="2" />
+<text  x="415.59" y="175.5" >Po..</text>
+</g>
+<g >
+<title>PlatformRecorder.start (3 samples, 0.47%)</title><rect x="10.0" y="165" width="6.5" height="15.0" fill="rgb(244,183,43)" rx="2" ry="2" />
+<text  x="13.00" y="175.5" ></text>
+</g>
+<g >
+<title>Position.makeMove (32 samples, 4.99%)</title><rect x="447.0" y="165" width="68.9" height="15.0" fill="rgb(252,218,52)" rx="2" ry="2" />
+<text  x="450.04" y="175.5" >Positio..</text>
+</g>
+<g >
+<title>MoveGenerator.pseudoLegalMoves (2 samples, 0.31%)</title><rect x="759.2" y="149" width="4.3" height="15.0" fill="rgb(254,227,54)" rx="2" ry="2" />
+<text  x="762.20" y="159.5" ></text>
+</g>
+<g >
+<title>ArrayList.add (2 samples, 0.31%)</title><rect x="1052.0" y="133" width="4.3" height="15.0" fill="rgb(235,139,33)" rx="2" ry="2" />
+<text  x="1055.00" y="143.5" ></text>
+</g>
+<g >
+<title>PlatformRecorder.lambda$startDiskMonitor$0 (3 samples, 0.47%)</title><rect x="1383.5" y="181" width="6.5" height="15.0" fill="rgb(227,104,25)" rx="2" ry="2" />
+<text  x="1386.54" y="191.5" ></text>
+</g>
+<g >
+<title>Perft.perft (300 samples, 46.80%)</title><rect x="737.7" y="213" width="645.8" height="15.0" fill="rgb(231,123,29)" rx="2" ry="2" />
+<text  x="740.68" y="223.5" >Perft.perft</text>
+</g>
+<g >
+<title>Character.toLowerCase (2 samples, 0.31%)</title><rect x="1198.4" y="101" width="4.3" height="15.0" fill="rgb(207,11,2)" rx="2" ry="2" />
+<text  x="1201.39" y="111.5" ></text>
+</g>
+<g >
+<title>ProfileWorkload.main (635 samples, 99.06%)</title><rect x="16.5" y="229" width="1367.0" height="15.0" fill="rgb(245,184,44)" rx="2" ry="2" />
+<text  x="19.46" y="239.5" >ProfileWorkload.main</text>
+</g>
+<g >
+<title>DCmdStart.execute (3 samples, 0.47%)</title><rect x="10.0" y="213" width="6.5" height="15.0" fill="rgb(219,64,15)" rx="2" ry="2" />
+<text  x="13.00" y="223.5" ></text>
 </g>
 </g>
 </svg>
